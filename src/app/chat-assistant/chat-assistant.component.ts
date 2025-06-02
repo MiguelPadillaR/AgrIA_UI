@@ -1,10 +1,12 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { ChatMessage } from '../models/chat-assistant.model';
 import { ChatAssistantService } from '../services/chat-assistant.service';
-
+import { MarkdownModule } from 'ngx-markdown';
 @Component({
   selector: 'app-chat-assistant',
-  imports: [],
+  imports: [
+    MarkdownModule,
+  ],
   templateUrl: './chat-assistant.component.html',
   styleUrl: './chat-assistant.component.css'
 })

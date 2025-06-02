@@ -5,7 +5,7 @@
         @if (msg.loading) {
           <img src="message-icon.png" class="typing-icon" alt="Assistant is thinking...">
         } @else {
-          {{ msg.revealProgress ?? msg.content }}
+          <markdown [data]="msg.revealProgress ?? msg.content"></markdown>
         }
       </div>
     </div>
