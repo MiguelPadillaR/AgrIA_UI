@@ -1,14 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChatAssistantComponent } from "../chat-assistant/chat-assistant.component";
+import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-chat',
   imports: [FormsModule, ChatAssistantComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'] // fixed typo: styleUrl -> styleUrls
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class DashboardComponent {
+export class ChatComponent {
   public imageFile: File | null = null;
   public imagePreviewUrl: string | null = null;
   public userInput: string = ""
