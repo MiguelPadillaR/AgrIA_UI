@@ -1,0 +1,54 @@
+<div id="parcel-finder">
+    <div class="content">
+        <div class="parcel-finder-form">
+            <div class="cadastral-field">
+                <label class="form-label">Inserte código de referencia catastral:
+                    <input class="form-input" type="text" placeholder="Ref. catastral" class="cadastral-input-field" />
+                </label>
+            </div>
+            <div class="date-field">
+                <label class="form-label">Seleccione fecha aproximada:
+                    <input class="form-input" type="date" placeholder="Date" class="date-input-field" />
+                </label>
+            </div>
+            <div class="crop-field">
+                
+            </div>
+        </div>
+        <div class="parcel-finder-buttons">
+            <button 
+                class="find-parcel-button"
+                (click)="findParcel()"
+                >
+                Find Parcel
+            </button>
+            <button
+                class="clear-info-button"
+                >
+                Clear Form
+            </button>
+        </div>
+        <div class="parcel-finder-display">
+            <div class="display-title">
+                <h2>Selected Parcel</h2>
+            </div>
+            <div class="display-box">
+                @if(imagePreviewUrl){
+                    <img [src]="imagePreviewUrl" alt="Preview" />
+                } @else {
+                    <img class="image-icon" src="image-icon.png" alt="Upload image" />
+                }
+            </div>
+            <div class="display-buttons">
+                @if(!imagePreviewUrl){
+                   <button 
+                        class="select-parcel-button"
+                        (click)="goToChat()"
+                    >
+                        Select Parcel
+                   </button> 
+                }
+            </div>
+    </div>
+    
+</div>

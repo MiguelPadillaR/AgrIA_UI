@@ -15,9 +15,7 @@ export class ChatComponent {
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
   public onFileSelected(event: any) {
-    console.log("Event:", event); // Log the event object
     const files = event.target.files;
-    console.log("Selected files:", files); // Log the selected files
     if (files.length > 0) {
       this.imageFile = files[0] as File;
       this.chatAssistant.sendImage(this.imageFile);
@@ -32,6 +30,7 @@ export class ChatComponent {
       this.imageFile = null;
       this.imagePreviewUrl = null;
     }
+    console.log("this.imageFile", this.imageFile)
   }
 
   public sendUserInput() {
