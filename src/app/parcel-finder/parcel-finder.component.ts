@@ -93,11 +93,12 @@ export class ParcelFinderComponent {
     const formData = new FormData();
     formData.append('cadastralReference', this.cadastralReference);
     formData.append('selectedDate', this.selectedDate);
+    this.parcelFinderService.findParcel(formData).subscribe(
+      (response: any) => {
+        console.log(response)
+      }
+    )
   }
-
-  updateCadastralReference($event: any) {
-    this.cadastralReference = $event.target.value;
-}
 
   public clearForm() {
     this.cadastralReference = '';
@@ -105,7 +106,7 @@ export class ParcelFinderComponent {
   }
 
   /* Reroute to chat while sending parcel image file */
-  public goToChat(): void {
+  public goToChatView(): void {
     // TODO this.sendParcelToChat();
     this.router.navigate(['/chat']);
   }
