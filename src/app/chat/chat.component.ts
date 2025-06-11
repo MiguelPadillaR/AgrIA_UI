@@ -42,7 +42,6 @@ export class ChatComponent {
       this.imageFile = null;
       this.imagePreviewUrl = null;
     }
-    console.log("this.imageFile", this.imageFile)
   }
 
   /**
