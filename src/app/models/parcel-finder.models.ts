@@ -1,4 +1,4 @@
-export interface cropClassification {
+export interface ICropClassification {
     class: string,
     name: string,
     type: string,
@@ -6,8 +6,8 @@ export interface cropClassification {
     subtype2: string | null;
 }
 
-export interface GroupedCropClassification {
+export interface IGroupedCropClassification {
   [type: string]: {
-    [subtype: string]: cropClassification[];
+    [subtype: string]: ICropClassification[];
   };
 }

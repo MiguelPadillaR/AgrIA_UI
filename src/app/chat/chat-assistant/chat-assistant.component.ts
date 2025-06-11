@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { ChatMessage } from '../../models/chat-assistant.model';
+import { IChatMessage } from '../../models/chat-assistant.model';
 import { ChatAssistantService } from '../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
 @Component({
@@ -13,7 +13,7 @@ import { MarkdownModule } from 'ngx-markdown';
 
 export class ChatAssistantComponent {
   // Chat History stack
-  public chatHistory: ChatMessage[] = [
+  public chatHistory: IChatMessage[] = [
     { role: 'assistant', content: 'Hello there!\n\nI am your Agricultural Imaging Assitant, but you can call me AgrIA!\n\nMy purpose here is to analyse satellite images of crop fields to help farmers analyze their use of space and resources, as well as agricultural practices, in order to help them qualify for the European Comitee of Common Agricultural Policies (CAPs) subventions.\n\nJust upload a satellite image of your crop fields and we will get to work!\n\nIf you have any questions, you can also type in the textbox.'},
   ];
   // HTML element to automatically scroll to the bototm
@@ -104,7 +104,7 @@ export class ChatAssistantComponent {
    * Shows message icon while waiting response
    */
   private showMessageIcon() {
-    const loadingMsg: ChatMessage = { role: 'assistant', content: '', loading: true };
+    const loadingMsg: IChatMessage = { role: 'assistant', content: '', loading: true };
     this.chatHistory.push(loadingMsg); // Add loading indicator
     this.scrollToBottom();
   }
@@ -120,7 +120,7 @@ export class ChatAssistantComponent {
   }  
 
   private displayResponse(responseText: string) {
-    const newMsg: ChatMessage = {
+    const newMsg: IChatMessage = {
       role: 'assistant',
       content: responseText,
       revealProgress: ''
@@ -136,7 +136,7 @@ export class ChatAssistantComponent {
    * @param msg 
    * @param fullText 
    */
-  private animateLoadingResponse(msg: ChatMessage, fullText: string) {
+  private animateLoadingResponse(msg: IChatMessage, fullText: string) {
     let index = 0;
     const interval = setInterval(() => {
       if (index < fullText.length) {
