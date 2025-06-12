@@ -1,0 +1,98 @@
+<div id="parcel-finder">
+    <div class="content">
+            <div class="form-title">
+                <h2>Cadastral Data</h2>
+            </div>
+        <div class="form">
+            <div class="cadastral-field">
+                <label class="form-label">Inserte código de referencia catastral:
+                    <input class="form-input"
+                    type="text"
+                    placeholder="Ref. catastral"
+                    class="cadastral-input-field"
+                    [(ngModel)]="cadastralReference"
+                    />
+                </label>
+            </div>
+            <div class="date-field">
+                <label class="form-label">Seleccione fecha aproximada:
+                    <input class="form-input"
+                    type="date"
+                    placeholder="Date"
+                    [(ngModel)]="selectedDate"
+                    class="date-input-field"/>
+                </label>
+            </div>
+            <div class="parcel-finder-buttons">
+                <button 
+                    class="input-button"
+                    (click)="findParcel()"
+                    >
+                    Find Parcel
+                </button>
+                <button
+                    class="clear-info-button"
+                    (click)="clearForm()"
+                    >
+                    Clear Form
+                </button>
+            </div>
+        </div>
+        <div class="parcel-finder-display">
+            <div class="display-title">
+                <h2>Selected Parcel</h2>
+            </div>
+            <div class="display-box">
+                @if(parcelImageUrl){
+                    <img [src]="parcelImageUrl" alt="Preview" />
+                } @else {
+                    <img class="image-icon" src="image-icon.png" alt="Upload image" />
+                }
+            </div>
+            <div class="display-buttons">
+                @if(parcelImageUrl){
+                   <button 
+                        class="input-button"
+                        (click)="confirmParcel()"
+                    >
+                        Confirm Parcel
+                   </button> 
+                }
+            </div>
+        </div>
+    
+        <!-- 
+        <h2>Parcel Data</h2>
+        <form class="form">
+            <div class="crop-classification-tree">
+                @for (type of (objectKeys(groupedCropClassification)); track type) {
+                <details class="type-group">
+                <summary>{{ type }}</summary>
+
+                @for (subtype of (objectKeys(groupedCropClassification[type])); track subtype) {
+                <details class="subtype-group">
+                    <summary>{{ subtype }}</summary>
+
+                    <div class="checkbox-grid">
+                    @for (item of groupedCropClassification[type][subtype]; track item.class) {
+                    <label class="crop-checkbox-label">
+                        <input
+                        type="checkbox"
+                        [value]="item.class"
+                        class="crop-checkbox"
+                        (click)="toggleSelectedClassification(item)"
+                        />
+                        {{ item.class }} - {{ item.name }}
+                    </label>
+                    }
+                    </div>
+                </details>
+                }
+                </details>
+                }
+            </div>
+        </form>   
+        -->      
+        
+    </div>
+</div>

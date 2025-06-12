@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { ChatMessage } from '../models/chat-assistant.model';
-import { ChatAssistantService } from '../services/chat-assistant.service';
+import { IChatMessage } from '../../models/chat-assistant.model';
+import { ChatAssistantService } from '../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
 @Component({
   selector: 'app-chat-assistant',
@@ -13,12 +13,12 @@ import { MarkdownModule } from 'ngx-markdown';
 
 export class ChatAssistantComponent {
   // Chat History stack
-  public chatHistory: ChatMessage[] = [
+  public chatHistory: IChatMessage[] = [
     { role: 'assistant', content: 'Hello there!\n\nI am your Agricultural Imaging Assitant, but you can call me AgrIA!\n\nMy purpose here is to analyse satellite images of crop fields to help farmers analyze their use of space and resources, as well as agricultural practices, in order to help them qualify for the European Comitee of Common Agricultural Policies (CAPs) subventions.\n\nJust upload a satellite image of your crop fields and we will get to work!\n\nIf you have any questions, you can also type in the textbox.'},
   ];
   // HTML element to automatically scroll to the bototm
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
-  private chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
+  public chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
 
   // TODO: Load chat history from local storage or API or other source
   ngAfterViewInit() {
@@ -28,7 +28,7 @@ export class ChatAssistantComponent {
   /**
    * * Scrolls to the bottom of the chat window
    */
-  private scrollToBottom() {
+  public scrollToBottom() {
     setTimeout(() => {
       this.scrollAnchor?.nativeElement.scrollIntoView({ block:"end", behavior: 'smooth' });
     }, 1500);
@@ -50,7 +50,7 @@ export class ChatAssistantComponent {
    * Send image to assistant
    * @param imageFile - Image file to be sent to the assistant
    */
-  sendImage(imageFile: File) {
+  public sendImage(imageFile: File) {
     this.showMessageIcon();
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -81,7 +81,7 @@ export class ChatAssistantComponent {
     const trimmedInput: string = userInput.trim().replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ');
     this.showMessageIcon();
     const formData = new FormData();
-    formData.append('user_input', trimmedInput);
+    formData.append('userInput', trimmedInput);
 
     this.chatAssistantService.sendUserInput(formData).subscribe({
       next: (responseText: string) => {
@@ -103,8 +103,8 @@ export class ChatAssistantComponent {
   /**
    * Shows message icon while waiting response
    */
-  private showMessageIcon() {
-    const loadingMsg: ChatMessage = { role: 'assistant', content: '', loading: true };
+  public showMessageIcon() {
+    const loadingMsg: IChatMessage = { role: 'assistant', content: '', loading: true };
     this.chatHistory.push(loadingMsg); // Add loading indicator
     this.scrollToBottom();
   }
@@ -112,15 +112,15 @@ export class ChatAssistantComponent {
   /**
    * Hides message icon after response
    */
-  private hideMessageIcon() {
+  public hideMessageIcon() {
     const last = this.chatHistory[this.chatHistory.length - 1];
     if (last.loading) {
       this.chatHistory.pop();
     }
   }  
 
-  private displayResponse(responseText: string) {
-    const newMsg: ChatMessage = {
+  public displayResponse(responseText: string) {
+    const newMsg: IChatMessage = {
       role: 'assistant',
       content: responseText,
       revealProgress: ''
@@ -136,7 +136,7 @@ export class ChatAssistantComponent {
    * @param msg 
    * @param fullText 
    */
-  private animateLoadingResponse(msg: ChatMessage, fullText: string) {
+  public animateLoadingResponse(msg: IChatMessage, fullText: string) {
     let index = 0;
     const interval = setInterval(() => {
       if (index < fullText.length) {

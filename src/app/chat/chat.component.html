@@ -1,4 +1,4 @@
-<div id="dashboard">
+<div id="chat">
     <div class="content">
         <div class="top-section">
             <div id="image">
@@ -12,14 +12,14 @@
                         <img class="image-icon" src="image-icon.png" alt="Upload image" />
                     }
                 </div>
-                @if (imageFile) {
+                @if (imagePreviewUrl) {
                     <div class="image-desc">
-                        <p> Name: {{ imageFile.name }}</p>
-                        <p>Here will be the physical description of the image</p>
+                        <p> Nombre Imagen: {{ imagePreviewUrl.split("/").pop() }}</p>
+                        <p>{{ parcelImageInfo }}</p>
                     </div>
                 }
             </div>
-            <div id="chat">
+            <div id="chat-box">
                 <div class="chat-header">
                     <h2>AgrIA</h2>
                 </div>
@@ -58,6 +58,12 @@
                 Get suggestion
             </button>
         </div>
-          
+        <button
+            class="navigation-button"
+            (click)="goToParcelFinderView()"
+            title="Navigate to parcel finder view."
+        >
+            Return to parcel finder
+        </button>
     </div>
 </div>

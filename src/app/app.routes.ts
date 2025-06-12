@@ -1,10 +1,17 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChatComponent } from './chat/chat.component';
+import { ParcelFinderComponent } from './parcel-finder/parcel-finder.component';
 
 export const routes: Routes = [
     {
-        path: "",
-        component: DashboardComponent,
-        title: "Agri-Multimodel"
-    }
+        path: "chat",
+        component: ChatComponent,
+        title: "AgrIA"
+    },
+    {
+        path: "parcel-finder",
+        component: ParcelFinderComponent,
+        title: "Parcel Finder"
+    },
+    
 ];
