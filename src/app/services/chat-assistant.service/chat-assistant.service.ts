@@ -12,14 +12,13 @@ export class ChatAssistantService {
 
   constructor(private http: HttpClient) {}
 
-  sendUserInput(request: FormData): Observable<string> {
+  public sendUserInput(request: FormData): Observable<string> {
     return this.http.post<{ response: string }>(`${this.apiUrl}/send-user-input`, request)
       .pipe(map(res => res.response));
   }
-  sendImage(request: FormData): Observable<string> {
+
+  public sendImage(request: FormData): Observable<string> {
     return this.http.post<{ response: string }>(`${this.apiUrl}/send-image`, request)
     .pipe(map(res => res.response));
   }
-
 }
-

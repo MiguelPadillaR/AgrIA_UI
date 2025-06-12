@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { cropClassification, GroupedCropClassification } from '../models/parcel-finder.models';
-import { ParcelFinderService } from '../services/parcel-finder.service';
+// import { ICropClassification, IGroupedCropClassification } from '../models/parcel-finder.models';
+import { ParcelFinderService } from '../services/parcel-finder.service/parcel-finder.service';
+import { IFindParcelresponse } from '../models/parcel-finder-response.models';
+import { ParcelInfoService } from '../services/parcel-info.service/parcel-info.service';
 @Component({
   selector: 'app-parcel-finder',
   imports: [FormsModule],
@@ -11,20 +13,26 @@ import { ParcelFinderService } from '../services/parcel-finder.service';
 })
 export class ParcelFinderComponent {
   // Cadastral reference of the parcel
-  public cadastralReference: string = '';
+  public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
+/* 
   // List of SIGPAC's crop classifications
-  public cropClassification: cropClassification[] = [];
+  public cropClassification: ICropClassification[] = [];
   // Grouped crop classifications by type and subtype
-  public groupedCropClassification: GroupedCropClassification = {};
+  public groupedCropClassification: IGroupedCropClassification = {};
   // Selected crop classifications
-  private selectedClassifications: cropClassification[] = [];
+  private selectedClassifications: ICropClassification[] = [];
+ */
+  // Selected parcel information
+  private selectedParcelInfo: IFindParcelresponse | null = null;
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
 
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
+  // Service to communicate parcel info from parcel finder to chat
+  private parcelInfoService = inject(ParcelInfoService);
   // Router for navigation
   private router: Router = inject(Router);
     // Utility to get object keys
@@ -34,12 +42,13 @@ export class ParcelFinderComponent {
   constructor() {}
 
   ngOnInit() {
-    this.loadCropClassifications();
+    // this.loadCropClassifications();
   }
- 
+
+ /* 
   private loadCropClassifications() {
     this.parcelFinderService.getCropClassifications().subscribe(
-      (cropClassification: cropClassification[]) => {
+      (cropClassification: ICropClassification[]) => {
         this.cropClassification = cropClassification;
         this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
 
@@ -50,25 +59,13 @@ export class ParcelFinderComponent {
     );
   }
 
-  /**
-   * Toggles the selection state of a crop classification item.
-   * If the item is already selected, it will be removed from the selection.
-   * If the item is not selected, it will be added to the selection.
-   * 
-   * @param clickedItem - The crop classification item to toggle.
-   */
-  public toggleSelectedClassification(clickedItem: cropClassification): void {
+  public toggleSelectedClassification(clickedItem: ICropClassification): void {
     !this.selectedClassifications.includes(clickedItem) ? 
       this.selectedClassifications.push(clickedItem): 
       this.selectedClassifications = this.selectedClassifications.filter(item => item !== clickedItem);
-  }
-  /**
-   * Groups crop classifications by type and subtype.
-   * 
-   * @param data - Array of crop classifications to be grouped.
-   * @returns An object where keys are types and values are objects with subtypes as keys.
-   */
-  private groupByTypeAndSubtype(data: cropClassification[]) {
+  } 
+  
+    private groupByTypeAndSubtype(data: ICropClassification[]) {
     const grouped: any = {};
 
     for (const item of data) {
@@ -83,21 +80,22 @@ export class ParcelFinderComponent {
 
     return grouped;
   }
-
+  */
+ 
  /**
  * Finds a parcel based on the provided cadastral reference and selected date.
  * 
- * @throws Error Always throws "Method not implemented." as this method is a stub.
  */
   public findParcel() {
     const formData = new FormData();
     formData.append('cadastralReference', this.cadastralReference);
     formData.append('selectedDate', this.selectedDate);
     this.parcelFinderService.findParcel(formData).subscribe(
-      (response: any) => {
-        console.log(response)
+      (response: IFindParcelresponse) => {
+        this.selectedParcelInfo = response;
+        this.parcelImageUrl = this.selectedParcelInfo.imagePath
       }
-    )
+    );
   }
 
   public clearForm() {
@@ -106,14 +104,10 @@ export class ParcelFinderComponent {
   }
 
   /* Reroute to chat while sending parcel image file */
-  public goToChatView(): void {
-    // TODO this.sendParcelToChat();
-    this.router.navigate(['/chat']);
+  public confirmParcel(): void {
+    if (this.selectedParcelInfo) {
+      this.parcelInfoService.setParcelInfo(this.selectedParcelInfo);
+      this.router.navigate(['/chat']);
+    }
   }
-
-  /* Send parcel image to chat and begin conversation */
-  public sendParcelToChat() {
-    throw new Error('Method not implemented.');
-  }
-
 }

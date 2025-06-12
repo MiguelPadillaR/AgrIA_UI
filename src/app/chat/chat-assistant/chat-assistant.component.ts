@@ -18,7 +18,7 @@ export class ChatAssistantComponent {
   ];
   // HTML element to automatically scroll to the bototm
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
-  private chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
+  public chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
 
   // TODO: Load chat history from local storage or API or other source
   ngAfterViewInit() {
@@ -28,7 +28,7 @@ export class ChatAssistantComponent {
   /**
    * * Scrolls to the bottom of the chat window
    */
-  private scrollToBottom() {
+  public scrollToBottom() {
     setTimeout(() => {
       this.scrollAnchor?.nativeElement.scrollIntoView({ block:"end", behavior: 'smooth' });
     }, 1500);
@@ -50,7 +50,7 @@ export class ChatAssistantComponent {
    * Send image to assistant
    * @param imageFile - Image file to be sent to the assistant
    */
-  sendImage(imageFile: File) {
+  public sendImage(imageFile: File) {
     this.showMessageIcon();
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -81,7 +81,7 @@ export class ChatAssistantComponent {
     const trimmedInput: string = userInput.trim().replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ');
     this.showMessageIcon();
     const formData = new FormData();
-    formData.append('user_input', trimmedInput);
+    formData.append('userInput', trimmedInput);
 
     this.chatAssistantService.sendUserInput(formData).subscribe({
       next: (responseText: string) => {
@@ -103,7 +103,7 @@ export class ChatAssistantComponent {
   /**
    * Shows message icon while waiting response
    */
-  private showMessageIcon() {
+  public showMessageIcon() {
     const loadingMsg: IChatMessage = { role: 'assistant', content: '', loading: true };
     this.chatHistory.push(loadingMsg); // Add loading indicator
     this.scrollToBottom();
@@ -112,14 +112,14 @@ export class ChatAssistantComponent {
   /**
    * Hides message icon after response
    */
-  private hideMessageIcon() {
+  public hideMessageIcon() {
     const last = this.chatHistory[this.chatHistory.length - 1];
     if (last.loading) {
       this.chatHistory.pop();
     }
   }  
 
-  private displayResponse(responseText: string) {
+  public displayResponse(responseText: string) {
     const newMsg: IChatMessage = {
       role: 'assistant',
       content: responseText,
@@ -136,7 +136,7 @@ export class ChatAssistantComponent {
    * @param msg 
    * @param fullText 
    */
-  private animateLoadingResponse(msg: IChatMessage, fullText: string) {
+  public animateLoadingResponse(msg: IChatMessage, fullText: string) {
     let index = 0;
     const interval = setInterval(() => {
       if (index < fullText.length) {

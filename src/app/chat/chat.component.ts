@@ -2,6 +2,10 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
+import { ParcelInfoService } from '../services/parcel-info.service/parcel-info.service';
+import { ChatService } from '../services/chat.services/chat.service';
+import { IChatParcelResponse } from '../models/chat.models';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -14,15 +18,47 @@ export class ChatComponent {
   public imageFile: File | null = null;
   // Image URL/path for the preview module
   public imagePreviewUrl: string | null = null;
+  // Parcel's image information
+  public parcelImageInfo: string =  "Leyendo características de la parcela..."
   // User's chat input
   public userInput: string = ""
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
+  // Service to communicate parcel info from parcel finder to chat
+  private parcelInfoService = inject(ParcelInfoService);
+  // Chat service
+  private chatService = inject(ChatService);
   // Router for navigation
   private router: Router = inject(Router);
 
+
+ngOnInit() {
+  this.parcelInfoService.parcelInfo$.pipe(take(1))
+  .subscribe(parcel => {
+    if (parcel) {
+      // Delay template updates to avoid ExpressionChanged errors
+      setTimeout(() => {
+        this.chatAssistant.showMessageIcon();
+        this.imagePreviewUrl = parcel.imagePath;
+
+        const formData = new FormData();
+        formData.append('imageDate', parcel.metadata.vigencia);
+        formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+        formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
+
+        this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
+        .subscribe((response: IChatParcelResponse) => {
+          this.parcelImageInfo = response.imageDesc;
+          this.chatAssistant.hideMessageIcon();
+          this.chatAssistant.displayResponse(response.text);
+        });
+      });
+    }
+  });
+}
+
   /**
-   * Reads file and displays image on image proview module.
+   * Reads file and displays image on image preview module.
    * 
    * @param event 
    */
@@ -71,7 +107,10 @@ export class ChatComponent {
     this.userInput = "This is my brand new suggestion!"
   }
 
-    /* Reroute to chat while sending parcel image file */
+  /**
+   * Reroute to chat while sending parcel image file
+   * 
+   */
   public goToParcelFinderView(): void {
     this.router.navigate(['/parcel-finder']);
   }

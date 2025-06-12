@@ -50,12 +50,12 @@
                 }
             </div>
             <div class="display-buttons">
-                @if(!parcelImageUrl){
+                @if(parcelImageUrl){
                    <button 
                         class="input-button"
-                        (click)="goToChatView()"
+                        (click)="confirmParcel()"
                     >
-                        Select Parcel
+                        Confirm Parcel
                    </button> 
                 }
             </div>
