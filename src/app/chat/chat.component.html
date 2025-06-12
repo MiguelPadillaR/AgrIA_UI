@@ -14,7 +14,7 @@
                 </div>
                 @if (imagePreviewUrl) {
                     <div class="image-desc">
-                        <p> Nombre Imagen: {{ imagePreviewUrl.split("/").pop() }}</p>
+                        <p> Nombre Imagen: {{ displayImageName }}</p>
                         <p>{{ parcelImageInfo }}</p>
                     </div>
                 }

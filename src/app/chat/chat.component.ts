@@ -32,30 +32,35 @@ export class ChatComponent {
   private router: Router = inject(Router);
 
 
-ngOnInit() {
-  this.parcelInfoService.parcelInfo$.pipe(take(1))
-  .subscribe(parcel => {
-    if (parcel) {
-      // Delay template updates to avoid ExpressionChanged errors
-      setTimeout(() => {
-        this.chatAssistant.showMessageIcon();
-        this.imagePreviewUrl = parcel.imagePath;
+  ngOnInit() {
+    this.parcelInfoService.parcelInfo$.pipe(take(1))
+    .subscribe(parcel => {
+      if (parcel) {
+        // Delay template updates to avoid ExpressionChanged errors
+        setTimeout(() => {
+          this.chatAssistant.showMessageIcon();
+          this.imagePreviewUrl = parcel.imagePath;
 
-        const formData = new FormData();
-        formData.append('imageDate', parcel.metadata.vigencia);
-        formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
-        formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
+          const formData = new FormData();
+          formData.append('imageDate', parcel.metadata.vigencia);
+          formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+          formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
 
-        this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
-        .subscribe((response: IChatParcelResponse) => {
-          this.parcelImageInfo = response.imageDesc;
-          this.chatAssistant.hideMessageIcon();
-          this.chatAssistant.displayResponse(response.text);
+          this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
+          .subscribe((response: IChatParcelResponse) => {
+            this.parcelImageInfo = response.imageDesc;
+            this.chatAssistant.hideMessageIcon();
+            this.chatAssistant.displayResponse(response.text);
+          });
         });
-      });
-    }
-  });
-}
+      }
+    });
+  }
+
+  get displayImageName(): string | undefined {
+    const fileName = this.imagePreviewUrl?.split('/')?.pop();
+    return (fileName?.length ?? 0) < 2 ? this.imageFile?.name : fileName;
+  }
 
   /**
    * Reads file and displays image on image preview module.
@@ -67,6 +72,7 @@ ngOnInit() {
     if (files.length > 0) {
       this.imageFile = files[0] as File;
       this.chatAssistant.sendImage(this.imageFile);
+      this.parcelImageInfo = "FECHA: *Sin datos*\nCULTIVO: *Sin datos*"
 
       // Create a preview URL
       const reader = new FileReader();
