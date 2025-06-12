@@ -1,4 +1,4 @@
-#dashboard {
+#chat {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,7 @@
       max-width: 100vw;
       margin-bottom: 2rem;
   
-      #image, #chat {
+      #image, #chat-box {
         flex: 1;
       }
     }
@@ -31,11 +31,11 @@
           margin: 1rem 0;
         
           width: 100%;
-          height: 150px;               /* fixed height */
-          overflow-y: auto;            /* vertical scroll on overflow */
-          overflow-x: hidden;          /* no horizontal scroll */
-          white-space: pre-wrap;       /* wrap long lines */
-          word-wrap: break-word;       /* break long words if needed */
+          height: 150px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          white-space: pre-wrap;
+          word-wrap: break-word;
       }
         
       .image-preview {
@@ -67,7 +67,7 @@
       }
     }  
 
-    #chat {
+    #chat-box {
       .chat-content {
         justify-content: center;
         align-items: stretch;
@@ -123,31 +123,42 @@
           word-wrap: break-word;       /* break long words if needed */
           font-family: inherit;        /* optional: match your app font */
         }
-          
-        .input-button {
-          padding: 0.5rem 1rem;
-          border: none;
-          border-radius: 6px;
-          background-color: #4caf50;
-          color: white;
-          cursor: pointer;
-          transition: background-color 0.3s;
-      
-          &:hover {
-            background-color: #45a049;
-          }
-        }
+    }
+
+    .input-button,
+    .navigation-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .input-button {
+      background-color: #4caf50;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+
+    .navigation-button {
+      background-color: #1883e0;
+      &:hover {
+        background-color: #1265ad;
+      }
     }
 
   }
 
   @media (max-width: 1024px) {
-    #dashboard .top-section {
+    #chat-box .top-section {
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
   
-      #image, #chat {
+      #image, #chat-box {
         width: 100%;
       }
     }
@@ -158,7 +169,7 @@
   }
   
   @media (max-width: 768px) {
-    #dashboard {
+    #chat-box {
       margin: 1rem;
     }
   

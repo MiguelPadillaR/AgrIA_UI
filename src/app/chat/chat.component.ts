@@ -1,0 +1,118 @@
+import { Component, inject, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
+import { Router } from '@angular/router';
+import { ParcelInfoService } from '../services/parcel-info.service/parcel-info.service';
+import { ChatService } from '../services/chat.services/chat.service';
+import { IChatParcelResponse } from '../models/chat.models';
+import { take } from 'rxjs';
+
+@Component({
+  selector: 'app-chat',
+  imports: [FormsModule, ChatAssistantComponent],
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
+})
+export class ChatComponent {
+  // Image file
+  public imageFile: File | null = null;
+  // Image URL/path for the preview module
+  public imagePreviewUrl: string | null = null;
+  // Parcel's image information
+  public parcelImageInfo: string =  "Leyendo características de la parcela..."
+  // User's chat input
+  public userInput: string = ""
+  @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
+
+  // Service to communicate parcel info from parcel finder to chat
+  private parcelInfoService = inject(ParcelInfoService);
+  // Chat service
+  private chatService = inject(ChatService);
+  // Router for navigation
+  private router: Router = inject(Router);
+
+
+ngOnInit() {
+  this.parcelInfoService.parcelInfo$.pipe(take(1))
+  .subscribe(parcel => {
+    if (parcel) {
+      // Delay template updates to avoid ExpressionChanged errors
+      setTimeout(() => {
+        this.chatAssistant.showMessageIcon();
+        this.imagePreviewUrl = parcel.imagePath;
+
+        const formData = new FormData();
+        formData.append('imageDate', parcel.metadata.vigencia);
+        formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+        formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
+
+        this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
+        .subscribe((response: IChatParcelResponse) => {
+          this.parcelImageInfo = response.imageDesc;
+          this.chatAssistant.hideMessageIcon();
+          this.chatAssistant.displayResponse(response.text);
+        });
+      });
+    }
+  });
+}
+
+  /**
+   * Reads file and displays image on image preview module.
+   * 
+   * @param event 
+   */
+  public onFileSelected(event: any): void {
+    const files = event.target.files;
+    if (files.length > 0) {
+      this.imageFile = files[0] as File;
+      this.chatAssistant.sendImage(this.imageFile);
+
+      // Create a preview URL
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreviewUrl = e.target.result;
+      };
+      reader.readAsDataURL(this.imageFile as Blob);
+    } else {
+      this.imageFile = null;
+      this.imagePreviewUrl = null;
+    }
+  }
+
+  /**
+   * Collect and send user input to LLM's chat in backend.
+   * 
+   */
+  public sendUserInput(): void {
+    if (this.userInput.trim()) {
+      this.chatAssistant.addUserMessage(this.userInput);
+      this.clearUserInput();
+    }
+  }
+
+  /**
+   * Deletes user import from text area.
+   * 
+   */
+  public clearUserInput() {
+    this.userInput = '';
+  }
+
+  /**
+   * Mock method to provide user input suggestion based on last LLM answer (TODO).
+   * 
+   */
+  public getInputSuggesiton() {
+    this.userInput = "This is my brand new suggestion!"
+  }
+
+  /**
+   * Reroute to chat while sending parcel image file
+   * 
+   */
+  public goToParcelFinderView(): void {
+    this.router.navigate(['/parcel-finder']);
+  }
+
+}

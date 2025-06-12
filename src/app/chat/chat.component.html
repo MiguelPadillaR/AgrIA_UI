@@ -1,0 +1,69 @@
+<div id="chat">
+    <div class="content">
+        <div class="top-section">
+            <div id="image">
+                <div class="image-header">
+                    <h2>Upload image</h2>
+                </div>
+                <div class="image-preview">
+                    @if(imagePreviewUrl){
+                        <img [src]="imagePreviewUrl" alt="Preview" />
+                    } @else {
+                        <img class="image-icon" src="image-icon.png" alt="Upload image" />
+                    }
+                </div>
+                @if (imagePreviewUrl) {
+                    <div class="image-desc">
+                        <p> Nombre Imagen: {{ imagePreviewUrl.split("/").pop() }}</p>
+                        <p>{{ parcelImageInfo }}</p>
+                    </div>
+                }
+            </div>
+            <div id="chat-box">
+                <div class="chat-header">
+                    <h2>AgrIA</h2>
+                </div>
+                <div class="chat-content" #chatContent>
+                    <app-chat-assistant></app-chat-assistant>
+                </div>
+            </div>
+        </div>
+
+        <div id="input">
+            <label class="custom-file-upload">
+              <img src="upload-icon1.png" alt="Upload image" title="Upload image"/>
+              <input type="file" (change)="onFileSelected($event)"/>
+            </label>
+          
+            <textarea 
+                id="user-input" 
+                (keydown.enter)="sendUserInput()"
+                (keyup.enter)="clearUserInput()"
+                placeholder="Type here..." 
+                [(ngModel)]="userInput"
+            >
+            </textarea>
+            <button 
+                class="input-button"
+                (click)="sendUserInput()"
+                title="Send prompt."
+            >
+                Send
+            </button>
+            <button
+                class="input-button"
+                (click)="getInputSuggesiton()"
+                title="Get a suggested prompt from the reply."
+            >
+                Get suggestion
+            </button>
+        </div>
+        <button
+            class="navigation-button"
+            (click)="goToParcelFinderView()"
+            title="Navigate to parcel finder view."
+        >
+            Return to parcel finder
+        </button>
+    </div>
+</div>
