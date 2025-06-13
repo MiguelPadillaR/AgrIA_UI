@@ -21,6 +21,7 @@ export class NavbarComponent {
    */
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen; // Flips the boolean value
+    console.log("this.isMenuOpen", this.isMenuOpen)
   }
 
   /**

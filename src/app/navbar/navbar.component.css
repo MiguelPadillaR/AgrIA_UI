@@ -70,6 +70,7 @@
   justify-content: flex-end; /* Pushes links to the right */
   align-items: center;
   flex-wrap: wrap; /* Allows actions to wrap below links if needed */
+  margin-right: 1rem;
 }
 
 /* Navbar Nav Links */
@@ -185,9 +186,9 @@
     z-index: 1000;
   }
 
-  .navbar-menu.active {
-    display: flex; /* Show menu when active */
-  }
+    .navbar-menu:active {
+        display: flex; /* Show menu when active */
+    }
 
   .navbar-nav {
     flex-direction: column;

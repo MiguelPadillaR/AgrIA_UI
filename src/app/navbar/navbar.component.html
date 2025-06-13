@@ -1,33 +1,29 @@
 <nav class="navbar">
-  <div class="navbar-brand">
-    <a routerLink="/" class="navbar-logo">
-      <img src="logo.png" alt="AgrIA Logo" class="logo-img">
-      AgrIA
-    </a>
-  </div>
-
-  <button class="navbar-toggler" (click)="toggleMenu()">
-    <span class="toggler-icon"></span>
-    <span class="toggler-icon"></span>
-    <span class="toggler-icon"></span>
-  </button>
-
-  <div class="navbar-menu" [class.active]="isMenuOpen">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/parcel-finder" routerLinkActive="active" class="nav-link">Parcel finder</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/chat" routerLinkActive="active" class="nav-link">New chat</a>
-      </li>
-    </ul>
-
-    <div class="navbar-actions">
-      <button class="btn btn-primary">Sign Up</button>
-      <button class="btn btn-secondary">Login</button>
+    <div class="navbar-brand">
+        <a routerLink="/" class="navbar-logo">
+        <img src="logo.png" alt="AgrIA Logo" class="logo-img">
+        AgrIA
+        </a>
     </div>
-  </div>
+
+    <button class="navbar-toggler" (click)="toggleMenu()">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    
+    <div class="navbar-menu" [className]="isMenuOpen ? 'active': 'navbar-menu'">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+            <a routerLink="/parcel-finder" routerLinkActive="active" class="nav-link">Parcel finder</a>
+            </li>
+            <li class="nav-item">
+            <a routerLink="/chat" routerLinkActive="active" class="nav-link">New chat</a>
+            </li>
+        </ul>
+
+    </div>
 </nav>
