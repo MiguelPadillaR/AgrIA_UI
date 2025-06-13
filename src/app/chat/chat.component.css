@@ -190,7 +190,7 @@ app-chat-assistant {
   border-radius: var(--border-radius);
   font-size: 1rem;
   line-height: 1.5; /* Good for multi-line input */
-  resize: vertical; /* Allow vertical resizing, but limit min/max */
+  resize: none; /* Allow vertical resizing, but limit min/max */
   min-height: 50px; /* Minimum height for input */
   max-height: 150px; /* Max height before scrolling */
   background-color: var(--input-bg);
