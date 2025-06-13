@@ -1,215 +1,336 @@
-#chat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem;
-  
-  .content {
-    width: 100%;
-    max-width: 80vw;
-    text-align: center;
-    .top-section {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      width: 100%;
-      max-width: 100vw;
-      margin-bottom: 2rem;
-  
-      #image, #chat-box {
-        flex: 1;
-      }
-    }
-
-    #image {
-      .image-desc {
-          border: 1px solid #ccc;
-          border-radius: 5pt;
-          color: #555;
-          font-size: medium;
-          font-weight: bold;
-          margin: 1rem 0;
-        
-          width: 100%;
-          height: 150px;
-          overflow-y: auto;
-          overflow-x: hidden;
-          white-space: pre-wrap;
-          word-wrap: break-word;
-      }
-        
-      .image-preview {
-        max-width: 100%;
-        height: 500px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 1rem;
-        background-color: #f0f0f0;
-        img {
-            height: 500px;
-            object-fit: contain;
-          }
-          .image-icon {
-            height: 120px;
-            object-fit: contain;
-
-          }
-      }
-      
-      .image-preview img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-      }
-    }  
-
-    #chat-box {
-      .chat-content {
-        justify-content: center;
-        align-items: stretch;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 1rem;
-        background-color: #f0f0f0;
-        min-height: 300px; 
-        overflow-y: auto;
-      }
-  
-    }
-    
-    #input {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-      
-        .custom-file-upload {
-          display: inline-block;
-          cursor: pointer;
-          text-align: center;
-      
-          input[type="file"] {
-            display: none; /* hide native input */
-          }
-      
-          img {
-            height: 80px; /* adjust size */
-            transition: transform 0.2s;
-      
-            &:hover {
-              transform: scale(1.1);
-            }
-          }
-        }
-      
-        #user-input {
-          padding: 0.5rem;
-          border-radius: 6px;
-          border: 1px solid #ccc;
-          flex: 1;
-          min-width: 200px;
-          margin: 1rem 0;
-
-          width: 100%;
-          height: 70px;               /* fixed height */
-          resize: none;                /* prevent user resize */
-          overflow-y: auto;            /* vertical scroll on overflow */
-          overflow-x: hidden;          /* no horizontal scroll */
-          white-space: pre-wrap;       /* wrap long lines */
-          word-wrap: break-word;       /* break long words if needed */
-          font-family: inherit;        /* optional: match your app font */
-        }
-    }
-
-    .input-button,
-    .navigation-button {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .input-button {
-      background-color: #4caf50;
-
-      &:hover {
-        background-color: #45a049;
-      }
-    }
-
-    .navigation-button {
-      background-color: #1883e0;
-      &:hover {
-        background-color: #1265ad;
-      }
-    }
-
-  }
-
-  @media (max-width: 1024px) {
-    #chat-box .top-section {
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-  
-      #image, #chat-box {
-        width: 100%;
-      }
-    }
-  
-    .chat-content {
-      min-height: 250px;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    #chat-box {
-      margin: 1rem;
-    }
-  
-    #input {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    #user-input {
-      height: 60px;
-    }
-  
-    .custom-file-upload img {
-      height: 60px;
-    }
-  
-    .input-button {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .chat-content {
-      padding: 0.5rem;
-    }
-  
-    #user-input {
-      height: 50px;
-    }
-  
-    .custom-file-upload img {
-      height: 50px;
-    }
-  
-    .bubble {
-      max-width: 90%;
-      font-size: 0.9rem;
-    }
-  }
-  
+/* Variables for easy theme customization */
+:host {
+  --primary-color: #4CAF50; /* Green, similar to the image's "Send" button */
+  --secondary-color: #607D8B; /* Greyish blue */
+  --tertiary-color: #FFC107; /* Amber for suggestions */
+  --bg-color: #f0f2f5; /* Light grey background */
+  --card-bg-color: #ffffff; /* White for cards */
+  --border-color: #ddd; /* Light grey border */
+  --text-color-dark: #333;
+  --text-color-light: #666;
+  --header-bg: #e0e0e0; /* Light grey for headers */
+  --input-bg: #f9f9f9; /* Slightly off-white for input */
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --padding-unit: 1.5rem;
 }
-    
+
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Arial', sans-serif; /* Or your preferred font */
+  background-color: var(--bg-color);
+}
+
+/* Main Chat Container */
+#chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  background-color: var(--bg-color);
+  padding: var(--padding-unit); /* Overall padding */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 1200px; /* Max width for desktop */
+  overflow: hidden; /* Ensures rounded corners are respected */
+}
+
+/* Top Section: Image Upload and Chat Box */
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Image takes 1 part, chat takes 2 parts */
+  gap: var(--padding-unit);
+  padding: var(--padding-unit); /* Padding inside the content box */
+  border-bottom: 1px solid var(--border-color); /* Separator */
+}
+
+/* Image Upload Section */
+#image {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden; /* For image preview border-radius */
+  display: flex;
+  flex-direction: column;
+}
+
+.image-header, .chat-header {
+  background-color: var(--header-bg);
+  padding: 0.75rem var(--padding-unit);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.image-header h2, .chat-header h2 {
+  font-size: 1.2rem;
+  color: var(--text-color-dark);
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--input-bg);
+  min-height: 250px; /* Adjust as needed */
+  flex-grow: 1; /* Allows it to take available space */
+  padding: 1rem;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Ensures the entire image is visible */
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color); /* A subtle border around the image */
+}
+
+/* Placeholder icon for no image */
+.image-preview .image-icon {
+  width: 80px; /* Adjust size for the placeholder icon */
+  height: 80px;
+  opacity: 0.5;
+}
+
+.image-desc {
+  padding: 0.75rem var(--padding-unit);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--header-bg); /* Match header background */
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+}
+
+.image-desc p {
+  margin-bottom: 0.25rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Chat Box Section */
+#chat-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden; /* For chat content scroll */
+}
+
+.chat-content {
+  flex-grow: 1;
+  background-color: var(--card-bg-color);
+  padding: var(--padding-unit);
+  height: auto; /* Fixed height for chat area, adjust as needed */
+  display: flex; /* To contain chat messages effectively */
+  flex-direction: column; /* Stack messages vertically */
+}
+
+/* This is where your app-chat-assistant component will render its content */
+/* If app-chat-assistant has its own scrolling, you might need to adjust height */
+app-chat-assistant {
+  display: block; /* Ensures it takes up space */
+  /* Any internal styling for messages within app-chat-assistant */
+}
+
+/* Input Section */
+#input {
+  display: flex;
+  align-items: flex-end; /* Align items to the bottom of the input row */
+  gap: 10px;
+  padding: var(--padding-unit);
+  border-top: 1px solid var(--border-color); /* Separator from chat content */
+  background-color: var(--card-bg-color); /* Same as content background */
+}
+
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  border-radius: 50%; /* Make it circular */
+  background-color: var(--primary-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Prevent it from shrinking */
+  width: 45px; /* Fixed width for circular button */
+  height: 45px; /* Fixed height for circular button */
+  box-shadow: var(--shadow);
+}
+
+.custom-file-upload:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.custom-file-upload img {
+  width: 24px; /* Adjust icon size */
+  height: 24px;
+  filter: invert(1); /* Makes a dark icon white */
+}
+
+.custom-file-upload input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+#user-input {
+  flex-grow: 1; /* Take up remaining space */
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  line-height: 1.5; /* Good for multi-line input */
+  resize: vertical; /* Allow vertical resizing, but limit min/max */
+  min-height: 50px; /* Minimum height for input */
+  max-height: 150px; /* Max height before scrolling */
+  background-color: var(--input-bg);
+  color: var(--text-color-dark);
+}
+
+#user-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+}
+
+.input-button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  white-space: nowrap; /* Prevent button text from wrapping */
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+.input-button:active {
+  transform: translateY(1px); /* Simple press effect */
+}
+
+.input-button:first-of-type { /* 'Send' button */
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.input-button:first-of-type:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.input-button:nth-of-type(2) { /* 'Get suggestion' button */
+  background-color: var(--tertiary-color); /* Amber */
+  color: var(--text-color-dark);
+}
+
+.input-button:nth-of-type(2):hover {
+  background-color: color-mix(in srgb, var(--tertiary-color) 90%, black);
+}
+
+/* Navigation Button (Bottom) */
+.navigation-button {
+  display: block;
+  width: fit-content; /* Make button only as wide as its content */
+  margin: var(--padding-unit) auto; /* Center it below the main box */
+  padding: 0.8rem 1.5rem;
+  background-color: var(--secondary-color); /* Greyish blue */
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: var(--shadow);
+}
+
+.navigation-button:hover {
+  background-color: color-mix(in srgb, var(--secondary-color) 90%, black);
+}
+
+.navigation-button:active {
+  transform: translateY(1px);
+}
+
+/* ================================== */
+/* Responsive Design for Mobile */
+/* ================================== */
+
+@media (max-width: 992px) {
+  .top-section {
+    grid-template-columns: 1fr; /* Stack image and chat vertically */
+    gap: var(--padding-unit);
+  }
+
+  #image, #chat-box {
+    width: 100%; /* Take full width */
+  }
+
+  .chat-content {
+    height: 350px; /* Adjust height for smaller screens if needed */
+  }
+
+  #input {
+    flex-wrap: wrap; /* Allow buttons to wrap to a new line */
+    justify-content: center; /* Center input elements on smaller screens */
+  }
+
+  .custom-file-upload {
+    margin-bottom: 10px; /* Space between upload button and textarea if wrapping */
+  }
+
+  #user-input {
+    min-height: 40px; /* Slightly smaller input area on mobile */
+    max-height: 100px;
+  }
+
+  .input-button {
+    width: 100%; /* Make buttons full width */
+    margin-top: 5px; /* Space between buttons when stacked */
+  }
+
+  .navigation-button {
+    width: calc(100% - (2 * var(--padding-unit))); /* Take full width minus padding */
+    margin-left: var(--padding-unit);
+    margin-right: var(--padding-unit);
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    --padding-unit: 1rem; /* Reduce overall padding on very small screens */
+  }
+
+  #chat {
+    padding: 0.5rem;
+  }
+
+  .content {
+    border-radius: 0; /* Remove border-radius on very small screens for full width */
+    box-shadow: none; /* Remove shadow */
+    min-height: 100vh; /* Make it full height of screen */
+  }
+
+  .top-section {
+    padding: var(--padding-unit);
+    gap: var(--padding-unit);
+  }
+
+  .image-preview {
+    min-height: 200px;
+  }
+
+  .chat-content {
+    height: 300px; /* Further adjust chat height for smaller screens */
+  }
+}

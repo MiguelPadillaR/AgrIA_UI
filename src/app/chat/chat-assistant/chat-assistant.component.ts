@@ -42,6 +42,7 @@ export class ChatAssistantComponent {
     if (content.length > 0) {
       this.chatHistory.push({ role: 'user', content });
       this.getAssistantOutput(content);
+      this.scrollToBottom()
     }
     this.scrollToBottom();
   }
