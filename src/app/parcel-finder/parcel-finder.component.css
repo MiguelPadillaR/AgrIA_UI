@@ -183,12 +183,23 @@
 
 .display-buttons {
   display: flex;
-  justify-content: center;
-  margin-top: var(--padding-unit); /* Space between image and button */
+  justify-content: center; /* Center the new wrapper horizontally */
+  align-items: flex-start; /* Align to the start of the cross-axis */
+  margin-top: var(--padding-unit); /* Space between image and actions */
   padding: 0 var(--padding-unit); /* Horizontal padding */
 }
 
-/* "Confirm Parcel" button uses primary styling */
+.parcel-actions-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack checkbox and button vertically */
+  align-items: center; /* Center them horizontally within this wrapper */
+  gap: 15px; /* Space between the checkbox and the button */
+  width: 100%; /* Allows alignment to center within display-buttons */
+  max-width: 300px; /* Limit the width of the stacked elements */
+}
+
+
+/* "Confirm Parcel" button styling (adjustments) */
 .confirm-parcel-button {
   padding: 0.8rem 2rem;
   background-color: var(--primary-color);
@@ -200,6 +211,7 @@
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.1s ease;
   box-shadow: var(--shadow);
+  width: 100%; /* Make it take full width of its parent wrapper */
 }
 
 .confirm-parcel-button:hover {
@@ -208,6 +220,53 @@
 
 .confirm-parcel-button:active {
   transform: translateY(1px);
+}
+
+.detailed-description-checkbox {
+  display: flex;
+  align-items: center; /* Vertically align checkbox and text */
+  cursor: pointer;
+  font-size: 0.95rem; /* Slightly smaller text for checkbox */
+  color: var(--text-color-dark);
+  white-space: nowrap; /* Prevent text from wrapping unnecessarily */
+  width: fit-content; /* Only take space needed by content, allows centering */
+}
+
+.description-length { /* Style for the actual checkbox input */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.description-length:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.description-length:checked::before {
+  content: '\2713';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.description-length:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.3);
 }
 
 /* ================================== */
@@ -259,8 +318,19 @@
     padding: 1rem;
   }
 
+  .parcel-actions-wrapper {
+    width: 100%; /* Take full width on mobile */
+    max-width: none; /* Remove max-width constraint on mobile */
+  }
+
   .confirm-parcel-button {
     width: 100%; /* Full width for the confirm button */
     padding: 0.8rem 1.5rem; /* Adjust padding */
   }
+
+  .detailed-description-checkbox {
+    /* Align checkbox with the button's width on mobile, or just keep centered */
+    width: fit-content; /* Still allows it to center */
+  }
+
 }

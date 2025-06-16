@@ -16,6 +16,8 @@ export class ParcelFinderComponent {
   public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
+  // User preference for longer image description
+  public isDetailedDescription: boolean = false;
 /* 
   // List of SIGPAC's crop classifications
   public cropClassification: ICropClassification[] = [];
@@ -106,6 +108,7 @@ export class ParcelFinderComponent {
   /* Reroute to chat while sending parcel image file */
   public confirmParcel(): void {
     if (this.selectedParcelInfo) {
+      this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
       this.parcelInfoService.setParcelInfo(this.selectedParcelInfo);
       this.router.navigate(['/chat']);
     }

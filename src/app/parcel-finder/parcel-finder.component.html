@@ -51,12 +51,21 @@
             </div>
             <div class="display-buttons">
                 @if(parcelImageUrl){
-                   <button 
-                        class="input-button"
-                        (click)="confirmParcel()"
-                    >
-                        Confirm Parcel
-                   </button> 
+                    <div class="parcel-actions-wrapper">
+                        <label class="detailed-description-checkbox">
+                            <input 
+                                type="checkbox"
+                                class="description-length"
+                                [(ngModel)]="isDetailedDescription"
+                            >
+                            Descripción detallada.
+                        </label>
+                        <button 
+                            class="confirm-parcel-button" (click)="confirmParcel()"
+                        >
+                            Confirm Parcel
+                        </button> 
+                    </div>
                 }
             </div>
         </div>

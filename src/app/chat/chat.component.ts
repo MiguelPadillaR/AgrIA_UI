@@ -42,12 +42,14 @@ export class ChatComponent {
         setTimeout(() => {
           this.chatAssistant.showMessageIcon();
           this.imagePreviewUrl = parcel.imagePath;
+          this.isDetailedDescription = parcel.isDetailedDescription
 
           const formData = new FormData();
           formData.append('imageDate', parcel.metadata.vigencia);
           formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
           formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
-
+          formData.append('isDetailedDescription', String(parcel.isDetailedDescription))
+          
           this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
           .subscribe((response: IChatParcelResponse) => {
             this.parcelImageInfo = response.imageDesc;
