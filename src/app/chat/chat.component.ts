@@ -22,6 +22,8 @@ export class ChatComponent {
   public parcelImageInfo: string =  "Leyendo características de la parcela..."
   // User's chat input
   public userInput: string = ""
+  // User preference for longer image description
+  isDetailedDescription: boolean = false;
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
   // Service to communicate parcel info from parcel finder to chat
@@ -71,7 +73,7 @@ export class ChatComponent {
     const files = event.target.files;
     if (files.length > 0) {
       this.imageFile = files[0] as File;
-      this.chatAssistant.sendImage(this.imageFile);
+      this.chatAssistant.sendImage(this.imageFile, this.isDetailedDescription);
       this.parcelImageInfo = "FECHA: *Sin datos*\nCULTIVO: *Sin datos*"
 
       // Create a preview URL

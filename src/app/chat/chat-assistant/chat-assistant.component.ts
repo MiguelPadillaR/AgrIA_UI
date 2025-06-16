@@ -51,10 +51,11 @@ export class ChatAssistantComponent {
    * Send image to assistant
    * @param imageFile - Image file to be sent to the assistant
    */
-  public sendImage(imageFile: File) {
+  public sendImage(imageFile: File, isDetailedDescription: boolean) {
     this.showMessageIcon();
     const formData = new FormData();
     formData.append('image', imageFile);
+    formData.append('isDetailedDescription', String(isDetailedDescription));
     
     this.chatAssistantService.sendImage(formData).subscribe({
       next: (responseText: string) => {
@@ -129,6 +130,8 @@ export class ChatAssistantComponent {
     this.chatHistory.push(newMsg);
     this.animateLoadingResponse(newMsg, responseText);
     this.scrollToBottom();
+
+    console.log(responseText)
 
   }
       

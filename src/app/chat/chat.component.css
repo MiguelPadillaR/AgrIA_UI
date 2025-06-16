@@ -111,6 +111,8 @@ body, html {
   background-color: var(--header-bg); /* Match header background */
   font-size: 0.9rem;
   color: var(--text-color-light);
+  max-height: 150px;
+  overflow-y: scroll;
 }
 
 .image-desc p {
@@ -203,6 +205,23 @@ app-chat-assistant {
   box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
 }
 
+.input-actions-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack buttons and checkbox vertically */
+  align-items: center; /* Center them horizontally */
+  gap: 10px; /* Space between buttons-wrapper and checkbox */
+  flex-shrink: 0; /* Prevent this wrapper from shrinking */
+}
+
+/* Style for the button wrapper (horizontal layout for buttons) */
+.input-buttons-wrapper {
+  display: flex; /* Make buttons go side-by-side */
+  gap: 10px; /* Space between the buttons */
+  justify-content: center; /* Center the buttons within their wrapper */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+/* Your existing .input-button styles (copied from your provided CSS) */
 .input-button {
   padding: 0.8rem 1.2rem;
   border: none;
@@ -235,6 +254,55 @@ app-chat-assistant {
 
 .input-button:nth-of-type(2):hover {
   background-color: color-mix(in srgb, var(--tertiary-color) 90%, black);
+}
+
+
+/* Styles for the checkbox */
+.detailed-description-checkbox {
+  display: flex;
+  align-items: center; /* Vertically align checkbox and text */
+  cursor: pointer;
+  font-size: 0.95rem; /* Slightly smaller text for checkbox */
+  color: var(--text-color-dark);
+  white-space: nowrap; /* Prevent text from wrapping unnecessarily */
+  /* No margin-top here, controlled by parent gap */
+}
+
+.description-length { /* Style for the actual checkbox input */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.description-length:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.description-length:checked::before {
+  content: '\2713';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.description-length:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.3);
 }
 
 /* Navigation Button (Bottom) */
@@ -277,7 +345,7 @@ app-chat-assistant {
   }
 
   .chat-content {
-    height: 350px; /* Adjust height for smaller screens if needed */
+    height: 600px; /* Adjust height for smaller screens if needed */
   }
 
   #input {
@@ -294,9 +362,24 @@ app-chat-assistant {
     max-height: 100px;
   }
 
+  .input-actions-wrapper {
+    width: 100%; /* Take full width on mobile */
+    gap: 10px; /* Keep gap for vertical stacking */
+  }
+
+  .input-buttons-wrapper {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+    gap: 10px;
+    width: 100%; /* Buttons wrapper takes full width */
+  }
+
   .input-button {
-    width: 100%; /* Make buttons full width */
-    margin-top: 5px; /* Space between buttons when stacked */
+    width: 100%; /* Individual buttons take full width */
+  }
+
+  .detailed-description-checkbox {
+    /* No specific margin-top needed here; gap from parent handles spacing */
+    width: fit-content; /* Still center itself based on parent align-items: center */
   }
 
   .navigation-button {
@@ -327,10 +410,11 @@ app-chat-assistant {
   }
 
   .image-preview {
-    min-height: 200px;
+    min-height: 100px;
+    max-height: 200px;
   }
 
   .chat-content {
-    height: 300px; /* Further adjust chat height for smaller screens */
+    height: 600px; /* Further adjust chat height for smaller screens */
   }
 }
