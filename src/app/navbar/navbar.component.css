@@ -191,7 +191,6 @@
     }
 
   .navbar-nav {
-    flex-direction: column;
     width: 100%;
     margin-bottom: 1rem; /* Space below links */
   }

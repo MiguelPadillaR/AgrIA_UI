@@ -22,7 +22,9 @@ export class ChatAssistantComponent {
 
   // TODO: Load chat history from local storage or API or other source
   ngAfterViewInit() {
-    this.scrollToBottom();  // in case there are preloaded messages
+    if(this.chatHistory.length > 1) {
+      this.scrollToBottom();  // in case there are preloaded messages
+    }
   }
 
   /**

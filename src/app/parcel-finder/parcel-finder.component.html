@@ -26,9 +26,11 @@
             <div class="parcel-finder-buttons">
                 <button 
                     class="input-button"
+                    [style.cursor]="isLoading() ? 'progress' : 'pointer'"
+                    [disabled]="isLoading() || cadastralReference.length !== 20"
                     (click)="findParcel()"
-                    >
-                    Find Parcel
+                >
+                {{ isLoading() ? 'Loading…' : 'Find Parcel' }}
                 </button>
                 <button
                     class="clear-info-button"
