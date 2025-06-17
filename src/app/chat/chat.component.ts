@@ -113,8 +113,12 @@ export class ChatComponent {
    * Mock method to provide user input suggestion based on last LLM answer (TODO).
    * 
    */
-  public getInputSuggesiton() {
-    this.userInput = "This is my brand new suggestion!"
+  public getInputSuggestion() {
+    this.chatService.getInputSuggestion().subscribe(
+      (response: string) => {
+            this.userInput = response
+      }
+    );
   }
 
   /**

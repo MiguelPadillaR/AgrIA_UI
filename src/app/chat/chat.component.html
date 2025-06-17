@@ -32,7 +32,11 @@
         <div id="input">
             <label class="custom-file-upload">
               <img src="upload-icon1.png" alt="Upload image" title="Upload image"/>
-              <input type="file" (change)="onFileSelected($event)"/>
+              <input 
+                type="file" 
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                />
             </label>
           
             <textarea 
@@ -54,7 +58,7 @@
                 </button>
                 <button
                     class="input-button"
-                    (click)="getInputSuggesiton()"
+                    (click)="getInputSuggestion()"
                     title="Get a suggested prompt from the reply."
                 >
                     Get suggestion

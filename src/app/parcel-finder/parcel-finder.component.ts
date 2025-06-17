@@ -43,8 +43,9 @@ export class ParcelFinderComponent {
 
   constructor() {}
 
-  ngOnInit() {
-    // this.loadCropClassifications();
+  ngOnInit(): void {
+    // Empty the observable by emitting null
+    this.parcelInfoService.setParcelInfo(null);
   }
 
  /* 
