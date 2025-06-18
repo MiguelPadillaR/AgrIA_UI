@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { IChatMessage } from '../../models/chat-assistant.model';
-import { ChatAssistantService } from '../../services/chat-assistant.service/chat-assistant.service';
+import { IChatMessage } from '../../../models/chat-assistant.model';
+import { ChatAssistantService } from '../../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
 @Component({
   selector: 'app-chat-assistant',

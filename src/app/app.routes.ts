@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { ChatComponent } from './chat/chat.component';
-import { ParcelFinderComponent } from './parcel-finder/parcel-finder.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { ParcelFinderComponent } from './components/parcel-finder/parcel-finder.component';
 
 export const routes: Routes = [
     {
