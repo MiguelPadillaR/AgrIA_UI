@@ -58,6 +58,7 @@
                 </button>
                 <button
                     class="input-button"
+                    [style.cursor]="isLoading() ? 'progress' : 'pointer'"
                     (click)="getInputSuggestion()"
                     title="Get a suggested prompt from the reply."
                 >

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
@@ -24,6 +24,9 @@ export class ChatComponent {
   public userInput: string = ""
   // User preference for longer image description
   isDetailedDescription: boolean = false;
+  // Loading variable for styling
+  public isLoading: WritableSignal<boolean> = signal(false)
+
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
   // Service to communicate parcel info from parcel finder to chat
@@ -114,9 +117,13 @@ export class ChatComponent {
    * 
    */
   public getInputSuggestion() {
+    this.isLoading.set(true);
+    document.body.style.cursor = 'progress';
     this.chatService.getInputSuggestion().subscribe(
       (response: string) => {
-            this.userInput = response
+        this.userInput = response
+        document.body.style.cursor = 'default';
+        this.isLoading.set(true);
       }
     );
   }

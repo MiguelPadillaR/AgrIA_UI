@@ -103,9 +103,11 @@ public findParcel() {
     next: (response: IFindParcelresponse) => {
       this.selectedParcelInfo = response;
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
+      document.body.style.cursor = 'default';
     },
     error: (err) => {
       console.error('Parcel fetch failed', err);
+      document.body.style.cursor = 'default';
       this.isLoading.set(false);
     },
     complete: () => {
