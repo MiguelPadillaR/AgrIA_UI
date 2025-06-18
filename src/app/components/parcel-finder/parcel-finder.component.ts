@@ -2,9 +2,9 @@ import { Component, inject, Signal, signal, WritableSignal } from '@angular/core
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 // import { ICropClassification, IGroupedCropClassification } from '../models/parcel-finder.models';
-import { ParcelFinderService } from '../services/parcel-finder.service/parcel-finder.service';
-import { IFindParcelresponse } from '../models/parcel-finder-response.models';
-import { ParcelInfoService } from '../services/parcel-info.service/parcel-info.service';
+import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
+import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { ParcelInfoService } from '../../services/parcel-info.service/parcel-info.service';
 @Component({
   selector: 'app-parcel-finder',
   imports: [FormsModule],

@@ -2,9 +2,9 @@ import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/c
 import { FormsModule } from '@angular/forms';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
-import { ParcelInfoService } from '../services/parcel-info.service/parcel-info.service';
-import { ChatService } from '../services/chat.services/chat.service';
-import { IChatParcelResponse } from '../models/chat.models';
+import { ParcelInfoService } from '../../services/parcel-info.service/parcel-info.service';
+import { ChatService } from '../../services/chat.services/chat.service';
+import { IChatParcelResponse } from '../../models/chat.models';
 import { take } from 'rxjs';
 
 @Component({
