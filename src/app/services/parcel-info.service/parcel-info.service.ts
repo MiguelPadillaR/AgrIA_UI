@@ -10,7 +10,7 @@ export class ParcelInfoService {
   private parcelInfoSubject = new BehaviorSubject<IFindParcelresponse | null>(null);
   parcelInfo$ = this.parcelInfoSubject.asObservable();
 
-  setParcelInfo(data: IFindParcelresponse) {
+  setParcelInfo(data: IFindParcelresponse | null) {
     this.parcelInfoSubject.next(data);
   }
 }

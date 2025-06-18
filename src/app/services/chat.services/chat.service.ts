@@ -18,4 +18,8 @@ export class ChatService {
     .pipe(map(res => res.response));
   }
 
+  public getInputSuggestion(): Observable<string> {
+    return this.http.get<{ response: string }>(`${this.apiUrl}/get-input-suggestion`)
+    .pipe(map(res => res.response));
+  }
 }

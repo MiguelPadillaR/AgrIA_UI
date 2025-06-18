@@ -14,7 +14,7 @@ import { MarkdownModule } from 'ngx-markdown';
 export class ChatAssistantComponent {
   // Chat History stack
   public chatHistory: IChatMessage[] = [
-    { role: 'assistant', content: 'Hello there!\n\nI am your Agricultural Imaging Assitant, but you can call me AgrIA!\n\nMy purpose here is to analyse satellite images of crop fields to help farmers analyze their use of space and resources, as well as agricultural practices, in order to help them qualify for the European Comitee of Common Agricultural Policies (CAPs) subventions.\n\nJust upload a satellite image of your crop fields and we will get to work!\n\nIf you have any questions, you can also type in the textbox.'},
+    { role: 'assistant', content: '¡Hola!\n\nSoy tu Asistente de Imágenes Agrícolas, ¡pero puedes llamarme **AgrIA**!\n\nMi propósito aquí es **analizar imágenes satelitales de campos de cultivo** para asistir a los agricultores en en análisis del su **uso del espacio y los recursos, así como las prácticas agrícolas**, con el fin de **asesorarles a reunir los requisitos para las subvenciones del Comité Europeo de Política Agrícola Común (CAP)**.\n\n¡Sólo tienes que subir una imagen satelital de tus campos de cultivo y nos pondremos manos a la obra!\n\nSi tiene alguna pregunta, también puede escribir en el cuadro de texto'},
   ];
   // HTML element to automatically scroll to the bototm
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
@@ -22,7 +22,9 @@ export class ChatAssistantComponent {
 
   // TODO: Load chat history from local storage or API or other source
   ngAfterViewInit() {
-    this.scrollToBottom();  // in case there are preloaded messages
+    if(this.chatHistory.length > 1) {
+      this.scrollToBottom();  // in case there are preloaded messages
+    }
   }
 
   /**
@@ -42,6 +44,7 @@ export class ChatAssistantComponent {
     if (content.length > 0) {
       this.chatHistory.push({ role: 'user', content });
       this.getAssistantOutput(content);
+      this.scrollToBottom()
     }
     this.scrollToBottom();
   }
@@ -50,10 +53,11 @@ export class ChatAssistantComponent {
    * Send image to assistant
    * @param imageFile - Image file to be sent to the assistant
    */
-  public sendImage(imageFile: File) {
+  public sendImage(imageFile: File, isDetailedDescription: boolean) {
     this.showMessageIcon();
     const formData = new FormData();
     formData.append('image', imageFile);
+    formData.append('isDetailedDescription', String(isDetailedDescription));
     
     this.chatAssistantService.sendImage(formData).subscribe({
       next: (responseText: string) => {
@@ -128,6 +132,8 @@ export class ChatAssistantComponent {
     this.chatHistory.push(newMsg);
     this.animateLoadingResponse(newMsg, responseText);
     this.scrollToBottom();
+
+    console.log(responseText)
 
   }
       

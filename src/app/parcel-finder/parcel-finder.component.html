@@ -26,9 +26,11 @@
             <div class="parcel-finder-buttons">
                 <button 
                     class="input-button"
+                    [style.cursor]="isLoading() ? 'progress' : 'pointer'"
+                    [disabled]="isLoading() || cadastralReference.length !== 20"
                     (click)="findParcel()"
-                    >
-                    Find Parcel
+                >
+                {{ isLoading() ? 'Loading…' : 'Find Parcel' }}
                 </button>
                 <button
                     class="clear-info-button"
@@ -51,12 +53,21 @@
             </div>
             <div class="display-buttons">
                 @if(parcelImageUrl){
-                   <button 
-                        class="input-button"
-                        (click)="confirmParcel()"
-                    >
-                        Confirm Parcel
-                   </button> 
+                    <div class="parcel-actions-wrapper">
+                        <label class="detailed-description-checkbox">
+                            <input 
+                                type="checkbox"
+                                class="description-length"
+                                [(ngModel)]="isDetailedDescription"
+                            >
+                            Descripción detallada.
+                        </label>
+                        <button 
+                            class="confirm-parcel-button" (click)="confirmParcel()"
+                        >
+                            Confirm Parcel
+                        </button> 
+                    </div>
                 }
             </div>
         </div>
