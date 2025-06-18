@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
@@ -22,6 +22,11 @@ export class ChatComponent {
   public parcelImageInfo: string =  "Leyendo características de la parcela..."
   // User's chat input
   public userInput: string = ""
+  // User preference for longer image description
+  isDetailedDescription: boolean = false;
+  // Loading variable for styling
+  public isLoading: WritableSignal<boolean> = signal(false)
+
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
   // Service to communicate parcel info from parcel finder to chat
@@ -40,12 +45,14 @@ export class ChatComponent {
         setTimeout(() => {
           this.chatAssistant.showMessageIcon();
           this.imagePreviewUrl = parcel.imagePath;
+          this.isDetailedDescription = parcel.isDetailedDescription
 
           const formData = new FormData();
           formData.append('imageDate', parcel.metadata.vigencia);
           formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
           formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
-
+          formData.append('isDetailedDescription', String(parcel.isDetailedDescription))
+          
           this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
           .subscribe((response: IChatParcelResponse) => {
             this.parcelImageInfo = response.imageDesc;
@@ -71,7 +78,7 @@ export class ChatComponent {
     const files = event.target.files;
     if (files.length > 0) {
       this.imageFile = files[0] as File;
-      this.chatAssistant.sendImage(this.imageFile);
+      this.chatAssistant.sendImage(this.imageFile, this.isDetailedDescription);
       this.parcelImageInfo = "FECHA: *Sin datos*\nCULTIVO: *Sin datos*"
 
       // Create a preview URL
@@ -109,8 +116,16 @@ export class ChatComponent {
    * Mock method to provide user input suggestion based on last LLM answer (TODO).
    * 
    */
-  public getInputSuggesiton() {
-    this.userInput = "This is my brand new suggestion!"
+  public getInputSuggestion() {
+    this.isLoading.set(true);
+    document.body.style.cursor = 'progress';
+    this.chatService.getInputSuggestion().subscribe(
+      (response: string) => {
+        this.userInput = response
+        document.body.style.cursor = 'default';
+        this.isLoading.set(true);
+      }
+    );
   }
 
   /**

@@ -22,7 +22,9 @@ export class ChatAssistantComponent {
 
   // TODO: Load chat history from local storage or API or other source
   ngAfterViewInit() {
-    this.scrollToBottom();  // in case there are preloaded messages
+    if(this.chatHistory.length > 1) {
+      this.scrollToBottom();  // in case there are preloaded messages
+    }
   }
 
   /**
@@ -42,6 +44,7 @@ export class ChatAssistantComponent {
     if (content.length > 0) {
       this.chatHistory.push({ role: 'user', content });
       this.getAssistantOutput(content);
+      this.scrollToBottom()
     }
     this.scrollToBottom();
   }
@@ -50,10 +53,11 @@ export class ChatAssistantComponent {
    * Send image to assistant
    * @param imageFile - Image file to be sent to the assistant
    */
-  public sendImage(imageFile: File) {
+  public sendImage(imageFile: File, isDetailedDescription: boolean) {
     this.showMessageIcon();
     const formData = new FormData();
     formData.append('image', imageFile);
+    formData.append('isDetailedDescription', String(isDetailedDescription));
     
     this.chatAssistantService.sendImage(formData).subscribe({
       next: (responseText: string) => {
@@ -128,6 +132,8 @@ export class ChatAssistantComponent {
     this.chatHistory.push(newMsg);
     this.animateLoadingResponse(newMsg, responseText);
     this.scrollToBottom();
+
+    console.log(responseText)
 
   }
       

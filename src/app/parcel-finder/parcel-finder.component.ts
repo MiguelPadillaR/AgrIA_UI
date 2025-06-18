@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 // import { ICropClassification, IGroupedCropClassification } from '../models/parcel-finder.models';
@@ -16,6 +16,10 @@ export class ParcelFinderComponent {
   public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
+  // Loading variable for styling
+  public isLoading: WritableSignal<boolean> = signal(false)
+  // User preference for longer image description
+  public isDetailedDescription: boolean = false;
 /* 
   // List of SIGPAC's crop classifications
   public cropClassification: ICropClassification[] = [];
@@ -41,8 +45,9 @@ export class ParcelFinderComponent {
 
   constructor() {}
 
-  ngOnInit() {
-    // this.loadCropClassifications();
+  ngOnInit(): void {
+    // Empty the observable by emitting null
+    this.parcelInfoService.setParcelInfo(null);
   }
 
  /* 
@@ -86,17 +91,31 @@ export class ParcelFinderComponent {
  * Finds a parcel based on the provided cadastral reference and selected date.
  * 
  */
-  public findParcel() {
-    const formData = new FormData();
-    formData.append('cadastralReference', this.cadastralReference);
-    formData.append('selectedDate', this.selectedDate);
-    this.parcelFinderService.findParcel(formData).subscribe(
-      (response: IFindParcelresponse) => {
-        this.selectedParcelInfo = response;
-        this.parcelImageUrl = this.selectedParcelInfo.imagePath
-      }
-    );
-  }
+public findParcel() {
+  this.isLoading.set(true);
+  document.body.style.cursor = 'progress';
+
+  const formData = new FormData();
+  formData.append('cadastralReference', this.cadastralReference);
+  formData.append('selectedDate', this.selectedDate);
+
+  this.parcelFinderService.findParcel(formData).subscribe({
+    next: (response: IFindParcelresponse) => {
+      this.selectedParcelInfo = response;
+      this.parcelImageUrl = this.selectedParcelInfo.imagePath;
+      document.body.style.cursor = 'default';
+    },
+    error: (err) => {
+      console.error('Parcel fetch failed', err);
+      document.body.style.cursor = 'default';
+      this.isLoading.set(false);
+    },
+    complete: () => {
+      this.isLoading.set(false);
+      document.body.style.cursor = 'default';
+    }
+  });
+}
 
   public clearForm() {
     this.cadastralReference = '';
@@ -106,6 +125,7 @@ export class ParcelFinderComponent {
   /* Reroute to chat while sending parcel image file */
   public confirmParcel(): void {
     if (this.selectedParcelInfo) {
+      this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
       this.parcelInfoService.setParcelInfo(this.selectedParcelInfo);
       this.router.navigate(['/chat']);
     }

@@ -1,128 +1,336 @@
+/* Variables for easy theme customization (consistent with previous component) */
+:host {
+  --primary-color: #4CAF50; /* Green */
+  --secondary-color: #607D8B; /* Greyish blue */
+  --tertiary-color: #FFC107; /* Amber for suggestions (not used directly here, but for consistency) */
+  --red-button-color: #dc3545; /* Red for Clear Form */
+  --bg-color: #f0f2f5; /* Light grey background */
+  --card-bg-color: #ffffff; /* White for cards */
+  --border-color: #ddd; /* Light grey border */
+  --text-color-dark: #333;
+  --text-color-light: #666;
+  --header-bg: #e0e0e0; /* Light grey for headers */
+  --input-bg: #f9f9f9; /* Slightly off-white for input */
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --padding-unit: 1.5rem;
+}
+
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Parcel Finder Container */
+#parcel-finder {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to start, as it's not a full-height chat */
+  min-height: 100vh; /* Minimum height for full screen */
+  background-color: var(--bg-color);
+  padding: var(--padding-unit); /* Overall padding */
+}
+
 .content {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 80vw;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 800px; /* Adjust max width for this layout */
+  overflow: hidden;
+  margin-top: 5vh; /* Push content down from the top slightly */
+  margin-bottom: var(--padding-unit); /* Space at the bottom */
+}
 
-    .form {
-        border: 1px solid #ccc;
-        padding: 20px;
-        background-color: #f0f0f0;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
+/* Form Section (Cadastral Data) */
+.form-title, .display-title {
+  background-color: var(--header-bg);
+  padding: 0.75rem var(--padding-unit);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
 
-        /* --- Type Alignment and Styling --- */
-        .crop-classification-tree {
-            .type-group summary {
-                text-align: left; /* Align types to the left */
-                font-weight: bold; /* Make the type titles stand out */
-                cursor: pointer; /* Indicate it's clickable */
-                padding: 5px 0; /* Add a little vertical padding */
-            }
-            /* --- Subtype Alignment and Margin --- */
-            .subtype-group {
-                margin-left: 20px; /* Add margin to subtypes */
-                /* You can adjust this value for more or less indentation */
-            }
-            .subtype-group summary {
-                text-align: left; /* Align subtypes to the left */
-                font-weight: 500; /* Slightly less bold than type, but still clear */
-                cursor: pointer; /* Indicate it's clickable */
-                padding: 3px 0; /* Add a little vertical padding */
-            }
-            /* --- Checkbox Grid (Rows of 3) --- */
-            .checkbox-grid {
-                display: flex; /* Enable Flexbox */
-                flex-wrap: wrap; /* Allow items to wrap to the next line */
-                gap: 15px; /* Space between checkbox items */
-                margin-top: 10px; /* Add some space above the checkboxes */
-                margin-bottom: 10px; /* Add some space below the checkboxes */
-                margin-left: 20px; /* Indent the grid slightly to align with subtype content */
+.form-title h2, .display-title h2 {
+  font-size: 1.2rem;
+  color: var(--text-color-dark);
+}
 
-                .crop-checkbox-label {
-                    flex: 0 0 calc(33% - 15px); /* Crucial for 4 items per row */
-                    /*
-                        - flex-grow: 0 (don't grow)
-                        - flex-shrink: 0 (don't shrink)
-                        - flex-basis: calc(25% - 15px) (take up 25% width minus gap to allow for 4 items)
-                    */
-                    display: flex; /* Make the label itself a flex container to align text and checkbox */
-                    align-items: center; /* Vertically align checkbox and text */
-                    white-space: nowrap; /* Prevent text wrapping within the label */
-                    overflow: hidden; /* Hide overflow if text is too long */
-                    text-overflow: ellipsis; /* Add ellipsis if text is too long */
-                }
+.form {
+  padding: var(--padding-unit);
+  display: flex;
+  flex-direction: column; /* Stack fields and buttons */
+  gap: 15px; /* Space between form groups */
+  border-bottom: 1px solid var(--border-color); /* Separator */
+}
 
-                .crop-checkbox {
-                    margin-right: 8px; /* Space between checkbox and text */
-                    /* You might want to style the checkbox appearance further here */
-                }
-            }
-            /* Optional: Basic styling for details/summary appearance */
-            details {
-                border: none; /* Remove default border */
-                padding: 0;
-                margin: 0;
-            }
-        
-            details summary::-webkit-details-marker {
-                display: none; /* Hide default marker for Chrome */
-            }
-        }
+.cadastral-field, .date-field {
+  display: flex;
+  align-items: center; /* Vertically align label and input */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 10px; /* Space between label and input */
+}
+
+.form-label {
+  font-size: 1rem;
+  color: var(--text-color-dark);
+  white-space: nowrap; /* Prevent label text from wrapping */
+}
+
+.form-input {
+  flex-grow: 1; /* Allow input to take remaining space */
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  color: var(--text-color-dark);
+  min-width: 150px; /* Ensure input isn't too small */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+}
+
+/* Buttons within the form */
+.parcel-finder-buttons {
+  display: flex;
+  justify-content: center; /* Center buttons */
+  gap: 15px; /* Space between buttons */
+  margin-top: 10px; /* Space above buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+}
+
+.input-button { /* Reusing input-button class for Find Parcel */
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.input-button:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.input-button:active {
+  transform: translateY(1px);
+}
+
+.clear-info-button { /* Specific style for Clear Form */
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  white-space: nowrap;
+  background-color: var(--red-button-color); /* Red color */
+  color: white;
+}
+
+.clear-info-button:hover {
+  background-color: color-mix(in srgb, var(--red-button-color) 90%, black);
+}
+
+.clear-info-button:active {
+  transform: translateY(1px);
+}
 
 
-    .parcel-finder-display {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        .display-box {
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 1rem;
-            background-color: #f0f0f0;
-            margin-bottom: 1rem;
-            img {
-                height: 500px;
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-            }
-            .image-icon {
-                height: 120px;
-                object-fit: contain;
-            }
-        }
-    }
-    .input-button,
-    .clear-info-button {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
+/* Selected Parcel Display Section */
+.parcel-finder-display {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--padding-unit); /* Padding below the image and buttons */
+}
 
-    .input-button {
-      background-color: #4caf50;
+.display-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px; /* Minimum height for the image display area */
+  background-color: var(--input-bg);
+  padding: var(--padding-unit); /* Padding inside the display box */
+  flex-grow: 1;
+}
 
-      &:hover {
-        background-color: #45a049;
-      }
-    }
+.display-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
 
-    .clear-info-button {
-      background-color: #e6062c;
-      &:hover {
-        background-color: #a70722;
-      }
-    }
+/* Placeholder icon for no image (reusing from chat component) */
+.display-box .image-icon {
+  width: 80px; /* Adjust size for the placeholder icon */
+  height: 80px;
+  opacity: 0.5;
+}
+
+.display-buttons {
+  display: flex;
+  justify-content: center; /* Center the new wrapper horizontally */
+  align-items: flex-start; /* Align to the start of the cross-axis */
+  margin-top: var(--padding-unit); /* Space between image and actions */
+  padding: 0 var(--padding-unit); /* Horizontal padding */
+}
+
+.parcel-actions-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack checkbox and button vertically */
+  align-items: center; /* Center them horizontally within this wrapper */
+  gap: 15px; /* Space between the checkbox and the button */
+  width: 100%; /* Allows alignment to center within display-buttons */
+  max-width: 300px; /* Limit the width of the stacked elements */
+}
+
+
+/* "Confirm Parcel" button styling (adjustments) */
+.confirm-parcel-button {
+  padding: 0.8rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: var(--shadow);
+  width: 100%; /* Make it take full width of its parent wrapper */
+}
+
+.confirm-parcel-button:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+}
+
+.confirm-parcel-button:active {
+  transform: translateY(1px);
+}
+
+.detailed-description-checkbox {
+  display: flex;
+  align-items: center; /* Vertically align checkbox and text */
+  cursor: pointer;
+  font-size: 0.95rem; /* Slightly smaller text for checkbox */
+  color: var(--text-color-dark);
+  white-space: nowrap; /* Prevent text from wrapping unnecessarily */
+  width: fit-content; /* Only take space needed by content, allows centering */
+}
+
+.description-length { /* Style for the actual checkbox input */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.description-length:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.description-length:checked::before {
+  content: '\2713';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.description-length:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.3);
+}
+
+/* ================================== */
+/* Responsive Design for Mobile */
+/* ================================== */
+
+@media (max-width: 768px) {
+  #parcel-finder {
+    padding: 0.5rem; /* Less padding on small screens */
+  }
+
+  .content {
+    margin-top: 2vh; /* Reduce top margin */
+    border-radius: 0; /* Full width, no rounded corners */
+    box-shadow: none; /* No shadow */
+    min-height: 100vh; /* Take full vertical space */
+  }
+
+  .form, .parcel-finder-display {
+    padding: 1rem; /* Reduce padding inside sections */
+  }
+
+  .form-label {
+    width: 100%; /* Labels take full width */
+    text-align: left; /* Align labels to the left */
+    margin-bottom: 5px; /* Space between label and input */
+  }
+
+  .cadastral-field, .date-field {
+    flex-direction: column; /* Stack label and input vertically */
+    align-items: flex-start; /* Align to the start for stacking */
+  }
+
+  .form-input {
+    width: 100%; /* Inputs take full width */
+  }
+
+  .parcel-finder-buttons {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Space between stacked buttons */
+  }
+
+  .input-button, .clear-info-button {
+    width: 100%; /* Make buttons full width */
+  }
+
+  .display-box {
+    min-height: 250px; /* Adjust image display height for mobile */
+    padding: 1rem;
+  }
+
+  .parcel-actions-wrapper {
+    width: 100%; /* Take full width on mobile */
+    max-width: none; /* Remove max-width constraint on mobile */
+  }
+
+  .confirm-parcel-button {
+    width: 100%; /* Full width for the confirm button */
+    padding: 0.8rem 1.5rem; /* Adjust padding */
+  }
+
+  .detailed-description-checkbox {
+    /* Align checkbox with the button's width on mobile, or just keep centered */
+    width: fit-content; /* Still allows it to center */
+  }
+
 }

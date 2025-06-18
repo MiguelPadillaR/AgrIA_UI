@@ -3,6 +3,7 @@ export interface IFindParcelresponse {
   geometry: ICadastralGeometry,
   imagePath: string,
   metadata: ICadastralMetadata,
+  isDetailedDescription: boolean,
 }
 
 export interface ICadastralGeometry {

@@ -14,7 +14,7 @@
                 </div>
                 @if (imagePreviewUrl) {
                     <div class="image-desc">
-                        <p> Nombre Imagen: {{ displayImageName }}</p>
+                        <p>Nombre Imagen: {{ displayImageName }}</p>
                         <p>{{ parcelImageInfo }}</p>
                     </div>
                 }
@@ -32,7 +32,11 @@
         <div id="input">
             <label class="custom-file-upload">
               <img src="upload-icon1.png" alt="Upload image" title="Upload image"/>
-              <input type="file" (change)="onFileSelected($event)"/>
+              <input 
+                type="file" 
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                />
             </label>
           
             <textarea 
@@ -43,20 +47,34 @@
                 [(ngModel)]="userInput"
             >
             </textarea>
-            <button 
-                class="input-button"
-                (click)="sendUserInput()"
-                title="Send prompt."
-            >
-                Send
-            </button>
-            <button
-                class="input-button"
-                (click)="getInputSuggesiton()"
-                title="Get a suggested prompt from the reply."
-            >
-                Get suggestion
-            </button>
+        <div class="input-actions-wrapper">
+            <div class="input-buttons-wrapper">
+                <button 
+                    class="input-button"
+                    (click)="sendUserInput()"
+                    title="Send prompt."
+                >
+                    Send
+                </button>
+                <button
+                    class="input-button"
+                    [style.cursor]="isLoading() ? 'progress' : 'pointer'"
+                    (click)="getInputSuggestion()"
+                    title="Get a suggested prompt from the reply."
+                >
+                    Get suggestion
+                </button>
+            </div>
+
+            <label class="detailed-description-checkbox">
+                <input 
+                    type="checkbox"
+                    class="description-length"
+                    [(ngModel)]="isDetailedDescription"
+                >
+                Descripción detallada.
+            </label>
+        </div>
         </div>
         <button
             class="navigation-button"
