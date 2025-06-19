@@ -2,10 +2,11 @@ import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/c
 import { FormsModule } from '@angular/forms';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
-import { ParcelInfoService } from '../../services/parcel-info.service/parcel-info.service';
+import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { ChatService } from '../../services/chat.services/chat.service';
 import { IChatParcelResponse } from '../../models/chat.models';
 import { take } from 'rxjs';
+import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
 
 @Component({
   selector: 'app-chat',
@@ -30,7 +31,7 @@ export class ChatComponent {
   @ViewChild(ChatAssistantComponent) chatAssistant!: ChatAssistantComponent;
 
   // Service to communicate parcel info from parcel finder to chat
-  private parcelInfoService = inject(ParcelInfoService);
+  private parcelFinderService = inject(ParcelFinderService);
   // Chat service
   private chatService = inject(ChatService);
   // Router for navigation
@@ -38,30 +39,39 @@ export class ChatComponent {
 
 
   ngOnInit() {
-    this.parcelInfoService.parcelInfo$.pipe(take(1))
+    this.parcelFinderService.parcelInfo$.pipe(take(1))
     .subscribe(parcel => {
       if (parcel) {
         // Delay template updates to avoid ExpressionChanged errors
         setTimeout(() => {
-          this.chatAssistant.showMessageIcon();
-          this.imagePreviewUrl = parcel.imagePath;
-          this.isDetailedDescription = parcel.isDetailedDescription
-
-          const formData = new FormData();
-          formData.append('imageDate', parcel.metadata.vigencia);
-          formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
-          formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
-          formData.append('isDetailedDescription', String(parcel.isDetailedDescription))
-          
-          this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
-          .subscribe((response: IChatParcelResponse) => {
-            this.parcelImageInfo = response.imageDesc;
-            this.chatAssistant.hideMessageIcon();
-            this.chatAssistant.displayResponse(response.text);
-          });
+          this.sendParcelInfoToChat(parcel);
         });
       }
     });
+  }
+
+  /**
+   * Takes detected parcel info and sends it to chat assistant for image description.
+   * 
+   * @param parcel 
+   */
+  private sendParcelInfoToChat(parcel: IFindParcelresponse) {
+    this.chatAssistant.showMessageIcon();
+    this.imagePreviewUrl = parcel.imagePath;
+    this.isDetailedDescription = parcel.isDetailedDescription;
+
+    const formData = new FormData();
+    formData.append('imageDate', parcel.metadata.vigencia);
+    formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+    formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
+    formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
+
+    this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
+      .subscribe((response: IChatParcelResponse) => {
+        this.parcelImageInfo = response.imageDesc;
+        this.chatAssistant.hideMessageIcon();
+        this.chatAssistant.displayResponse(response.text);
+      });
   }
 
   get displayImageName(): string | undefined {
@@ -113,7 +123,7 @@ export class ChatComponent {
   }
 
   /**
-   * Mock method to provide user input suggestion based on last LLM answer (TODO).
+   * Provides user input suggestion based on last LLM answer.
    * 
    */
   public getInputSuggestion() {
@@ -129,7 +139,7 @@ export class ChatComponent {
   }
 
   /**
-   * Reroute to chat while sending parcel image file
+   * Reroute to parcel finder form view
    * 
    */
   public goToParcelFinderView(): void {

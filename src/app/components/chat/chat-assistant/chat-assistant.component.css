@@ -34,7 +34,7 @@
   }
   
   /* Assistant message aligned left */
-  .message.assistant {
+  .message.model {
     justify-content: flex-start;
     .bubble {
       border-left: 3px solid rgb(139, 88, 88);

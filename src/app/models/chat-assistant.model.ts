@@ -1,5 +1,5 @@
 export interface IChatMessage {
-    role: 'user' | 'assistant';
+    role: 'user' | 'model';
     content: string;
     loading?: boolean;
     revealProgress?: string;
