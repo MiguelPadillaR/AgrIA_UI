@@ -250,7 +250,6 @@ app-chat-assistant {
 .input-button:nth-of-type(2) { /* 'Get suggestion' button */
   background-color: var(--tertiary-color); /* Amber */
   color: var(--text-color-dark);
-  width: 160px; /* Fixed width for consistency */
 }
 
 .input-button:nth-of-type(2):hover {

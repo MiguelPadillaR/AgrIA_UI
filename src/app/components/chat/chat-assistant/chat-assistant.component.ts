@@ -78,11 +78,11 @@ export class ChatAssistantComponent {
   /**
    * Scrolls to the bottom of the chat window
    */
-  public scrollToBottom() {
+  public scrollToBottom(timeout:number = 1500) {
     setTimeout(() => {
       const el = this.scrollableContainer?.nativeElement;
       el.scrollTop = el.scrollHeight;
-    }, 1500);
+    }, timeout);
   }
 
   /**

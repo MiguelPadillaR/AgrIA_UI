@@ -120,6 +120,7 @@ export class ChatComponent {
    */
   public clearUserInput() {
     this.userInput = '';
+    this.chatAssistant.scrollToBottom(0);
   }
 
   /**
