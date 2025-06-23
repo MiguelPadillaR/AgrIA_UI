@@ -1,4 +1,4 @@
-<div class="chat-window" #chat>
+<div #scrollableContainer class="chat-window" #chat>
   @for (msg of chatHistory; track $index) {
     <div class="message {{ msg.role }}">
       <div class="bubble">

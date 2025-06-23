@@ -133,7 +133,7 @@ export class ChatComponent {
       (response: string) => {
         this.userInput = response
         document.body.style.cursor = 'default';
-        this.isLoading.set(true);
+        this.isLoading.set(false);
       }
     );
   }

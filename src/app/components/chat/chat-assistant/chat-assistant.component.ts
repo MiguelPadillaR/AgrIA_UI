@@ -20,7 +20,7 @@ export class ChatAssistantComponent {
   // Index of the first message after chat sanitizaion
   firstIndex: number = 5;
   // HTML element to automatically scroll to the bototm
-  @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
+  @ViewChild('scrollableContainer') scrollableContainer!: ElementRef;
   public chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
 
   ngOnInit() {
@@ -76,11 +76,12 @@ export class ChatAssistantComponent {
 
 
   /**
-   * * Scrolls to the bottom of the chat window
+   * Scrolls to the bottom of the chat window
    */
   public scrollToBottom() {
     setTimeout(() => {
-      this.scrollAnchor?.nativeElement.scrollIntoView({ block:"end", behavior: 'smooth' });
+      const el = this.scrollableContainer?.nativeElement;
+      el.scrollTop = el.scrollHeight;
     }, 1500);
   }
 
