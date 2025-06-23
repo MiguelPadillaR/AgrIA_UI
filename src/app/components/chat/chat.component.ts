@@ -45,7 +45,7 @@ export class ChatComponent {
         // Delay template updates to avoid ExpressionChanged errors
         setTimeout(() => {
           this.sendParcelInfoToChat(parcel);
-        });
+        }, 500);
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { IChatMessage } from '../../../models/chat-assistant.model';
 import { ChatAssistantService } from '../../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
@@ -17,19 +17,19 @@ export class ChatAssistantComponent {
       content: '¡Hola!\n\nSoy tu Asistente de Imágenes Agrícolas, ¡pero puedes llamarme **AgrIA**!\n\nMi propósito aquí es **analizar imágenes satelitales de campos de cultivo** para asistir a los agricultores en en análisis del su **uso del espacio y los recursos, así como las prácticas agrícolas**, con el fin de **asesorarles a reunir los requisitos para las subvenciones del Comité Europeo de Política Agrícola Común (CAP)**.\n\n¡Sólo tienes que subir una imagen satelital de tus campos de cultivo y nos pondremos manos a la obra!\n\nSi tiene alguna pregunta, también puede escribir en el cuadro de texto',
     },
   ];
+  // Index of the first message after chat sanitizaion
+  firstIndex: number = 5;
   // HTML element to automatically scroll to the bototm
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
   public chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
 
   ngOnInit() {
-    console.log("this.chatHistory.length > 1", this.chatHistory.length > 1)
     this.animateLoadingResponse(this.chatHistory[0], this.chatHistory[0].content);
     // Load chat history if it is empty or has only the initial message
     if (this.chatHistory.length <= 1) {
       this.chatAssistantService.loadActiveChatHistory().subscribe({
         next: (response: IChatMessage[]) => {
-          console.log(response)
-          this.chatHistory = response;
+          this.chatHistory = this.sanitizeChatHistory(response);
           this.scrollToBottom();  // scroll to bottom after loading history
         },
         error: (err) => {
@@ -43,11 +43,37 @@ export class ChatAssistantComponent {
       });
     }
   }
+
   ngAfterViewInit() {
     if(this.chatHistory.length > 1) {
       this.scrollToBottom();  // in case there are preloaded messages
     }
   }
+
+  /**
+   * Sanitizes chat history by removing initial messages and replacing image description requests
+   * @param response - Chat history response from the server
+   * @returns Sanitized chat history
+   */
+  private sanitizeChatHistory(response: IChatMessage[]) {
+    console.log("OG History:", response)
+    // Skip context setting messages
+    let index = this.firstIndex;
+    while (index < response.length && response[index].role !== 'model') {
+      index++;
+    };
+    let sanitized_history = response.slice(index);
+
+    // Remove image descriptions requests data
+    for(let msg of sanitized_history){
+      if (msg.content.includes('###DESCRIBE')) {
+        msg.content = '*Petición de descripción de imagen...*'
+      }
+    }
+
+    return sanitized_history
+  }
+
 
   /**
    * * Scrolls to the bottom of the chat window
@@ -161,6 +187,7 @@ export class ChatAssistantComponent {
       
   /**
    * Animates assitant's output message display
+   * 
    * @param msg 
    * @param fullText 
    */
@@ -174,7 +201,7 @@ export class ChatAssistantComponent {
         clearInterval(interval);
         msg.revealProgress = undefined; // done animating
       }
-    }, 20); // Adjust typing speed (ms per character)
+    }, 5); // Adjust typing speed (ms per character)
   }
 }
   
