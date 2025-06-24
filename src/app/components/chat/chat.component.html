@@ -62,7 +62,7 @@
                     (click)="getInputSuggestion()"
                     title="Get a suggested prompt from the reply."
                 >
-                    Get suggestion
+                    {{ !isLoading() ? 'Get Suggestion' : 'Loading...' }}
                 </button>
             </div>
 

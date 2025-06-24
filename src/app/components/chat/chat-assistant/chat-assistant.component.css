@@ -7,6 +7,7 @@
     padding: 1rem;
     background-color: #f0f0f0;
     border-radius: 8px;
+    scroll-behavior: smooth;
   }
   
   /* Ensures messages are aligned left/right overall */
@@ -34,7 +35,7 @@
   }
   
   /* Assistant message aligned left */
-  .message.assistant {
+  .message.model {
     justify-content: flex-start;
     .bubble {
       border-left: 3px solid rgb(139, 88, 88);

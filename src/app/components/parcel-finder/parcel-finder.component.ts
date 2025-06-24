@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 // import { ICropClassification, IGroupedCropClassification } from '../models/parcel-finder.models';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
-import { ParcelInfoService } from '../../services/parcel-info.service/parcel-info.service';
+
 @Component({
   selector: 'app-parcel-finder',
   imports: [FormsModule],
@@ -35,8 +35,6 @@ export class ParcelFinderComponent {
 
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
-  // Service to communicate parcel info from parcel finder to chat
-  private parcelInfoService = inject(ParcelInfoService);
   // Router for navigation
   private router: Router = inject(Router);
     // Utility to get object keys
@@ -47,7 +45,7 @@ export class ParcelFinderComponent {
 
   ngOnInit(): void {
     // Empty the observable by emitting null
-    this.parcelInfoService.setParcelInfo(null);
+    this.parcelFinderService.setParcelInfo(null);
   }
 
  /* 
@@ -126,7 +124,7 @@ public findParcel() {
   public confirmParcel(): void {
     if (this.selectedParcelInfo) {
       this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
-      this.parcelInfoService.setParcelInfo(this.selectedParcelInfo);
+      this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
       this.router.navigate(['/chat']);
     }
   }
