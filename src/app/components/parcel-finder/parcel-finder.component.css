@@ -21,6 +21,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Arial', sans-serif; /* Consistent font */
 }
 
 /* Main Parcel Finder Container */
@@ -59,10 +60,21 @@
   color: var(--text-color-dark);
 }
 
+.form-description {
+    border-bottom: 1px solid var(--border-color);
+  p {
+    padding: 0.75rem var(--padding-unit);
+    font-size: 1rem;
+    color: var(--text-color-light);
+    text-align: justify;
+  }
+}
+
 .form {
   padding: var(--padding-unit);
   display: flex;
   flex-direction: column; /* Stack fields and buttons */
+  align-items: center;
   gap: 15px; /* Space between form groups */
   border-bottom: 1px solid var(--border-color); /* Separator */
 }
@@ -291,8 +303,10 @@
 
   .form-label {
     width: 100%; /* Labels take full width */
-    text-align: left; /* Align labels to the left */
+    text-align: center; /* Align labels to the left */
     margin-bottom: 5px; /* Space between label and input */
+    display: flex; /* Missing flex! */
+    flex-wrap: wrap; /* Force long text to wrap */
   }
 
   .cadastral-field, .date-field {
@@ -302,6 +316,7 @@
 
   .form-input {
     width: 100%; /* Inputs take full width */
+    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
   }
 
   .parcel-finder-buttons {

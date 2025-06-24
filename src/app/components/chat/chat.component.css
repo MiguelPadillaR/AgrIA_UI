@@ -3,6 +3,7 @@
   --primary-color: #4CAF50; /* Green, similar to the image's "Send" button */
   --secondary-color: #607D8B; /* Greyish blue */
   --tertiary-color: #FFC107; /* Amber for suggestions */
+  --logo-color: #22a7ff; /* Blue, similar to the logo
   --bg-color: #f0f2f5; /* Light grey background */
   --card-bg-color: #ffffff; /* White for cards */
   --border-color: #ddd; /* Light grey border */
@@ -20,11 +21,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Arial', sans-serif; /* Or your preferred font */
 }
 
 body, html {
   height: 100%;
-  font-family: 'Arial', sans-serif; /* Or your preferred font */
   background-color: var(--bg-color);
 }
 

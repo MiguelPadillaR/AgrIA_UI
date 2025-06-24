@@ -1,6 +1,6 @@
 /* Variables for easy theme customization */
 :host {
-    --primary-color: #22a7ff; /* Green, similar to the image's "Send" button */
+    --primary-color: #22a7ff; /* Blue, similar to the logo */
     --secondary-color: #607D8B; /* Greyish blue */
     --tertiary-color: #FFC107; /* Amber for suggestions */
     --button-color: #4CAF50; /* Green, similar to the image's "Send" button */
