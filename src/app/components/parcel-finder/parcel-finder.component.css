@@ -32,6 +32,7 @@
   min-height: 100vh; /* Minimum height for full screen */
   background-color: var(--bg-color);
   padding: var(--padding-unit); /* Overall padding */
+  margin-top: 4rem;
 }
 
 .content {

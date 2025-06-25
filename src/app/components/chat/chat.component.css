@@ -3,7 +3,7 @@
   --primary-color: #4CAF50; /* Green, similar to the image's "Send" button */
   --secondary-color: #607D8B; /* Greyish blue */
   --tertiary-color: #FFC107; /* Amber for suggestions */
-  --logo-color: #22a7ff; /* Blue, similar to the logo
+  --logo-color: #22a7ff; /* Blue, similar to the logo */
   --bg-color: #f0f2f5; /* Light grey background */
   --card-bg-color: #ffffff; /* White for cards */
   --border-color: #ddd; /* Light grey border */
@@ -37,6 +37,7 @@ body, html {
   min-height: 100vh; /* Full viewport height */
   background-color: var(--bg-color);
   padding: var(--padding-unit); /* Overall padding */
+  margin-top: 4rem;
 }
 
 .content {
@@ -397,6 +398,7 @@ app-chat-assistant {
 
   #chat {
     padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
   .content {

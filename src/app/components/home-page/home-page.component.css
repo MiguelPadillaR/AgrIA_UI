@@ -32,6 +32,7 @@ body, html {
     color: var(--text-color-dark);
     line-height: 1.6;
     scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    margin-top: 2rem;
 }
 
 /* General Layout */
@@ -202,6 +203,13 @@ body, html {
     max-width: 900px;
     width: 100%;
     z-index: 1; /* Ensure content is above background animation */
+}
+
+.hero-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-text h2 {
@@ -755,14 +763,18 @@ body, html {
         min-height: 350px;
     }
 
-    .hero-text h2 {
-        font-size: 2.5rem;
+    .hero-text {
+        h2 {
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+        }
+        a {
+            display: none;
+        }
     }
-
-    .hero-text p {
-        font-size: 1.1rem;
-    }
-
+    
     .hero-image img {
         width: 300px;
     }
