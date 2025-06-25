@@ -16,6 +16,8 @@ export class ParcelFinderComponent {
   public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
+  // Max date allowed for the date picker
+  public today: string = new Date().toISOString().split('T')[0];
   // Loading variable for styling
   public isLoading: WritableSignal<boolean> = signal(false)
   // User preference for longer image description

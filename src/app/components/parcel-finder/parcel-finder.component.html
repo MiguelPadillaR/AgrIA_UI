@@ -1,11 +1,23 @@
 <div id="parcel-finder">
     <div class="content">
-            <div class="form-title">
-                <h2>Cadastral Data</h2>
-            </div>
+        <div class="form-title">
+            <h2>Cadastral Data</h2>
+        </div>
+        <div class="form-description">
+            <p>
+                Introduzca el código de referencia catastral de la parcela que desea consultar. 
+                Si no lo conoce, puede buscarlo en el sitio web del catastro o en documentos relacionados con la propiedad.
+            </p>
+            <p style="font-weight: bold;">
+                Asegúrese de que el código tenga 20 caracteres.
+            </p>
+            <p>
+                <span style="font-weight: bold;">No se admitirán códigos de referencia catastral urbanos.</span> Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.
+            </p>
+        </div>
         <div class="form">
             <div class="cadastral-field">
-                <label class="form-label">Inserte código de referencia catastral:
+                <label class="form-label">Código de referencia catastral:
                     <input class="form-input"
                     type="text"
                     placeholder="Ref. catastral"
@@ -17,10 +29,12 @@
             <div class="date-field">
                 <label class="form-label">Seleccione fecha aproximada:
                     <input class="form-input"
+                    class="date-input-field"
                     type="date"
                     placeholder="Date"
                     [(ngModel)]="selectedDate"
-                    class="date-input-field"/>
+                    [max]="today"
+                    />
                 </label>
             </div>
             <div class="parcel-finder-buttons">

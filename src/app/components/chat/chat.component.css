@@ -3,6 +3,7 @@
   --primary-color: #4CAF50; /* Green, similar to the image's "Send" button */
   --secondary-color: #607D8B; /* Greyish blue */
   --tertiary-color: #FFC107; /* Amber for suggestions */
+  --logo-color: #22a7ff; /* Blue, similar to the logo */
   --bg-color: #f0f2f5; /* Light grey background */
   --card-bg-color: #ffffff; /* White for cards */
   --border-color: #ddd; /* Light grey border */
@@ -20,11 +21,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Arial', sans-serif; /* Or your preferred font */
 }
 
 body, html {
   height: 100%;
-  font-family: 'Arial', sans-serif; /* Or your preferred font */
   background-color: var(--bg-color);
 }
 
@@ -36,6 +37,7 @@ body, html {
   min-height: 100vh; /* Full viewport height */
   background-color: var(--bg-color);
   padding: var(--padding-unit); /* Overall padding */
+  margin-top: 4rem;
 }
 
 .content {
@@ -250,7 +252,6 @@ app-chat-assistant {
 .input-button:nth-of-type(2) { /* 'Get suggestion' button */
   background-color: var(--tertiary-color); /* Amber */
   color: var(--text-color-dark);
-  width: 160px; /* Fixed width for consistency */
 }
 
 .input-button:nth-of-type(2):hover {
@@ -397,6 +398,7 @@ app-chat-assistant {
 
   #chat {
     padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
   .content {

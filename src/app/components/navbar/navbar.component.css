@@ -1,5 +1,12 @@
 /* Basic Reset & Variables (optional but good practice) */
 :host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
   --navbar-bg-color: #333;
   --navbar-text-color: #f4f4f4;
   --navbar-hover-color: #555;
@@ -9,6 +16,14 @@
   --btn-secondary-bg: #6c757d;
   --btn-secondary-text: #fff;
   --btn-hover-darken: 10%; /* For hover effects */
+}
+
+:host(.hidden) {
+  transform: translateY(-100%);
+}
+
+:host(.visible) {
+  transform: translateY(0);
 }
 
 /* Navbar Container */
@@ -77,6 +92,7 @@
 .navbar-nav {
   display: flex;
   list-style: none;
+  font-size: larger;
   margin: 0;
   padding: 0;
   flex-wrap: wrap; /* Allows nav items to wrap */
