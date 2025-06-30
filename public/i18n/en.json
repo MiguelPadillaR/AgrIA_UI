@@ -1,7 +1,27 @@
 {
-  "NAV": {
-    "HOME": "Home",
-    "PARCEL": "Parcel finder",
-    "CHAT": "Chat"
+  "nav": {
+    "home": "Home",
+    "parcel": "Parcel finder",
+    "chat": "Chat"
+  },
+  "parcelFinder": {
+    "cadastralData": "Cadastral Data",
+    "description1": "Enter the cadastral reference code of the parcel you want to query. If you don't know it, you can search for it on the cadastre website or related property documents.",
+    "description2": "Make sure the code has 20 characters.",
+    "description3Bold": "Urban cadastral reference codes will not be accepted.",
+    "description3": " If you have difficulty finding your parcel, upload an image of your farm to the chat along with crop data and parcel area.",
+    "cadastralReference": "Cadastral reference code",
+    "cadastralPlaceholder": "Ref. cadastral",
+    "selectDate": "Select approximate date",
+    "datePlaceholder": "Date",
+    "loading": "Loading…",
+    "findParcel": "Find Parcel",
+    "clearForm": "Clear Form",
+    "selectedParcel": "Selected Parcel",
+    "previewAlt": "Preview",
+    "uploadImageAlt": "Upload image",
+    "detailedDescription": "Detailed description.",
+    "confirmParcel": "Confirm Parcel"
   }
+
 }

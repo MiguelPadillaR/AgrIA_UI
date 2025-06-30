@@ -1,37 +1,38 @@
 <div id="parcel-finder">
     <div class="content">
         <div class="form-title">
-            <h2>Cadastral Data</h2>
+            <h2>{{ 'parcelFinder.cadastralData' | translate }}</h2>
         </div>
         <div class="form-description">
             <p>
-                Introduzca el código de referencia catastral de la parcela que desea consultar. 
-                Si no lo conoce, puede buscarlo en el sitio web del catastro o en documentos relacionados con la propiedad.
+                {{ 'parcelFinder.description1' | translate }}
             </p>
             <p style="font-weight: bold;">
-                Asegúrese de que el código tenga 20 caracteres.
+                {{ 'parcelFinder.description2' | translate }}
             </p>
             <p>
-                <span style="font-weight: bold;">No se admitirán códigos de referencia catastral urbanos.</span> Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.
+                <span style="font-weight: bold;">{{ 'parcelFinder.description3Bold' | translate }}</span> {{ 'parcelFinder.description3' | translate }}
             </p>
         </div>
         <div class="form">
             <div class="cadastral-field">
-                <label class="form-label">Código de referencia catastral:
+                <label class="form-label">
+                    {{ 'parcelFinder.cadastralReference' | translate }}::
                     <input class="form-input"
                     type="text"
-                    placeholder="Ref. catastral"
+                    placeholder="{{ 'parcelFinder.cadastralPlaceholder' | translate }}"
                     class="cadastral-input-field"
                     [(ngModel)]="cadastralReference"
                     />
                 </label>
             </div>
             <div class="date-field">
-                <label class="form-label">Seleccione fecha aproximada:
+                <label class="form-label">
+                    {{ 'parcelFinder.selectDate' | translate }}:
                     <input class="form-input"
                     class="date-input-field"
                     type="date"
-                    placeholder="Date"
+                    placeholder="{{ 'parcelFinder.datePlaceholder' | translate }}"
                     [(ngModel)]="selectedDate"
                     [max]="today"
                     />
@@ -44,19 +45,19 @@
                     [disabled]="isLoading() || cadastralReference.length !== 20"
                     (click)="findParcel()"
                 >
-                {{ isLoading() ? 'Loading…' : 'Find Parcel' }}
+                {{ isLoading() ? ('parcelFinder.loading' | translate) : ('parcelFinder.findParcel' | translate) }}
                 </button>
                 <button
                     class="clear-info-button"
                     (click)="clearForm()"
                     >
-                    Clear Form
+                    {{ 'parcelFinder.clearForm' | translate }}
                 </button>
             </div>
         </div>
         <div class="parcel-finder-display">
             <div class="display-title">
-                <h2>Selected Parcel</h2>
+                <h2>{{ 'parcelFinder.selectedParcel' | translate }}</h2>
             </div>
             <div class="display-box">
                 @if(parcelImageUrl){
@@ -74,50 +75,17 @@
                                 class="description-length"
                                 [(ngModel)]="isDetailedDescription"
                             >
-                            Descripción detallada.
+                            {{ 'parcelFinder.detailedDescription' | translate }}.
                         </label>
                         <button 
                             class="confirm-parcel-button" (click)="confirmParcel()"
                         >
-                            Confirm Parcel
+                            {{ 'parcelFinder.confirmParcel' | translate }}
                         </button> 
                     </div>
                 }
             </div>
         </div>
     
-        <!-- 
-        <h2>Parcel Data</h2>
-        <form class="form">
-            <div class="crop-classification-tree">
-                @for (type of (objectKeys(groupedCropClassification)); track type) {
-                <details class="type-group">
-                <summary>{{ type }}</summary>
-
-                @for (subtype of (objectKeys(groupedCropClassification[type])); track subtype) {
-                <details class="subtype-group">
-                    <summary>{{ subtype }}</summary>
-
-                    <div class="checkbox-grid">
-                    @for (item of groupedCropClassification[type][subtype]; track item.class) {
-                    <label class="crop-checkbox-label">
-                        <input
-                        type="checkbox"
-                        [value]="item.class"
-                        class="crop-checkbox"
-                        (click)="toggleSelectedClassification(item)"
-                        />
-                        {{ item.class }} - {{ item.name }}
-                    </label>
-                    }
-                    </div>
-                </details>
-                }
-                </details>
-                }
-            </div>
-        </form>   
-        -->      
-        
     </div>
 </div>

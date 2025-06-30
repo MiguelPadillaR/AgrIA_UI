@@ -1,7 +1,27 @@
 {
-  "NAV": {
-    "HOME": "Inicio",
-    "PARCEL": "Buscador de Parcelas",
-    "CHAT": "Chat"
+  "nav": {
+    "home": "Inicio",
+    "parcel": "Buscador de Parcelas",
+    "chat": "Chat"
+  },
+  "parcelFinder": {
+    "cadastralData": "Datos Catastrales",
+    "description1": "Introduzca el código de referencia catastral de la parcela que desea consultar. Si no lo conoce, puede buscarlo en el sitio web del catastro o en documentos relacionados con la propiedad.",
+    "description2": "Asegúrese de que el código tenga 20 caracteres.",
+    "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
+    "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
+    "cadastralReference": "Código de referencia catastral",
+    "cadastralPlaceholder": "Ref. catastral",
+    "selectDate": "Seleccione fecha aproximada",
+    "datePlaceholder": "Fecha",
+    "loading": "Cargando…",
+    "findParcel": "Buscando Parcela...",
+    "clearForm": "Borrar Datos",
+    "selectedParcel": "Parcela Seleccionada",
+    "previewAlt": "Vista previa",
+    "uploadImageAlt": "Subir imagen",
+    "detailedDescription": "Descripción detallada.",
+    "confirmParcel": "Confirmar Parcela"
   }
+
 }
