@@ -1,23 +1,36 @@
-import { Component, HostBinding, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for ngClass/ngIf
-import { RouterModule } from '@angular/router'; // Import RouterModule for routerLink/routerLinkActive
+import { Component, HostBinding, HostListener, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   // Initialize isMenuOpen to false, meaning the menu is closed by default
   isMenuOpen: boolean = false;
+  // Style tracking variables
+  isVisible: boolean = true;
+  lastScrollTop: number = 0;
+  isAtTop: boolean = true;
+  isHoveringTop: boolean = false;
+  maxPhoneScreenWidthPx: number = 768;
+  // Translation service
+  private translateService = inject(TranslateService);
+  public currentLanguage: string = 'es';
 
-  isVisible = true;
-  lastScrollTop = 0;
-  isAtTop = true;
-  isHoveringTop = false;
-
-  constructor() { }
+  constructor() {
+    this.translateService.setDefaultLang('es');
+    console.log(this.translateService.getLangs())
+ }
 
   ngOnInit() {
     this.updateVisibility();
@@ -47,7 +60,7 @@ export class NavbarComponent {
   }
 
   @HostListener('document:mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
+  private onMouseMove(event: MouseEvent) {
     this.isHoveringTop = event.clientY < 80; // top 80px of screen
 
     if (this.isHoveringTop) {
@@ -56,6 +69,14 @@ export class NavbarComponent {
       this.isVisible = false;
     }
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    if (window.innerWidth > this.maxPhoneScreenWidthPx && this.isMenuOpen) {
+      this.isMenuOpen = false; // Close menu if resized above breakpoint
+    }
+  }
+
 
   /**
    * Updates navbar visibility reactively based on scroll position and hover state.
@@ -71,8 +92,10 @@ export class NavbarComponent {
    * Toggles the state of the mobile menu (open/closed).
    * This method is called when the hamburger icon is clicked.
    */
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen; // Flips the boolean value
+  public toggleMenu(): void {
+    if (window.innerWidth < this.maxPhoneScreenWidthPx) {
+      this.isMenuOpen = !this.isMenuOpen;
+    }
   }
 
   /**
@@ -80,7 +103,13 @@ export class NavbarComponent {
    * This can be useful for closing the menu when a navigation link is clicked,
    * especially in a single-page application where navigating doesn't refresh the page.
    */
-  closeMenu(): void {
+  public closeMenu(): void {
     this.isMenuOpen = false;
+  }
+  
+  public switchLanguage(lang: string) {
+    this.translateService.use(lang);
+    this.currentLanguage = lang;
+    console.log(this.currentLanguage)
   }
 }

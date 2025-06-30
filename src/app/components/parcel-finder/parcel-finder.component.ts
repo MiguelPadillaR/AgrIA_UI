@@ -1,13 +1,16 @@
 import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-// import { ICropClassification, IGroupedCropClassification } from '../models/parcel-finder.models';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
 
 @Component({
   selector: 'app-parcel-finder',
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    TranslateModule,
+],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
 })
@@ -22,14 +25,6 @@ export class ParcelFinderComponent {
   public isLoading: WritableSignal<boolean> = signal(false)
   // User preference for longer image description
   public isDetailedDescription: boolean = false;
-/* 
-  // List of SIGPAC's crop classifications
-  public cropClassification: ICropClassification[] = [];
-  // Grouped crop classifications by type and subtype
-  public groupedCropClassification: IGroupedCropClassification = {};
-  // Selected crop classifications
-  private selectedClassifications: ICropClassification[] = [];
- */
   // Selected parcel information
   private selectedParcelInfo: IFindParcelresponse | null = null;
   // URL of the parcel's satellite image
@@ -49,43 +44,6 @@ export class ParcelFinderComponent {
     // Empty the observable by emitting null
     this.parcelFinderService.setParcelInfo(null);
   }
-
- /* 
-  private loadCropClassifications() {
-    this.parcelFinderService.getCropClassifications().subscribe(
-      (cropClassification: ICropClassification[]) => {
-        this.cropClassification = cropClassification;
-        this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
-
-      },
-      (error) => {
-        console.error('Error loading crop classifications:', error);
-      }
-    );
-  }
-
-  public toggleSelectedClassification(clickedItem: ICropClassification): void {
-    !this.selectedClassifications.includes(clickedItem) ? 
-      this.selectedClassifications.push(clickedItem): 
-      this.selectedClassifications = this.selectedClassifications.filter(item => item !== clickedItem);
-  } 
-  
-    private groupByTypeAndSubtype(data: ICropClassification[]) {
-    const grouped: any = {};
-
-    for (const item of data) {
-      const type = item.type || 'Unknown';
-      const subtype = item.subtype1 || item.subtype2 || 'Otro';
-
-      if (!grouped[type]) grouped[type] = {};
-      if (!grouped[type][subtype]) grouped[type][subtype] = [];
-
-      grouped[type][subtype].push(item);
-    }
-
-    return grouped;
-  }
-  */
  
  /**
  * Finds a parcel based on the provided cadastral reference and selected date.

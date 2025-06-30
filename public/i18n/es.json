@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "parcel": "Buscador de Parcelas",
+    "chat": "Chat"
+  },
+  "home": {
+    "hero": {
+      "title": "Optimiza tus cultivos con Inteligencia Artificial",
+      "description": "AgrIA te ayuda a cumplir con los requisitos de las subvenciones de la PAC analizando tus imágenes satelitales.",
+      "button": "Descubre Más",
+      "imageAlt": "Imagen de satélite de campos de cultivo"
+    },
+    "about": {
+      "title": "Acerca de AgrIA",
+      "paragraph1Bold1": "El Asistente de Imágenes Agrícolas (AgrIA)",
+      "paragraph1Part2": "es una herramienta de análisis de imágenes y chat inteligente integrado,",
+      "paragraph1Bold2": "especializada en clasificación de imágenes satelitales agrícolas",
+      "paragraph1Part3": "Diseñada para agricultores y propietarios de tierras, facilita la valoración de sus cultivos y",
+      "paragraph1Bold3": "proporciona un informe que les ayuda a calificar para distintas ayudas de la Unión Europea de ecorregímenes dentro del marco de la Política Agraria Común (PAC).",
+      "paragraph2Part1": "Para empezar,",
+      "paragraph2Bold1": "abre el Buscador de Parcelas, introduce la referencia catastral y confirma la finca mostrada.",
+      "paragraph2Part2": "AgrIA abrirá el chat y te dará un análisis de la imagen, junto con recomendaciones para cumplir con normativas de eligibilidad de ecorregímenes de la PAC. También puedes",
+      "paragraph2Bold2": "subir tu propia imagen desde el chat, pero AgrIA no tendrá acceso a la información del SIGPAC que se consigue al usar la referencia catastral"
+    },
+    "features": {
+      "title": "Características Principales",
+      "parcelLocation": {
+        "title": "Localización de Parcela",
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral."
+      },
+      "satelliteImageAnalysis": {
+        "title": "Análisis de Imagen Satelital",
+        "description": "Obtén una descripción precisa de tus campos a partir de imágenes satelitales de Sentinel para una visión detallada del terreno."
+      },
+      "resourceAnalysis": {
+        "title": "Análisis de Recursos",
+        "description": "Recibe recomendaciones personalizadas para un uso eficiente del espacio, especies de cultivos y otros recursos."
+      },
+      "pacAdvisory": {
+        "title": "Asesoramiento PAC",
+        "description": "Consigue guía experta para cumplir con los criterios de subvención de la Política Agrícola Común."
+      },
+      "interactiveSupport": {
+        "title": "Soporte Interactivo",
+        "description": "Interactúa con AgrIA a través del chat y recibe respuestas actualizadas sobre tus cultivos."
+      }
+    },
+    "howToUse": {
+      "title": "Cómo Interactuar con AgrIA: El Chat",
+      "exampleTitle": "Ejemplo de interacción por chat de AgrIA"
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "description": "¿Tienes alguna pregunta o necesitas más información? No dudes en ponerte en contacto con nosotros.",
+      "namePlaceholder": "Tu Nombre",
+      "emailPlaceholder": "Tu Correo Electrónico",
+      "messagePlaceholder": "Tu Mensaje",
+      "sendButton": "Enviar Mensaje"
+    },
+    "footer": {
+      "copyright": "© 2025 AgrIA. Todos los derechos reservados.",
+      "facebookAlt": "Facebook",
+      "twitterAlt": "Twitter",
+      "linkedinAlt": "LinkedIn"
+    }
+  },
+  "parcelFinder": {
+    "cadastralData": "Datos Catastrales",
+    "description1": "Introduzca el código de referencia catastral de la parcela que desea consultar. Si no lo conoce, puede buscarlo en el sitio web del catastro o en documentos relacionados con la propiedad.",
+    "description2": "Asegúrese de que el código tenga 20 caracteres.",
+    "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
+    "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
+    "cadastralReference": "Código de referencia catastral",
+    "cadastralPlaceholder": "Ref. catastral",
+    "selectDate": "Seleccione fecha aproximada",
+    "datePlaceholder": "Fecha",
+    "loading": "Cargando…",
+    "findParcel": "Buscando Parcela...",
+    "clearForm": "Borrar Datos",
+    "selectedParcel": "Parcela Seleccionada",
+    "previewAlt": "Vista previa",
+    "uploadImageAlt": "Subir imagen",
+    "detailedDescription": "Descripción detallada.",
+    "confirmParcel": "Confirmar Parcela"
+  },
+  "chat": {
+    "uploadImage": {
+      "title": "Subir imagen",
+      "imageAlt": "Ejemplo de imagen satelital",
+      "description": "Aquí se mostrará la descripción generada por AgrIA de la imagen satelital subida.",
+      "imageName": "Nombre Imagen"
+    },
+    "chatWithAgria": {
+      "title": "Chat con AgrIA",
+      "agriaMessage1": "¡Hola! Soy tu Asistente de Imágenes Agrícolas, ¡pero puedes llamarme AgrIA! Mi propósito aquí es analizar imágenes satelitales de campos de cultivo para asistirte...",
+      "userMessage1": "Hola AgrIA, he subido una imagen de mi campo en la parcela 34. ¿Podrías analizar el uso del agua?",
+      "agriaMessage2": "Claro, he analizado la imagen de la parcela 34. Parece que hay áreas con bajo índice de vegetación que podrían indicar un uso ineficiente del agua. Te sugiero...",
+      "inputPlaceholder": "Escribe tu pregunta o comentario aquí...",
+      "sendButton": "Enviar",
+      "getSuggestionButton": "Obtener sugerencia"
+    },
+    "chatInput": {
+      "placeholder": "Escribe aquí...",
+      "sendButton": "Enviar",
+      "sendButtonTitle": "Enviar mensaje.",
+      "getSuggestionButton": "Obtener Sugerencia",
+      "getSuggestionButtonTitle": "Obtener una sugerencia de la respuesta.",
+      "detailedImageDescription": "Descripción detallada de imagen."
+    },
+    "navigationButton": {
+      "title": "Volver a la vista del buscador de parcelas.",
+      "text": "Volver al buscador de parcelas"
+    }
+  }
+}

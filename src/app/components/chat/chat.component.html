@@ -3,18 +3,18 @@
         <div class="top-section">
             <div id="image">
                 <div class="image-header">
-                    <h2>Upload image</h2>
+                    <h2>{{ 'chat.uploadImage.title' | translate }}</h2>
                 </div>
                 <div class="image-preview">
                     @if(imagePreviewUrl){
-                        <img [src]="imagePreviewUrl" alt="Preview" />
+                        <img [src]="imagePreviewUrl" alt="{{ 'parcelFinder.previewAlt' | translate }}" />
                     } @else {
-                        <img class="image-icon" src="image-icon.png" alt="Upload image" />
+                        <img class="image-icon" src="image-icon.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" />
                     }
                 </div>
                 @if (imagePreviewUrl) {
                     <div class="image-desc">
-                        <p>Nombre Imagen: {{ displayImageName }}</p>
+                        <p>{{ 'chat.uploadImage.imageName' | translate }}: {{ displayImageName }}</p>
                         <p>{{ parcelImageInfo }}</p>
                     </div>
                 }
@@ -31,7 +31,7 @@
 
         <div id="input">
             <label class="custom-file-upload">
-              <img src="upload-icon1.png" alt="Upload image" title="Upload image"/>
+              <img src="upload-icon1.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" title="{{ 'parcelFinder.uploadImageAlt' | translate }}"/>
               <input 
                 type="file" 
                 accept="image/*"
@@ -43,7 +43,7 @@
                 id="user-input" 
                 (keydown.enter)="sendUserInput()"
                 (keyup.enter)="clearUserInput()"
-                placeholder="Type here..." 
+                placeholder="{{ 'chat.chatInput.placeholder' | translate }}" 
                 [(ngModel)]="userInput"
             >
             </textarea>
@@ -52,17 +52,17 @@
                 <button 
                     class="input-button"
                     (click)="sendUserInput()"
-                    title="Send prompt."
+                    title="{{ 'chat.chatInput.sendButtonTitle' | translate }}"
                 >
-                    Send
+                    {{ 'chat.chatInput.sendButton' | translate }}
                 </button>
                 <button
                     class="input-button"
                     [style.cursor]="isLoading() ? 'progress' : 'pointer'"
                     (click)="getInputSuggestion()"
-                    title="Get a suggested prompt from the reply."
+                    title="{{ 'chat.chatInput.getSuggestionButtonTitle' | translate }}"
                 >
-                    {{ !isLoading() ? 'Get Suggestion' : 'Loading...' }}
+                    {{ !isLoading() ? ('chat.chatInput.getSuggestionButton' | translate) : ('parcelFinder.loading' | translate) }}
                 </button>
             </div>
 
@@ -72,16 +72,16 @@
                     class="description-length"
                     [(ngModel)]="isDetailedDescription"
                 >
-                Descripción detallada de imagen.
+                {{ 'chat.chatInput.detailedImageDescription' | translate }}
             </label>
         </div>
         </div>
         <button
             class="navigation-button"
             (click)="goToParcelFinderView()"
-            title="Navigate to parcel finder view."
+            title="{{ 'chat.navigationButton.title' | translate }}"
         >
-            Return to parcel finder
+            {{ 'chat.navigationButton.text' | translate }}
         </button>
     </div>
 </div>

@@ -14,23 +14,44 @@
     
     <div class="navbar-menu" [className]="isMenuOpen ? 'active': 'navbar-menu'">
         <ul class="navbar-nav" (click)="toggleMenu()">
-            <li class="nav-item">
-            <a 
-                routerLink="/" 
-                routerLinkActive="active" 
-                [routerLinkActiveOptions]="{ exact: true }" 
-                class="nav-link"
-            >
-            Home
-            </a>
+            <li class="nav-item" >
+                <a 
+                    routerLink="/" 
+                    routerLinkActive="active" 
+                    [routerLinkActiveOptions]="{ exact: true }" 
+                    class="nav-link"
+                >
+                    {{ 'nav.home' | translate }}
+                </a>
             </li>
             <li class="nav-item">
-            <a routerLink="/parcel-finder" routerLinkActive="active" class="nav-link">Parcel finder</a>
+                <a routerLink="/parcel-finder" routerLinkActive="active" class="nav-link">
+                    {{ 'nav.parcel' | translate }}
+                </a>
             </li>
             <li class="nav-item">
-            <a routerLink="/chat" routerLinkActive="active" class="nav-link">Chat</a>
+                <a routerLink="/chat" routerLinkActive="active" class="nav-link">
+                    {{ 'nav.chat' | translate }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <button
+                    class="btn es"
+                    (click)="switchLanguage('es')"
+                    [class.active-language]="currentLanguage === 'es'"
+                    [class.btn-primary]="currentLanguage === 'es'"  >
+                    ES
+                </button>
+            </li>
+            <li class="nav-item">
+                <button
+                    class="btn en"
+                    (click)="switchLanguage('en')"
+                    [class.active-language]="currentLanguage === 'en'"
+                    [class.btn-primary]="currentLanguage === 'en'"  >
+                    EN
+                </button>
             </li>
         </ul>
-
     </div>
 </nav>
