@@ -1,5 +1,6 @@
 import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
@@ -10,7 +11,11 @@ import { IFindParcelresponse } from '../../models/parcel-finder-response.models'
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, ChatAssistantComponent],
+  imports: [
+    FormsModule,
+    ChatAssistantComponent,
+    TranslateModule,
+  ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
