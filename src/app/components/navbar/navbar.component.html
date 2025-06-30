@@ -13,8 +13,8 @@
     </button>
     
     <div class="navbar-menu" [className]="isMenuOpen ? 'active': 'navbar-menu'">
-        <ul class="navbar-nav">
-            <li class="nav-item">
+        <ul class="navbar-nav" (click)="toggleMenu()">
+            <li class="nav-item" >
                 <a 
                     routerLink="/" 
                     routerLinkActive="active" 
@@ -35,10 +35,22 @@
                 </a>
             </li>
             <li class="nav-item">
-                <button class="btn" (click)="switchLanguage('es')">ES</button>
+                <button
+                    class="btn es"
+                    (click)="switchLanguage('es')"
+                    [class.active-language]="currentLanguage === 'es'"
+                    [class.btn-primary]="currentLanguage === 'es'"  >
+                    ES
+                </button>
             </li>
             <li class="nav-item">
-                <button class="btn" (click)="switchLanguage('en')">EN</button>
+                <button
+                    class="btn en"
+                    (click)="switchLanguage('en')"
+                    [class.active-language]="currentLanguage === 'en'"
+                    [class.btn-primary]="currentLanguage === 'en'"  >
+                    EN
+                </button>
             </li>
         </ul>
     </div>

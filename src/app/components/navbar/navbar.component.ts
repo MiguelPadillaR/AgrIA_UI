@@ -18,12 +18,14 @@ export class NavbarComponent {
   // Initialize isMenuOpen to false, meaning the menu is closed by default
   isMenuOpen: boolean = false;
   // Style tracking variables
-  isVisible = true;
-  lastScrollTop = 0;
-  isAtTop = true;
-  isHoveringTop = false;
+  isVisible: boolean = true;
+  lastScrollTop: number = 0;
+  isAtTop: boolean = true;
+  isHoveringTop: boolean = false;
+  maxPhoneScreenWidthPx: number = 768;
   // Translation service
   private translateService = inject(TranslateService);
+  public currentLanguage: string = 'es';
 
   constructor() {
     this.translateService.setDefaultLang('es');
@@ -68,6 +70,14 @@ export class NavbarComponent {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    if (window.innerWidth > this.maxPhoneScreenWidthPx && this.isMenuOpen) {
+      this.isMenuOpen = false; // Close menu if resized above breakpoint
+    }
+  }
+
+
   /**
    * Updates navbar visibility reactively based on scroll position and hover state.
    */
@@ -83,7 +93,9 @@ export class NavbarComponent {
    * This method is called when the hamburger icon is clicked.
    */
   public toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen; // Flips the boolean value
+    if (window.innerWidth < this.maxPhoneScreenWidthPx) {
+      this.isMenuOpen = !this.isMenuOpen;
+    }
   }
 
   /**
@@ -97,5 +109,7 @@ export class NavbarComponent {
   
   public switchLanguage(lang: string) {
     this.translateService.use(lang);
+    this.currentLanguage = lang;
+    console.log(this.currentLanguage)
   }
 }
