@@ -241,4 +241,7 @@
     width: 100%; /* Make buttons full width */
     margin-bottom: 0.5rem; /* Space between stacked buttons */
   }
+  .btn:hover {
+      background-color: red;
+    }
 }
