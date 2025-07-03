@@ -1,0 +1,124 @@
+<body>
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>{{ 'home.hero.title' | translate }}</h2>
+                <p>{{ 'home.hero.description' | translate }}</p>
+                <a href="#about" class="cta-button">{{ 'home.hero.button' | translate }}</a>
+            </div>
+            <div class="hero-image">
+                <img src="logo.png" alt="{{ 'home.hero.imageAlt' | translate }}">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section content-section">
+        <div class="content-card">
+            <h2 class="section-title">{{ 'home.about.title' | translate }}</h2>
+            <p>
+                <span style="font-weight: bold;">{{ 'home.about.paragraph1Bold1' | translate }}</span> {{ 'home.about.paragraph1Part2' | translate }} <span style="font-weight: bold;">{{ 'home.about.paragraph1Bold2' | translate }}</span>. {{ 'home.about.paragraph1Part3' | translate }} <span style="font-weight: bold;">{{ 'home.about.paragraph1Bold3' | translate }}</span>
+            </p>
+            <p>
+                {{ 'home.about.paragraph2Part1' | translate }} <span style="font-weight: bold;">{{ 'home.about.paragraph2Bold1' | translate }}</span> {{ 'home.about.paragraph2Part2' | translate }} <span style="font-weight: bold;">{{ 'home.about.paragraph2Bold2' | translate }}</span>.
+            </p>
+        </div>
+    </section>
+
+    <section id="features" class="features-section content-section">
+        <h2 class="section-title">{{ 'home.features.title' | translate }}</h2>
+        <div class="features-grid">
+            <div class="feature-item content-card">
+                <h3>{{ 'home.features.parcelLocation.title' | translate }}</h3>
+                <p>{{ 'home.features.parcelLocation.description' | translate }}</p>
+            </div>
+            <div class="feature-item content-card">
+                <h3>{{ 'home.features.satelliteImageAnalysis.title' | translate }}</h3>
+                <p>{{ 'home.features.satelliteImageAnalysis.description' | translate }}</p>
+            </div>
+            <div class="feature-item content-card">
+                <h3>{{ 'home.features.resourceAnalysis.title' | translate }}</h3>
+                <p>{{ 'home.features.resourceAnalysis.description' | translate }}</p>
+            </div>
+            <div class="feature-item content-card">
+                <h3>{{ 'home.features.pacAdvisory.title' | translate }}</h3>
+                <p>{{ 'home.features.pacAdvisory.description' | translate }}</p>
+            </div>
+            <div class="feature-item content-card">
+                <h3>{{ 'home.features.interactiveSupport.title' | translate }}</h3>
+                <p>{{ 'home.features.interactiveSupport.description' | translate }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-to-use" class="how-to-use-section content-section">
+        <h2 class="section-title">{{ 'home.howToUse.title' | translate }}</h2>
+        <div class="how-to-use-content content-card">
+            <h3>{{ 'home.howToUse.exampleTitle' | translate }}</h3>
+            <div class="mockup-container">
+                <div class="mockup-section">
+                    <div class="mockup-header">
+                        <h2>{{ 'chat.uploadImage.title' | translate }}</h2>
+                    </div>
+                    <div class="mockup-image-preview">
+                        <img src="SR_4-1-P6.jpg" alt="{{ 'chat.uploadImage.imageAlt' | translate }}">
+                    </div>
+                    <div class="mockup-image-desc">
+                        <p>{{ 'chat.uploadImage.description' | translate }}</p>
+                    </div>
+                </div>
+
+                <div class="mockup-section">
+                    <div class="mockup-header">
+                        <h2>{{ 'chat.chatWithAgria.title' | translate }}</h2>
+                    </div>
+                    <div class="mockup-chat-content">
+                        <div class="message agria-message">
+                            <p>{{ 'chat.chatWithAgria.agriaMessage1' | translate }}</p>
+                        </div>
+                        <div class="message user-message">
+                            <p>{{ 'chat.chatWithAgria.userMessage1' | translate }}</p>
+                        </div>
+                        <div class="message agria-message">
+                            <p>{{ 'chat.chatWithAgria.agriaMessage2' | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="mockup-input">
+                        <textarea id="mockup-user-input" placeholder="{{ 'chat.chatWithAgria.inputPlaceholder' | translate }}"></textarea>
+                        <div class="mockup-input-actions-wrapper">
+                            <div class="mockup-input-buttons-wrapper">
+                                <button class="input-button">{{ 'chat.chatWithAgria.sendButton' | translate }}</button>
+                                <button class="input-button get-suggestion">{{ 'chat.chatWithAgria.getSuggestionButton' | translate }}</button>
+                            </div>
+                            <label class="detailed-description-checkbox">
+                                <input type="checkbox" class="description-length">
+                                {{ 'parcelFinder.detailedDescription' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section content-section">
+        <div class="content-card">
+            <h2 class="section-title">{{ 'home.contact.title' | translate }}</h2>
+            <p>{{ 'home.contact.description' | translate }}</p>
+            <form class="contact-form">
+                <input type="text" placeholder="{{ 'home.contact.namePlaceholder' | translate }}" required>
+                <input type="email" placeholder="{{ 'home.contact.emailPlaceholder' | translate }}" required>
+                <textarea placeholder="{{ 'home.contact.messagePlaceholder' | translate }}" rows="5" required></textarea>
+                <button type="submit" class="cta-button">{{ 'home.contact.sendButton' | translate }}</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <p>{{ 'home.footer.copyright' | translate }}</p>
+        <div class="social-links">
+            <a href="#"><img src="logo.png" alt="{{ 'home.footer.facebookAlt' | translate }}"></a>
+            <a href="#"><img src="logo.png" alt="{{ 'home.footer.twitterAlt' | translate }}"></a>
+            <a href="#"><img src="logo.png" alt="{{ 'home.footer.linkedinAlt' | translate }}"></a>
+        </div>
+    </footer>
+</body>
