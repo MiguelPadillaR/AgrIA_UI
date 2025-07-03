@@ -76,7 +76,7 @@
     "selectDate": "Seleccione fecha aproximada",
     "datePlaceholder": "Fecha",
     "loading": "Cargando…",
-    "findParcel": "Buscando Parcela...",
+    "findParcel": "Buscar Parcela",
     "clearForm": "Borrar Datos",
     "selectedParcel": "Parcela Seleccionada",
     "previewAlt": "Vista previa",
@@ -86,7 +86,7 @@
   },
   "chat": {
     "uploadImage": {
-      "title": "Subir imagen",
+      "title": "Imagen",
       "imageAlt": "Ejemplo de imagen satelital",
       "description": "Aquí se mostrará la descripción generada por AgrIA de la imagen satelital subida.",
       "imageName": "Nombre Imagen"
@@ -100,6 +100,7 @@
       "sendButton": "Enviar",
       "getSuggestionButton": "Obtener sugerencia"
     },
+
     "chatInput": {
       "placeholder": "Escribe aquí...",
       "sendButton": "Enviar",

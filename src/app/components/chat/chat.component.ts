@@ -25,7 +25,7 @@ export class ChatComponent {
   // Image URL/path for the preview module
   public imagePreviewUrl: string | null = null;
   // Parcel's image information
-  public parcelImageInfo: string =  "Leyendo características de la parcela..."
+  public parcelImageInfo: string =  "..."
   // User's chat input
   public userInput: string = ""
   // User preference for longer image description

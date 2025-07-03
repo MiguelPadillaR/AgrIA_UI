@@ -52,6 +52,7 @@ export class ParcelFinderComponent {
 public findParcel() {
   this.isLoading.set(true);
   document.body.style.cursor = 'progress';
+  this.parcelImageUrl = null;
 
   const formData = new FormData();
   formData.append('cadastralReference', this.cadastralReference);
