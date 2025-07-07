@@ -23,6 +23,7 @@
                     placeholder="{{ 'parcelFinder.cadastralPlaceholder' | translate }}"
                     class="cadastral-input-field"
                     [(ngModel)]="cadastralReference"
+                    maxlength="20"
                     />
                 </label>
             </div>
@@ -55,6 +56,11 @@
                 </button>
             </div>
         </div>
+        <app-progress-bar
+            [isProcessing]="isLoading()"
+            [durationInSeconds]="40"
+        ></app-progress-bar>
+
         <div class="parcel-finder-display">
             <div class="display-title">
                 <h2>{{ 'parcelFinder.selectedParcel' | translate }}</h2>

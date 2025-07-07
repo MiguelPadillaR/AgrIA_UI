@@ -72,7 +72,7 @@
     "description3Bold": "Urban cadastral reference codes will not be accepted.",
     "description3": " If you have difficulty finding your parcel, upload an image of your farm to the chat along with crop data and parcel area.",
     "cadastralReference": "Cadastral reference code",
-    "cadastralPlaceholder": "Ref. cadastral",
+    "cadastralPlaceholder": "Cadastral Ref. Code",
     "selectDate": "Select approximate date",
     "datePlaceholder": "Date",
     "loading": "Loading…",
@@ -111,5 +111,8 @@
       "title": "Navigate to parcel finder view.",
       "text": "Return to parcel finder"
     }
+  },
+  "progressBar": {
+    "completed": "Completed"
   }
 }
