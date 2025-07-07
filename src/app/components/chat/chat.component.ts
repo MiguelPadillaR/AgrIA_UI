@@ -64,10 +64,11 @@ export class ChatComponent {
     this.chatAssistant.showMessageIcon();
     this.imagePreviewUrl = parcel.imagePath;
     this.isDetailedDescription = parcel.isDetailedDescription;
-
+    const [year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
+        
     const formData = new FormData();
-    formData.append('imageDate', parcel.metadata.vigencia);
-    formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+    formData.append('imageDate', `${month}/${year}`);
+    formData.append('imageCrops', JSON.stringify(parcel.metadata.query));
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
 
@@ -80,7 +81,7 @@ export class ChatComponent {
   }
 
   get displayImageName(): string | undefined {
-    const fileName = this.imagePreviewUrl?.split('/')?.pop();
+    const fileName = this.imagePreviewUrl?.split('/').pop();
     return (fileName?.length ?? 0) < 2 ? this.imageFile?.name : fileName;
   }
 

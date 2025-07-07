@@ -56,7 +56,6 @@ export class ChatAssistantComponent {
    * @returns Sanitized chat history
    */
   private sanitizeChatHistory(response: IChatMessage[]) {
-    console.log("OG History:", response)
     // Skip context setting messages
     let index = this.firstIndex;
     while (index < response.length && response[index].role !== 'model') {
