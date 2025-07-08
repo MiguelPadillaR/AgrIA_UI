@@ -115,6 +115,6 @@
     }
   },
   "progressBar": {
-    "completed": "Completado"
+    "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
   }
 }

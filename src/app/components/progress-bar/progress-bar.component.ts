@@ -98,8 +98,6 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     const pad = (num: number) => (num < 10 ? '0' : '') + num;
-    console.log(`${pad(minutes)}:${pad(seconds)}`)
-    console.log(totalSeconds)
     return `${pad(minutes)}:${pad(seconds)}`;
   }
 

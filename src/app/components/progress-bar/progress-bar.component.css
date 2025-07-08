@@ -2,6 +2,7 @@
     --bg-color:#e0e0e0;
     --completion-color1: #4CAF50;
     --completion-color2: #22a7ff;
+    --status-text-color: #dc3545;
 }
 .progress-container {
   width: 100%;
@@ -52,6 +53,6 @@
 
 .status-text {
   margin-left: 5px;
-  font-size: 0.8em;
-  color: var(--completion-color1); /* Example color for status */
+  font-size: 1em;
+  color: var(--status-text-color); /* Example color for status */
 }
