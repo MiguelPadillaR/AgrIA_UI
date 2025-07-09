@@ -81,7 +81,8 @@
     "selectedParcel": "Selected Parcel",
     "previewAlt": "Preview",
     "uploadImageAlt": "Upload image",
-    "detailedDescription": "Detailed description."
+    "detailedDescription": "Detailed description.",
+    "confirmParcel": "Confirm Parcel"
   },
   "chat": {
     "uploadImage": {
@@ -114,5 +115,16 @@
   },
   "progressBar": {
     "completed": "Process can sometimes take up to 1 minute aprox..."
+  },
+  "help": {
+    "intro": {
+      "header": "Need a little help?",
+      "content": "Welcome to the help guide! All features and functions of AgrIA are described and detailed here, from first steps to prompting strategies to exploit the tool."
+    },
+    "views": {
+      "home-alt": "lol",
+      "parcel-finder-alt": "lol",
+      "chat-alt": "lol"
+    }
   }
 }

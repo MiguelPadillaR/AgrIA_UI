@@ -2,7 +2,8 @@
   "nav": {
     "home": "Inicio",
     "parcel": "Buscador de Parcelas",
-    "chat": "Chat"
+    "chat": "Chat",
+    "help": "Help"
   },
   "home": {
     "hero": {
@@ -81,7 +82,7 @@
     "selectedParcel": "Parcela Seleccionada",
     "previewAlt": "Vista previa",
     "uploadImageAlt": "Subir imagen",
-    "detailedDescription": "Descripción detallada.",
+    "detailedDescription": "Descripción detallada",
     "confirmParcel": "Confirmar Parcela"
   },
   "chat": {
@@ -116,5 +117,8 @@
   },
   "progressBar": {
     "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
+  },
+  "help": {
+    
   }
 }
