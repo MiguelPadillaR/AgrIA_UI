@@ -1,6 +1,20 @@
-# AgriMultimodel
+# AgrIA_UI
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+
+## Installation:
+This is a guide to install all necessary components to run the frontend interface.
+
+### Requirements:
+- NodeJs Node Package Manager (`npm`) ( [npmjs.com](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)).
+- Angular CLI (easy to get if you have `npm` by just using `npm install -g @angular/cli`).
+
+### Setup
+After getting `npm` and all requirements, install al dependencies with:
+```bash
+npm install
+```
+Follow the instructions if prompted for anything and done!
 
 ## Development server
 
@@ -11,6 +25,10 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+<details>
+    <summary style="font-size: larger; font-weight: bold;">Expand for more useful Angular commands for developers.</summary>
+
 
 ## Code scaffolding
 
@@ -53,6 +71,7 @@ ng e2e
 ```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+</details>
 
 ## Additional Resources
 
