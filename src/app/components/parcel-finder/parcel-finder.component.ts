@@ -2,9 +2,10 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
+import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({
   selector: 'app-parcel-finder',
@@ -34,6 +35,8 @@ export class ParcelFinderComponent {
 
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
+  // Service for notifications
+  private notificationService = inject(NotificationService)
   // Router for navigation
   private router: Router = inject(Router);
     // Utility to get object keys
@@ -52,6 +55,7 @@ export class ParcelFinderComponent {
  * 
  */
 public findParcel() {
+  this.notificationService.showNotification("parcel-finder.searching", "", "info")
   this.isLoading.set(true);
   document.body.style.cursor = 'progress';
   this.parcelImageUrl = null;
@@ -62,11 +66,13 @@ public findParcel() {
 
   this.parcelFinderService.findParcel(formData).subscribe({
     next: (response: IFindParcelresponse) => {
+      this.notificationService.showNotification("parcel-finder.success","","success")
       this.selectedParcelInfo = response;
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
       document.body.style.cursor = 'default';
     },
     error: (err) => {
+      this.notificationService.showNotification("parcel-finder.error",`\n${err.error.error}`,"error", 10000)
       console.error('Parcel fetch failed', err);
       document.body.style.cursor = 'default';
       this.isLoading.set(false);

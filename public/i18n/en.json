@@ -114,5 +114,17 @@
   },
   "progressBar": {
     "completed": "Process can sometimes take up to 1 minute aprox..."
+  },
+    "notifications": {
+      "parcel-finder": {
+        "searching": "Searching for parcel image...",
+        "success": "Parcel found!",
+        "error": "Error when searching for parcel:"
+      },
+      "chat": {
+        "suggestion-info": "Getting suggested input...",
+        "suggestion-error": "Error when getting suggestion:",
+        "suggestion-success": "Suggestion loaded successfully!"
+      }
   }
 }

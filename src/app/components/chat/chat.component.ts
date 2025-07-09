@@ -8,6 +8,7 @@ import { ChatService } from '../../services/chat.services/chat.service';
 import { IChatParcelResponse } from '../../models/chat.models';
 import { take } from 'rxjs';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({
   selector: 'app-chat',
@@ -37,6 +38,8 @@ export class ChatComponent {
 
   // Service to communicate parcel info from parcel finder to chat
   private parcelFinderService = inject(ParcelFinderService);
+  // Service for notifications
+  private notificationService = inject(NotificationService)
   // Chat service
   private chatService = inject(ChatService);
   // Router for navigation
@@ -134,15 +137,27 @@ export class ChatComponent {
    * 
    */
   public getInputSuggestion() {
+    this.notificationService.showNotification("chat.suggestion-info", "", "info")
     this.isLoading.set(true);
     document.body.style.cursor = 'progress';
-    this.chatService.getInputSuggestion().subscribe(
-      (response: string) => {
+    this.chatService.getInputSuggestion().subscribe({
+      next: (response: string) => {
+      this.notificationService.showNotification("chat.suggestion-success", "", "success")
         this.userInput = response
         document.body.style.cursor = 'default';
         this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.notificationService.showNotification("chat.suggestion-error",`\n${err.error.error}`,"error", 10000)
+        console.error('Parcel fetch failed', err);
+        document.body.style.cursor = 'default';
+        this.isLoading.set(false);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+        document.body.style.cursor = 'default';
       }
-    );
+    });
   }
 
   /**

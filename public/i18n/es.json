@@ -116,5 +116,17 @@
   },
   "progressBar": {
     "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
+  },
+    "notifications": {
+      "parcel-finder": {
+        "searching": "Buscando imagen de las parcelas...",
+        "success": "¡Parcela encontrada!",
+        "error": "Fallo al buscar la parcela:"
+      },
+      "chat": {
+        "suggestion-info": "Obteniendo respuesta de sugerencia...",
+        "suggestion-error": "Fallo al obtener sugerencia:",
+        "suggestion-success": "¡Sugerencia obtenida con éxito!"
+      }
   }
 }
