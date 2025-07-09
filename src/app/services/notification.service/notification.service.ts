@@ -10,42 +10,12 @@ export class NotificationService {
 
   constructor(private snackBar: MatSnackBar, private translate: TranslateService) {}
 
-/* 
-
-  showSuccess(message: string, duration: number = 3000): void {
-    this.snackBar.open(message, 'Close', {
-      duration: duration,
-      panelClass: ['success-snackbar'], // Custom CSS class for success styling
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
-  }
-
-  showError(message: string, duration: number = 5000): void {
-    this.snackBar.open(message, 'Close', {
-      duration: duration,
-      panelClass: ['error-snackbar'], // Custom CSS class for error styling
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
-  }
-
-  showInfo(message: string, duration: number = 3000): void {
-    this.snackBar.open(message, 'Close', {
-      duration: duration,
-      panelClass: ['info-snackbar'], // Custom CSS class for info styling
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
-  }
-
- */
   /**
    * Show a notification on the interface.
    * 
    * @param messageKey (str) Dict key inside the JSON localization files.
-   * @param additionalMessage (str) 
-   * @param type (str) Type of notification.
+   * @param additionalMessage (str) Additional message context for the notification.
+   * @param type (str) Type of notification (`'success' | 'error' | 'info' | 'warning'`).
    * @param duration (number) Duration of displayed notidication in ms (Default: 3000).
    */
   public showNotification(
