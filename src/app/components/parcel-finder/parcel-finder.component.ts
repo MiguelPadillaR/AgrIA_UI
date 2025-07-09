@@ -1,22 +1,24 @@
-import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-parcel-finder',
   imports: [
     FormsModule,
     TranslateModule,
+    ProgressBarComponent,
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
 })
 export class ParcelFinderComponent {
   // Cadastral reference of the parcel
-  public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
+  public cadastralReference: string = '14048A001001990000RM';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker

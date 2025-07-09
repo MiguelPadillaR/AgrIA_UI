@@ -72,7 +72,7 @@
     "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
     "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
     "cadastralReference": "Código de referencia catastral",
-    "cadastralPlaceholder": "Ref. catastral",
+    "cadastralPlaceholder": "Referencia catastral",
     "selectDate": "Seleccione fecha aproximada",
     "datePlaceholder": "Fecha",
     "loading": "Cargando…",
@@ -113,5 +113,8 @@
       "title": "Volver a la vista del buscador de parcelas.",
       "text": "Volver al buscador de parcelas"
     }
+  },
+  "progressBar": {
+    "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
   }
 }
