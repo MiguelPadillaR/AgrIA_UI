@@ -58,7 +58,7 @@
         </div>
         <app-progress-bar
             [isProcessing]="isLoading()"
-            [durationInSeconds]="40"
+            [durationInSeconds]="this.progressMaxDuration"
         ></app-progress-bar>
 
         <div class="parcel-finder-display">
