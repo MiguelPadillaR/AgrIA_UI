@@ -135,7 +135,6 @@ body, html {
 .chat-content {
   flex-grow: 1;
   background-color: var(--card-bg-color);
-  padding: var(--padding-unit);
   height: auto; /* Fixed height for chat area, adjust as needed */
   display: flex; /* To contain chat messages effectively */
   flex-direction: column; /* Stack messages vertically */

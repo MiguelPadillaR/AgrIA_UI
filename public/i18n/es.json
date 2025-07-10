@@ -71,7 +71,7 @@
     "description2": "Asegúrese de que el código tenga 20 caracteres.",
     "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
     "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
-    "cadastralReference": "Código de referencia catastral",
+    "cadastralReference": "Código de referencia catastral:",
     "cadastralPlaceholder": "Referencia catastral",
     "selectDate": "Seleccione fecha aproximada",
     "datePlaceholder": "Fecha",

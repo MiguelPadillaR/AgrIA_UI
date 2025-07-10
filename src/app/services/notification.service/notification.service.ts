@@ -1,5 +1,5 @@
 // src/app/services/notification.service.ts
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,8 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class NotificationService {
+  // Service to access all MatSnackBar features
+  private matSnackBar = inject(MatSnackBar);
+  // Translation service
+  private translateService = inject(TranslateService);
 
-  constructor(private snackBar: MatSnackBar, private translate: TranslateService) {}
+  constructor() {}
 
   /**
    * Show a notification on the interface.
@@ -41,9 +45,9 @@ export class NotificationService {
     }
 
     // Look up the translation:
-    this.translate.get(`notifications.${messageKey}`).subscribe((translatedMessage: string) => {
+    this.translateService.get(`notifications.${messageKey}`).subscribe((translatedMessage: string) => {
       const message = additionalMessage ? translatedMessage + ' ' + additionalMessage: translatedMessage;
-      this.snackBar.open(message, 'Close', {
+      this.matSnackBar.open(message, 'Close', {
         duration: duration,
         panelClass: panelClass,
         horizontalPosition: 'center',
