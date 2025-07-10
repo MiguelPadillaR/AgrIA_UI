@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +18,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RouterOutlet,
     NavbarComponent,
     TranslateModule,
+    MatSnackBarModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
