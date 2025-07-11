@@ -50,6 +50,97 @@
         </div>
     </section>
 
+<section id="quickstart" class="quickstart-section content-section">
+    <h2 class="section-title">Quick Start</h2>
+    <div class="quickstart-list content-card">
+        <p>This is a quick guide to get you started with our service. <span style="font-weight: bold;">Follow these simple steps</span> to find and analyze your parcels.</p>
+        <ol>
+            <li>Navigate to the Parcel Finder.</li>
+            <li>Enter the cadastral reference and select a date.</li>
+            <li>Click 'Find Parcel' to retrieve information.</li>
+            <li>Review the parcel details and confirm.</li>
+        </ol>
+        <h3>Example: Parcel Finder</h3>
+        <div class="mockup-container parcel-finder-mockup">
+            <div class="content">
+                <div class="form-title">
+                    <h2>Cadastral Data</h2>
+                </div>
+                <div class="form-description">
+                    <p>
+                        To find your parcel, please provide the cadastral reference.
+                    </p>
+                    <p style="font-weight: bold;">
+                        This information is crucial for accurate parcel identification.
+                    </p>
+                    <p>
+                        <span style="font-weight: bold;">Please ensure the reference is correct</span> to avoid errors.
+                    </p>
+                </div>
+                <div class="form">
+                    <div class="cadastral-field">
+                        <label class="form-label">
+                            Cadastral Reference
+                            <input class="form-input"
+                                type="text"
+                                placeholder="e.g., 12345A001000010000AA"
+                                value="12345A001000010000AA"
+                                maxlength="20"
+                            />
+                        </label>
+                    </div>
+                    <div class="date-field">
+                        <label class="form-label">
+                            Select Date:
+                            <input class="form-input"
+                                type="date"
+                                value="2023-01-15"
+                            />
+                        </label>
+                    </div>
+                    <div class="parcel-finder-buttons">
+                        <button class="input-button">
+                            Find Parcel
+                        </button>
+                        <button class="clear-info-button">
+                            Clear Form
+                        </button>
+                    </div>
+                </div>
+                <!-- Progress bar is an Angular component, omitting for static mock -->
+                <!-- <app-progress-bar [isProcessing]="isLoading()" [durationInSeconds]="this.progressMaxDuration"></app-progress-bar> -->
+
+                <div class="parcel-finder-display">
+                    <div class="display-title">
+                        <h2>Selected Parcel</h2>
+                    </div>
+                    <div class="display-box">
+                        <!-- Using the provided image as a static placeholder -->
+                        <img src="SR_4-1-P6.jpg" alt="Preview of selected parcel" />
+                    </div>
+                    <div class="display-buttons">
+                        <div class="parcel-actions-wrapper">
+                            <label class="detailed-description-checkbox">
+                                <input
+                                    type="checkbox"
+                                    class="description-length"
+                                    checked
+                                >
+                                Detailed Description.
+                            </label>
+                            <button
+                                class="confirm-parcel-button"
+                            >
+                                Confirm Parcel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
     <section id="how-to-use" class="how-to-use-section content-section">
         <h2 class="section-title">{{ 'home.howToUse.title' | translate }}</h2>
         <div class="how-to-use-content content-card">

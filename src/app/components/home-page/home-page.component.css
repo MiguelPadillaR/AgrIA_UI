@@ -276,6 +276,296 @@ body, html {
     font-size: 1.05rem;
 }
 
+    /* Specific styles for the quickstart section to contain the mockup */
+    .quickstart-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .quickstart-list p {
+        font-size: 1.1rem;
+        color: var(--text-color-dark);
+        line-height: 1.7;
+    }
+
+    .quickstart-list ol {
+        list-style: decimal;
+        padding-left: 20px;
+        font-size: 1rem;
+        color: var(--text-color-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .quickstart-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .quickstart-list h3 {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    /* Mockup Container for Parcel Finder (adapted from parcel-finder.component.css) */
+    .mockup-container.parcel-finder-mockup {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background-color: var(--bg-color); /* Use homepage background color */
+        padding: var(--padding-unit);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        margin: 0 auto; /* Center the mockup within its parent */
+        max-width: 800px; /* Max width from parcel-finder.component.css */
+        margin-top: 2rem; /* Add some top margin to separate from list */
+    }
+
+    .mockup-container.parcel-finder-mockup .content {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--card-bg-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow); /* Reapply shadow for inner content */
+        width: 100%;
+        overflow: hidden;
+        margin-top: 0; /* Override margin from original #parcel-finder .content */
+        margin-bottom: 0;
+    }
+
+    /* Form Section (Cadastral Data) */
+    .form-title, .display-title {
+        background-color: var(--header-bg);
+        padding: 0.75rem var(--padding-unit);
+        border-bottom: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .form-title h2, .display-title h2 {
+        font-size: 1.2rem;
+        color: var(--text-color-dark);
+    }
+
+    .form-description {
+        border-bottom: 1px solid var(--border-color);
+    }
+    .form-description p {
+        padding: 0.75rem var(--padding-unit);
+        font-size: 1rem;
+        color: var(--text-color-light);
+        text-align: justify;
+    }
+
+    .form {
+        padding: var(--padding-unit);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .cadastral-field, .date-field {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%; /* Ensure fields take full width in the form */
+        justify-content: center; /* Center content within fields */
+    }
+
+    .form-label {
+        font-size: 1rem;
+        color: var(--text-color-dark);
+        white-space: nowrap;
+        flex-shrink: 0; /* Prevent label from shrinking */
+    }
+
+    .form-input {
+        flex-grow: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background-color: var(--input-bg);
+        color: var(--text-color-dark);
+        min-width: 150px;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+    }
+
+    /* Buttons within the form */
+    .parcel-finder-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        width: 100%; /* Ensure buttons take full width */
+    }
+
+    .input-button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        white-space: nowrap;
+        background-color: var(--blue-button-color);
+        color: white;
+        box-shadow: var(--shadow); /* Add shadow for consistency with homepage buttons */
+    }
+
+    .input-button:hover {
+        background-color: color-mix(in srgb, var(--blue-button-color) 90%, black);
+    }
+
+    .input-button:active {
+        transform: translateY(1px);
+    }
+
+    .clear-info-button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        white-space: nowrap;
+        background-color: var(--red-button-color);
+        color: white;
+        box-shadow: var(--shadow); /* Add shadow for consistency */
+    }
+
+    .clear-info-button:hover {
+        background-color: color-mix(in srgb, var(--red-button-color) 90%, black);
+    }
+
+    .clear-info-button:active {
+        transform: translateY(1px);
+    }
+
+    /* Selected Parcel Display Section */
+    .parcel-finder-display {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: var(--padding-unit);
+    }
+
+    .display-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+        background-color: var(--input-bg);
+        padding: var(--padding-unit);
+        flex-grow: 1;
+    }
+
+    .display-box img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the image */
+    }
+
+    .display-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-top: var(--padding-unit);
+        padding: 0 var(--padding-unit);
+    }
+
+    .parcel-actions-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .confirm-parcel-button {
+        padding: 0.8rem 2rem;
+        background-color: var(--blue-button-color); /* Using blue button color from parcel-finder */
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        box-shadow: var(--shadow);
+        width: 100%;
+    }
+
+    .confirm-parcel-button:hover {
+        background-color: color-mix(in srgb, var(--blue-button-color) 90%, black);
+    }
+
+    .confirm-parcel-button:active {
+        transform: translateY(1px);
+    }
+
+    .detailed-description-checkbox {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 0.95rem;
+        color: var(--text-color-dark);
+        white-space: nowrap;
+        width: fit-content;
+    }
+
+    .description-length {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--primary-color); /* Using primary-color from homepage */
+        border-radius: 4px;
+        background-color: var(--input-bg);
+        margin-right: 8px;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .description-length:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .description-length:checked::before {
+        content: '\2713';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    .description-length:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.3);
+    }
+
 /* How to Use Section (Mockup) */
 .how-to-use-content {
     display: flex;
@@ -665,6 +955,53 @@ body, html {
         font-size: 2.2rem;
     }
 
+            .mockup-container.parcel-finder-mockup {
+            padding: var(--mobile-padding-unit);
+            margin-top: 1.5rem;
+        }
+
+        .form, .parcel-finder-display {
+            padding: 1rem;
+        }
+
+        .cadastral-field, .date-field {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .parcel-finder-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-button, .clear-info-button {
+            width: 100%;
+        }
+
+        .display-box {
+            min-height: 250px;
+            padding: 1rem;
+        }
+
+        .parcel-actions-wrapper {
+            width: 100%;
+            max-width: none;
+        }
+
+        .confirm-parcel-button {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+        }
+
+        .detailed-description-checkbox {
+            width: fit-content;
+        }
+
     .mockup-container {
         grid-template-columns: 1fr; /* Stack image and chat vertically */
         gap: var(--mobile-padding-unit);
@@ -805,6 +1142,71 @@ body, html {
     .feature-item h3 {
         font-size: 1.4rem;
     }
+
+            .mockup-container.parcel-finder-mockup {
+            padding: var(--small-mobile-padding-unit);
+            border-radius: 0;
+            box-shadow: none;
+            margin-top: 1rem;
+        }
+
+        .mockup-container.parcel-finder-mockup .content {
+            border-radius: 0;
+            box-shadow: none;
+            min-height: auto; /* Allow content to define height */
+        }
+
+        .form-title h2, .display-title h2 {
+            font-size: 1rem;
+        }
+
+        .form-description p {
+            padding: 0.5rem var(--small-mobile-padding-unit);
+            font-size: 0.9rem;
+        }
+
+        .form {
+            padding: var(--small-mobile-padding-unit);
+            gap: 10px;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .input-button, .clear-info-button {
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .display-box {
+            min-height: 200px;
+            padding: 0.8rem;
+        }
+
+        .confirm-parcel-button {
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .detailed-description-checkbox {
+            font-size: 0.85rem;
+        }
+
+        .description-length {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+        }
+
+        .description-length:checked::before {
+            font-size: 12px;
+        }
 
     .mockup-image-preview {
         min-height: 150px;
