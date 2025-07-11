@@ -47,15 +47,16 @@
       }
     },
     "quickstart" : {
-      "title": "Get started with AgrIA: Parcel Finder",
+      "title": "Get Started with AgrIA: Parcel Finder",
       "paragraph1": "In order to exploit AgrIA's full potential, ",
       "paragraphBold": "you will need to access the Parcel Finder. ",
       "paragraph2": "Here's how to use it:",
       "steps": {
-        "1": "Go to the Parcel Finder view.",
+        "1": "Go to the 'Parcel Finder' view.",
         "2": "Introduce the cadastral reference code of your parcel or state.",
         "3": "Select the date you want the image from.",
-        "4": "Wait for the system to retrieve your parcel image and confirm to pass it to AgrIA's chat."
+        "4": "Press 'Find Parcel' and wait for the system to retrieve your parcel image.",
+        "5": "Confirm your parcel image to pass it to AgrIA's chat along with the SIGPAC classification information."
       },
       "exampleTitle": "Example of Parcel Finder view."
     },
@@ -92,7 +93,7 @@
     "findParcel": "Find Parcel",
     "clearForm": "Clear Form",
     "selectedParcel": "Selected Parcel",
-    "previewAlt": "Preview",
+    "previewAlt": "Parcel Image",
     "uploadImageAlt": "Upload image",
     "detailedDescription": "Detailed description.",
     "confirmParcel": "Confirm Parcel"

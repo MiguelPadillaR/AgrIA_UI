@@ -47,6 +47,20 @@
         "description": "Interactúa con AgrIA a través del chat y recibe respuestas actualizadas sobre tus cultivos."
       }
     },
+      "quickstart" : {
+      "title": "Empezar a Usar AgrIA: Buscador de Parcelas",
+      "paragraph1": "Para poder aprovechar AgrIA al máximo, ",
+      "paragraphBold": "necesitarás acceder al Buscador de Parcelas. ",
+      "paragraph2": "Así es cómo se usa:",
+      "steps": {
+        "1": "Ve a la ventana de 'Buscador de Parcelas'.",
+        "2": "Introduce el código de referncia catastral de tu parcela o finca.",
+        "3": "Selecciona la fecha de la que quieres conseguir la imagen.",
+        "4": "Pulsa 'Buscar Parcela' y espere a que el sistema obtenga la imagen de su parcela.",
+        "5": "Confirme la imagen de su aprcela par apasarla al char de AgrIA junto con la información de clasificación SIGPAC."
+      },
+      "exampleTitle": "Ejemplo de ventana de Buscador de Parcelas."
+    },
     "howToUse": {
       "title": "Cómo Interactuar con AgrIA: El Chat",
       "exampleTitle": "Ejemplo de interacción por chat de AgrIA"
