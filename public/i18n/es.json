@@ -46,6 +46,20 @@
         "description": "Interactúa con AgrIA a través del chat y recibe respuestas actualizadas sobre tus cultivos."
       }
     },
+      "quickstart" : {
+      "title": "Empezar a Usar AgrIA: Buscador de Parcelas",
+      "paragraph1": "Para poder aprovechar AgrIA al máximo, ",
+      "paragraphBold": "necesitarás acceder al Buscador de Parcelas. ",
+      "paragraph2": "Así es cómo se usa:",
+      "steps": {
+        "1": "Ve a la ventana de 'Buscador de Parcelas'.",
+        "2": "Introduce el código de referncia catastral de tu parcela o finca.",
+        "3": "Selecciona la fecha de la que quieres conseguir la imagen.",
+        "4": "Pulsa 'Buscar Parcela' y espere a que el sistema obtenga la imagen de su parcela.",
+        "5": "Confirme la imagen de su aprcela par apasarla al char de AgrIA junto con la información de clasificación SIGPAC."
+      },
+      "exampleTitle": "Ejemplo de ventana de Buscador de Parcelas."
+    },
     "howToUse": {
       "title": "Cómo Interactuar con AgrIA: El Chat",
       "exampleTitle": "Ejemplo de interacción por chat de AgrIA"
@@ -71,8 +85,8 @@
     "description2": "Asegúrese de que el código tenga 20 caracteres.",
     "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
     "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
-    "cadastralReference": "Código de referencia catastral",
-    "cadastralPlaceholder": "Ref. catastral",
+    "cadastralReference": "Código de referencia catastral:",
+    "cadastralPlaceholder": "Referencia catastral",
     "selectDate": "Seleccione fecha aproximada",
     "datePlaceholder": "Fecha",
     "loading": "Cargando…",
@@ -81,7 +95,7 @@
     "selectedParcel": "Parcela Seleccionada",
     "previewAlt": "Vista previa",
     "uploadImageAlt": "Subir imagen",
-    "detailedDescription": "Descripción detallada.",
+    "detailedDescription": "Descripción detallada",
     "confirmParcel": "Confirmar Parcela"
   },
   "chat": {
@@ -113,5 +127,27 @@
       "title": "Volver a la vista del buscador de parcelas.",
       "text": "Volver al buscador de parcelas"
     }
+  },
+  "progressBar": {
+    "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
+  },
+    "notifications": {
+      "parcel-finder": {
+        "searching": "Buscando imagen de las parcelas...",
+        "success": "¡Parcela encontrada!",
+        "error": "Fallo al buscar la parcela:"
+      },
+      "chat": {
+        "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
+        "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",
+        "load-parcel-finder-data-success": "¡Datos de la Parcela cargados con éxito!",
+        "suggestion-info": "Obteniendo respuesta de sugerencia...",
+        "suggestion-error": "Fallo al obtener sugerencia:",
+        "suggestion-success": "¡Sugerencia obtenida con éxito!"
+      },
+      "chat-assistant": {
+        "assistant-error": "Fallo al intentar consguir una respuesta:\n"
+      }
+
   }
 }

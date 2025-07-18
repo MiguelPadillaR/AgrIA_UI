@@ -13,8 +13,8 @@ export class ChatService {
 
   constructor(private http: HttpClient) {}
 
-  public sendParcelInfoToChat(request:FormData): Observable<IChatParcelResponse> {
-    return this.http.post<{ response: IChatParcelResponse }>(`${this.apiUrl}/send-parcel-info-to-chat`, request)
+  public loadParcelDataToChat(request:FormData): Observable<IChatParcelResponse> {
+    return this.http.post<{ response: IChatParcelResponse }>(`${this.apiUrl}/load-parcel-data-to-chat`, request)
     .pipe(map(res => res.response));
   }
 

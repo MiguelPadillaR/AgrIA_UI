@@ -8,6 +8,7 @@ import { ChatService } from '../../services/chat.services/chat.service';
 import { IChatParcelResponse } from '../../models/chat.models';
 import { take } from 'rxjs';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({
   selector: 'app-chat',
@@ -37,6 +38,8 @@ export class ChatComponent {
 
   // Service to communicate parcel info from parcel finder to chat
   private parcelFinderService = inject(ParcelFinderService);
+  // Service for notifications
+  private notificationService = inject(NotificationService)
   // Chat service
   private chatService = inject(ChatService);
   // Router for navigation
@@ -47,9 +50,12 @@ export class ChatComponent {
     this.parcelFinderService.parcelInfo$.pipe(take(1))
     .subscribe(parcel => {
       if (parcel) {
+      !parcel.hasBeenDescribed ? this.notificationService.showNotification("chat.load-parcel-finder-data-info", "", "info"): null;
         // Delay template updates to avoid ExpressionChanged errors
         setTimeout(() => {
-          this.sendParcelInfoToChat(parcel);
+          this.imagePreviewUrl = parcel.imagePath;
+          this.parcelImageInfo = parcel.parcelInfo;
+          !parcel.hasBeenDescribed ? this.sendParcelInfoToChat(parcel): null;
         }, 500);
       }
     });
@@ -61,26 +67,36 @@ export class ChatComponent {
    * @param parcel 
    */
   private sendParcelInfoToChat(parcel: IFindParcelresponse) {
-    this.chatAssistant.showMessageIcon();
-    this.imagePreviewUrl = parcel.imagePath;
-    this.isDetailedDescription = parcel.isDetailedDescription;
-
+    this.chatAssistant.showMessageIcon() ;
+    const [year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
+        
     const formData = new FormData();
-    formData.append('imageDate', parcel.metadata.vigencia);
-    formData.append('imageCrops', JSON.stringify(parcel.metadata.usos));
+    formData.append('imageDate', `${month}/${year}`);
+    formData.append('imageCrops', JSON.stringify(parcel.metadata.query));
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
 
-    this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
-      .subscribe((response: IChatParcelResponse) => {
-        this.parcelImageInfo = response.imageDesc;
-        this.chatAssistant.hideMessageIcon();
-        this.chatAssistant.displayResponse(response.text);
+    this.chatService.loadParcelDataToChat(formData).pipe(take(1)).subscribe({
+        next: (response: IChatParcelResponse) => { 
+          this.notificationService.showNotification("chat.load-parcel-finder-data-success", "", "success");
+
+          this.parcelImageInfo = response.imageDesc;
+          parcel.parcelInfo = response.imageDesc;
+          this.chatAssistant.hideMessageIcon();
+          this.chatAssistant.displayResponse(response.text);
+        }, 
+        error: (err) => {
+          this.notificationService.showNotification("chat.load-parcel-finder-data-error", err.error.error, "error", 10000);
+          this.chatAssistant.hideMessageIcon();
+        },
       });
+    // Update the parcel info in the service
+    parcel.hasBeenDescribed = true;
+    this.parcelFinderService.setParcelInfo(parcel);
   }
 
   get displayImageName(): string | undefined {
-    const fileName = this.imagePreviewUrl?.split('/')?.pop();
+    const fileName = this.imagePreviewUrl?.split('/').pop();
     return (fileName?.length ?? 0) < 2 ? this.imageFile?.name : fileName;
   }
 
@@ -133,15 +149,27 @@ export class ChatComponent {
    * 
    */
   public getInputSuggestion() {
+    this.notificationService.showNotification("chat.suggestion-info", "", "info")
     this.isLoading.set(true);
     document.body.style.cursor = 'progress';
-    this.chatService.getInputSuggestion().subscribe(
-      (response: string) => {
+    this.chatService.getInputSuggestion().subscribe({
+      next: (response: string) => {
+      this.notificationService.showNotification("chat.suggestion-success", "", "success")
         this.userInput = response
         document.body.style.cursor = 'default';
         this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.notificationService.showNotification("chat.suggestion-error",`\n${err.error.error}`,"error", 10000)
+        console.error('Parcel fetch failed', err);
+        document.body.style.cursor = 'default';
+        this.isLoading.set(false);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+        document.body.style.cursor = 'default';
       }
-    );
+    });
   }
 
   /**

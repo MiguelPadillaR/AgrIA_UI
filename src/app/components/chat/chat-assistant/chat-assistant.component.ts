@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, signal, ViewChild, WritableSignal } from
 import { IChatMessage } from '../../../models/chat-assistant.model';
 import { ChatAssistantService } from '../../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { NotificationService } from '../../../services/notification.service/notification.service';
 @Component({
   selector: 'app-chat-assistant',
   standalone: true,
@@ -21,11 +22,12 @@ export class ChatAssistantComponent {
   firstIndex: number = 5;
   // HTML element to automatically scroll to the bototm
   @ViewChild('scrollableContainer') scrollableContainer!: ElementRef;
+  // Service to handle chat messages
   public chatAssistantService: ChatAssistantService = inject(ChatAssistantService);
+  // Service for notifications
+  private notificationService = inject(NotificationService)
 
   ngOnInit() {
-    this.animateLoadingResponse(this.chatHistory[0], this.chatHistory[0].content);
-    // Load chat history if it is empty or has only the initial message
     if (this.chatHistory.length <= 1) {
       this.chatAssistantService.loadActiveChatHistory().subscribe({
         next: (response: IChatMessage[]) => {
@@ -41,12 +43,15 @@ export class ChatAssistantComponent {
           this.scrollToBottom();
         }
       });
+    } else {
+        // Load chat history if it is empty or has only the initial message
+        this.animateLoadingResponse(this.chatHistory[0]);
     }
   }
 
   ngAfterViewInit() {
     if(this.chatHistory.length > 1) {
-      this.scrollToBottom();  // in case there are preloaded messages
+      this.scrollToBottom();  // in case there are loaded messages
     }
   }
 
@@ -56,7 +61,6 @@ export class ChatAssistantComponent {
    * @returns Sanitized chat history
    */
   private sanitizeChatHistory(response: IChatMessage[]) {
-    console.log("OG History:", response)
     // Skip context setting messages
     let index = this.firstIndex;
     while (index < response.length && response[index].role !== 'model') {
@@ -67,16 +71,18 @@ export class ChatAssistantComponent {
     // Remove image descriptions requests data
     for(let msg of sanitized_history){
       if (msg.content.includes('###DESCRIBE')) {
-        msg.content = '*Petición de descripción de imagen...*'
+        const descMsg = msg.content.split('###');
+        msg.content = '```' + descMsg[descMsg.length - 1] + '```';
       }
     }
-
     return sanitized_history
   }
 
 
   /**
    * Scrolls to the bottom of the chat window
+   * 
+   * @param timeout - Optional timeout to delay scrolling. Default: 1500 ms.
    */
   public scrollToBottom(timeout:number = 1500) {
     setTimeout(() => {
@@ -92,7 +98,7 @@ export class ChatAssistantComponent {
   public addUserMessage(content: string) {
     if (content.length > 0) {
       this.chatHistory.push({ role: 'user', content });
-      this.getAssistantOutput(content);
+      this.sendUserInput(content);
       this.scrollToBottom()
     }
     this.scrollToBottom();
@@ -116,6 +122,9 @@ export class ChatAssistantComponent {
       error: (err) => {
         console.error('Error from assistant:', err);
         this.hideMessageIcon();
+        
+        this.notificationService.showNotification("chat-assistant.assistant-error", err.error.error, "error", 10000)
+
         this.chatHistory.push({
           role: 'model',
           content: 'Oops! Something went wrong while processing your image. Error was:\n\n' + err.error.error + '\n\nPlease try again later.'
@@ -130,7 +139,7 @@ export class ChatAssistantComponent {
    *  
    * @param userInput - User input message
    */
-  public getAssistantOutput(userInput: string) {
+  public sendUserInput(userInput: string) {
     const trimmedInput: string = userInput.trim().replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ');
     this.showMessageIcon();
     const formData = new FormData();
@@ -172,17 +181,25 @@ export class ChatAssistantComponent {
     }
   }  
 
+  /**
+   * Displays the output message on the chat window.
+   * 
+   * @param responseText - response from AgrIA
+   */
   public displayResponse(responseText: string) {
     const newMsg: IChatMessage = {
       role: 'model',
       content: responseText,
       revealProgress: ''
     };
+    if (newMsg.content?.length === 0 || newMsg.content === undefined) {
+      newMsg.content = 'No response received from the assistant.';
+    }
     this.chatHistory.push(newMsg);
-    this.animateLoadingResponse(newMsg, responseText);
+    this.animateLoadingResponse(newMsg);
     this.scrollToBottom();
 
-    console.log(responseText)
+    console.log("responseText:", responseText)
 
   }
       
@@ -192,7 +209,8 @@ export class ChatAssistantComponent {
    * @param msg 
    * @param fullText 
    */
-  public animateLoadingResponse(msg: IChatMessage, fullText: string) {
+  public animateLoadingResponse(msg: IChatMessage) {
+    const fullText = msg.content || '';
     let index = 0;
     const interval = setInterval(() => {
       if (index < fullText.length) {

@@ -1,28 +1,33 @@
-import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
+import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({
   selector: 'app-parcel-finder',
   imports: [
     FormsModule,
     TranslateModule,
+    ProgressBarComponent,
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
 })
 export class ParcelFinderComponent {
   // Cadastral reference of the parcel
-  public cadastralReference: string = '37040A004000110000BJ';  // TODO: REMOVE WHEN TESTING IS DONE
+  public cadastralReference: string = '14048A001001990000RM';  // TODO: REMOVE WHEN TESTING IS DONE
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker
   public today: string = new Date().toISOString().split('T')[0];
   // Loading variable for styling
   public isLoading: WritableSignal<boolean> = signal(false)
+  // Maximum seconds set for the progress bar
+  public progressMaxDuration: number = 40;
   // User preference for longer image description
   public isDetailedDescription: boolean = false;
   // Selected parcel information
@@ -32,17 +37,17 @@ export class ParcelFinderComponent {
 
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
+  // Translation service
+  private translateService = inject(TranslateService);
+  // Service for notifications
+  private notificationService = inject(NotificationService)
   // Router for navigation
   private router: Router = inject(Router);
-    // Utility to get object keys
-  public objectKeys = Object.keys;
-
 
   constructor() {}
 
   ngOnInit(): void {
     // Empty the observable by emitting null
-    this.parcelFinderService.setParcelInfo(null);
   }
  
  /**
@@ -50,6 +55,7 @@ export class ParcelFinderComponent {
  * 
  */
 public findParcel() {
+  this.notificationService.showNotification("parcel-finder.searching", "", "info")
   this.isLoading.set(true);
   document.body.style.cursor = 'progress';
   this.parcelImageUrl = null;
@@ -60,11 +66,17 @@ public findParcel() {
 
   this.parcelFinderService.findParcel(formData).subscribe({
     next: (response: IFindParcelresponse) => {
+      this.notificationService.showNotification("parcel-finder.success","","success")
       this.selectedParcelInfo = response;
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
       document.body.style.cursor = 'default';
     },
     error: (err) => {
+      const errorMessage = err.error.error.includes("No images are available")? 
+        this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
+          : "No images are available for the selected date, images are processed at the end of each month."
+        : err.error.error
+      this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
       console.error('Parcel fetch failed', err);
       document.body.style.cursor = 'default';
       this.isLoading.set(false);
@@ -85,6 +97,7 @@ public findParcel() {
   public confirmParcel(): void {
     if (this.selectedParcelInfo) {
       this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
+      this.selectedParcelInfo.hasBeenDescribed = false;
       this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
       this.router.navigate(['/chat']);
     }

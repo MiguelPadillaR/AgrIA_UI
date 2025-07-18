@@ -4,6 +4,8 @@ export interface IFindParcelresponse {
   imagePath: string,
   metadata: ICadastralMetadata,
   isDetailedDescription: boolean,
+  hasBeenDescribed: boolean,
+  parcelInfo: string,
 }
 
 export interface ICadastralGeometry {

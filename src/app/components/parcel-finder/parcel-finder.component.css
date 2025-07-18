@@ -4,6 +4,7 @@
   --secondary-color: #607D8B; /* Greyish blue */
   --tertiary-color: #FFC107; /* Amber for suggestions (not used directly here, but for consistency) */
   --red-button-color: #dc3545; /* Red for Clear Form */
+  --blue-button-color: #22a7ff; /* Blue to Send Form */
   --bg-color: #f0f2f5; /* Light grey background */
   --card-bg-color: #ffffff; /* White for cards */
   --border-color: #ddd; /* Light grey border */
@@ -128,12 +129,12 @@
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.1s ease;
   white-space: nowrap;
-  background-color: var(--primary-color);
+  background-color: var(--blue-button-color);
   color: white;
 }
 
 .input-button:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+  background-color: color-mix(in srgb, var(--blue-button-color) 90%, black);
 }
 
 .input-button:active {
@@ -215,7 +216,7 @@
 /* "Confirm Parcel" button styling (adjustments) */
 .confirm-parcel-button {
   padding: 0.8rem 2rem;
-  background-color: var(--primary-color);
+  background-color: var(--blue-button-color);
   color: white;
   border: none;
   border-radius: var(--border-radius);
@@ -228,7 +229,7 @@
 }
 
 .confirm-parcel-button:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 90%, black);
+  background-color: color-mix(in srgb, var(--blue-button-color) 90%, black);
 }
 
 .confirm-parcel-button:active {

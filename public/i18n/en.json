@@ -46,8 +46,22 @@
         "description": "Interact with AgrIA through chat and receive updated answers about your crops."
       }
     },
+    "quickstart" : {
+      "title": "Get Started with AgrIA: Parcel Finder",
+      "paragraph1": "In order to exploit AgrIA's full potential, ",
+      "paragraphBold": "you will need to access the Parcel Finder. ",
+      "paragraph2": "Here's how to use it:",
+      "steps": {
+        "1": "Go to the 'Parcel Finder' view.",
+        "2": "Introduce the cadastral reference code of your parcel or state.",
+        "3": "Select the date you want the image from.",
+        "4": "Press 'Find Parcel' and wait for the system to retrieve your parcel image.",
+        "5": "Confirm your parcel image to pass it to AgrIA's chat along with the SIGPAC classification information."
+      },
+      "exampleTitle": "Example of Parcel Finder view."
+    },
     "howToUse": {
-      "title": "How to Interact with AgrIA: The Chat",
+      "title": "Interact with AgrIA: The Chat",
       "exampleTitle": "Example of AgrIA chat interaction"
     },
     "contact": {
@@ -71,17 +85,18 @@
     "description2": "Make sure the code has 20 characters.",
     "description3Bold": "Urban cadastral reference codes will not be accepted.",
     "description3": " If you have difficulty finding your parcel, upload an image of your farm to the chat along with crop data and parcel area.",
-    "cadastralReference": "Cadastral reference code",
-    "cadastralPlaceholder": "Ref. cadastral",
+    "cadastralReference": "Cadastral reference code:",
+    "cadastralPlaceholder": "Cadastral Ref. Code",
     "selectDate": "Select approximate date",
     "datePlaceholder": "Date",
     "loading": "Loading…",
     "findParcel": "Find Parcel",
     "clearForm": "Clear Form",
     "selectedParcel": "Selected Parcel",
-    "previewAlt": "Preview",
+    "previewAlt": "Parcel Image",
     "uploadImageAlt": "Upload image",
-    "detailedDescription": "Detailed description."
+    "detailedDescription": "Detailed description.",
+    "confirmParcel": "Confirm Parcel"
   },
   "chat": {
     "uploadImage": {
@@ -111,5 +126,26 @@
       "title": "Navigate to parcel finder view.",
       "text": "Return to parcel finder"
     }
+  },
+  "progressBar": {
+    "completed": "Process can sometimes take up to 1 minute aprox..."
+  },
+    "notifications": {
+      "parcel-finder": {
+        "searching": "Searching for parcel image...",
+        "success": "Parcel found!",
+        "error": "Error when searching for parcel:"
+      },
+      "chat": {
+        "load-parcel-finder-data-info": "Getting parcel finder data...",
+        "load-parcel-finder-data-error": "Error while getting parcel finder data:\n",
+        "load-parcel-finder-data-success": "Loaded parcel data successfully!",
+        "suggestion-info": "Getting suggested input...",
+        "suggestion-error": "Error when getting suggestion:",
+        "suggestion-success": "Suggestion loaded successfully!"
+      },
+      "chat-assistant": {
+        "assistant-error": "Error while getting a response:\n"
+      }
   }
 }

@@ -5,20 +5,19 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 
 export const routes: Routes = [
     {
-        path: "parcel-finder",
-        component: ParcelFinderComponent,
-        title: "Parcel Finder"
-    },
-{
-        path: "chat",
-        component: ChatComponent,
-        title: "AgrIA"
-    },
-        {
         path: "",
         component: HomePageComponent,
         title: "Home"
     },
-
+{
+        path: "parcel-finder",
+        component: ParcelFinderComponent,
+        title: "Parcel Finder"
+    },
+    {
+        path: "chat",
+        component: ChatComponent,
+        title: "AgrIA"
+    },
     
 ];

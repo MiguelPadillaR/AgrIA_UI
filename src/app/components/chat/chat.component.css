@@ -47,7 +47,7 @@ body, html {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   width: 100%;
-  max-width: 1200px; /* Max width for desktop */
+  max-width: 1600px; /* Max width for desktop */
   overflow: hidden; /* Ensures rounded corners are respected */
 }
 
@@ -135,7 +135,6 @@ body, html {
 .chat-content {
   flex-grow: 1;
   background-color: var(--card-bg-color);
-  padding: var(--padding-unit);
   height: auto; /* Fixed height for chat area, adjust as needed */
   display: flex; /* To contain chat messages effectively */
   flex-direction: column; /* Stack messages vertically */
