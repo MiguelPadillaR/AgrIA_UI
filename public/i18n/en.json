@@ -137,9 +137,15 @@
         "error": "Error when searching for parcel:"
       },
       "chat": {
+        "load-parcel-finder-data-info": "Getting parcel finder data...",
+        "load-parcel-finder-data-error": "Error while getting parcel finder data:\n",
+        "load-parcel-finder-data-success": "Loaded parcel data successfully!",
         "suggestion-info": "Getting suggested input...",
         "suggestion-error": "Error when getting suggestion:",
         "suggestion-success": "Suggestion loaded successfully!"
+      },
+      "chat-assistant": {
+        "assistant-error": "Error while getting a response:\n"
       }
   }
 }

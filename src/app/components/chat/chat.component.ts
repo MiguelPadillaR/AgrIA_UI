@@ -50,9 +50,12 @@ export class ChatComponent {
     this.parcelFinderService.parcelInfo$.pipe(take(1))
     .subscribe(parcel => {
       if (parcel) {
+      !parcel.hasBeenDescribed ? this.notificationService.showNotification("chat.load-parcel-finder-data-info", "", "info"): null;
         // Delay template updates to avoid ExpressionChanged errors
         setTimeout(() => {
-          this.sendParcelInfoToChat(parcel);
+          this.imagePreviewUrl = parcel.imagePath;
+          this.parcelImageInfo = parcel.parcelInfo;
+          !parcel.hasBeenDescribed ? this.sendParcelInfoToChat(parcel): null;
         }, 500);
       }
     });
@@ -64,9 +67,7 @@ export class ChatComponent {
    * @param parcel 
    */
   private sendParcelInfoToChat(parcel: IFindParcelresponse) {
-    this.chatAssistant.showMessageIcon();
-    this.imagePreviewUrl = parcel.imagePath;
-    this.isDetailedDescription = parcel.isDetailedDescription;
+    this.chatAssistant.showMessageIcon() ;
     const [year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
         
     const formData = new FormData();
@@ -75,12 +76,23 @@ export class ChatComponent {
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
 
-    this.chatService.sendParcelInfoToChat(formData).pipe(take(1))
-      .subscribe((response: IChatParcelResponse) => {
-        this.parcelImageInfo = response.imageDesc;
-        this.chatAssistant.hideMessageIcon();
-        this.chatAssistant.displayResponse(response.text);
+    this.chatService.loadParcelDataToChat(formData).pipe(take(1)).subscribe({
+        next: (response: IChatParcelResponse) => { 
+          this.notificationService.showNotification("chat.load-parcel-finder-data-success", "", "success");
+
+          this.parcelImageInfo = response.imageDesc;
+          parcel.parcelInfo = response.imageDesc;
+          this.chatAssistant.hideMessageIcon();
+          this.chatAssistant.displayResponse(response.text);
+        }, 
+        error: (err) => {
+          this.notificationService.showNotification("chat.load-parcel-finder-data-error", err.error.error, "error", 10000);
+          this.chatAssistant.hideMessageIcon();
+        },
       });
+    // Update the parcel info in the service
+    parcel.hasBeenDescribed = true;
+    this.parcelFinderService.setParcelInfo(parcel);
   }
 
   get displayImageName(): string | undefined {

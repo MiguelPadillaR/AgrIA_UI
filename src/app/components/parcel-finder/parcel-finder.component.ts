@@ -48,7 +48,6 @@ export class ParcelFinderComponent {
 
   ngOnInit(): void {
     // Empty the observable by emitting null
-    this.parcelFinderService.setParcelInfo(null);
   }
  
  /**
@@ -98,6 +97,7 @@ public findParcel() {
   public confirmParcel(): void {
     if (this.selectedParcelInfo) {
       this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
+      this.selectedParcelInfo.hasBeenDescribed = false;
       this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
       this.router.navigate(['/chat']);
     }
