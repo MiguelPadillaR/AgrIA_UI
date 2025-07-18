@@ -2,8 +2,7 @@
   "nav": {
     "home": "Inicio",
     "parcel": "Buscador de Parcelas",
-    "chat": "Chat",
-    "help": "Help"
+    "chat": "Chat"
   },
   "home": {
     "hero": {
