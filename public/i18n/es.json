@@ -112,6 +112,14 @@
     "coordinates": {
       "label": "Coordenadas de la Parcela",
       "button": "Centrar mapa"
+    },
+    "sigpac-form": {
+      "title": "Clasificación SIGPAC "
+    },
+      "sigpac-table": {
+      "title": "Cultivos seleccionados",
+      "header1": "Tipo SIGPAC",
+      "header2": "Superficie (ha)"
     }
   },
   "chat": {

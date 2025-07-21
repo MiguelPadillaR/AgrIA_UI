@@ -30,5 +30,66 @@
                 <div id="map"></div>
             </div>
         </div>
+        <div class="crop-classification-container">
+            <h2 class="form-title">{{ "parcelDrawer.sigpac-form.title" | translate}}</h2>
+            <form class="form">
+                <div class="crop-classification-tree">
+                    @for (type of (objectKeys(groupedCropClassification)); track type) {
+                    <details class="type-group">
+                        <summary class="type-title">{{ type }}</summary>
+
+                        @for (subtype of (objectKeys(groupedCropClassification[type])); track subtype) {
+                            <details class="subtype-group">
+                            <summary class="subtype-title">{{ subtype }}</summary>
+
+                            <div class="checkbox-grid">
+                                @for (item of groupedCropClassification[type][subtype]; track item.class) {
+                                <label class="crop-checkbox-label">
+                                    <input
+                                    type="checkbox"
+                                    [value]="item.class"
+                                    class="crop-checkbox"
+                                    (click)="toggleSelectedClassification(item)"
+                                    />
+                                    {{ item.class }} - {{ item.name }}
+                                </label>
+                                }
+                            </div>
+                            </details>
+                        }
+                        </details>
+                    }
+                </div>
+            </form>
+            @if (selectedClassifications.length > 0) {
+                <div class="selected-crops-table">
+                    <h3>{{ "parcelDrawer.sigpac-table.title" | translate}}</h3>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>{{ "parcelDrawer.sigpac-table.header1" | translate}}</th>
+                            <th>{{ "parcelDrawer.sigpac-table.header2" | translate}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for (item of selectedClassifications; track trackClassification(item)) {
+                            <tr>
+                            <td>{{ item.classification.class }} - {{ item.classification.name }}</td>
+                            <td>
+                                <input
+                                type="number"
+                                min="0"
+                                class="surface-input"
+                                [(ngModel)]="item.surface"
+                                [name]="'surface-' + item.classification.class"
+                                />
+                            </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
     </div>
 </div>

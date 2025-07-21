@@ -112,6 +112,14 @@
     "coordinates": {
       "label": "Parcel's coordinates",
       "button": "Center map"
+    },
+    "sigpac-form": {
+      "title": "SIGPAC Classification"
+    },
+    "sigpac-table": {
+      "title": "Selected Crops",
+      "header1": "SIGPAC Type",
+      "header2": "Surface (ha)"
     }
   },
   "chat": {

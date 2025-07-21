@@ -47,10 +47,7 @@ export class ParcelFinderComponent {
   private router: Router = inject(Router);
 
   constructor() {}
-
-  ngOnInit(): void {
-    // Empty the observable by emitting null
-  }
+ 
  
  /**
  * Finds a parcel based on the provided cadastral reference and selected date.

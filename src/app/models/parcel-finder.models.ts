@@ -11,3 +11,8 @@ export interface IGroupedCropClassification {
     [subtype: string]: ICropClassification[];
   };
 }
+
+export interface ISelectedCrop {
+  classification: ICropClassification;
+  surface: number | null;
+}
