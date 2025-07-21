@@ -1,8 +1,34 @@
-<p>parcel-drawer works!</p>
-<div id="test">
-    <div class="map-container">
-        <div class="map-frame">
-            <div id="map"></div>
+<div id="parcel-drawer">
+    <div class="content">
+        <div class="form-title">
+            <h2>{{ 'parcelDrawer.title' | translate }}</h2>
+        </div>
+        <div class="form-description">
+            <p>
+                <span style="font-weight: bold;">{{ "parcelDrawer.description.bold1" | translate }}</span> 
+                {{ "parcelDrawer.description.normal1" | translate }}
+                <span style="font-weight: bold;">{{ "parcelDrawer.description.bold2" | translate}}</span>
+                {{ "parcelDrawer.description.normal2" | translate}}
+            </p>
+            <p>
+                {{ "parcelDrawer.description.normal3" | translate }}
+                <span style="font-weight: bold;">{{ "parcelDrawer.description.bold3" | translate}}</span>
+                {{ "parcelDrawer.description.normal4" | translate}}
+            </p>
+        </div>
+        <div class="coordinates-container">
+            <label class="coordinates-label"> {{ 'parcelDrawer.coordinates.label' | translate }} <span style="font-style: italic;">(lat, lon): </span>
+                <input class="coordinates-input" type="text" name="coordinates" id="">
+            </label>
+    
+            <button class="coordinates-button" (click)="centerMap()">
+                {{ 'parcelDrawer.coordinates.button' | translate }}
+            </button>
+        </div>
+        <div class="map-container">
+            <div class="map-frame">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
 </div>

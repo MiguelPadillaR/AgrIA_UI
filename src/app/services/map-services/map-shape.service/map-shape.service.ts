@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MapShapeService {
 
-  private httpClietn: HttpClient = inject(HttpClient);
+  private httpClient: HttpClient = inject(HttpClient);
 
   constructor() { }
 
   getStateShapes() {
-    return this.httpClietn.get('gz_2010_us_040_00_5m.json');
+    return this.httpClient.get('gz_2010_us_040_00_5m.json');
   }
 }

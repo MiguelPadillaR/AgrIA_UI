@@ -1,13 +1,87 @@
-#test {
-  margin: var(--padding-unit);
+:host {
+  --primary-color: #4CAF50; /* Green */
+  --secondary-color: #607D8B; /* Greyish blue */
+  --tertiary-color: #FFC107; /* Amber for suggestions (not used directly here, but for consistency) */
+  --red-button-color: #dc3545; /* Red for Clear Form */
+  --blue-button-color: #22a7ff; /* Blue to Send Form */
+  --bg-color: #f0f2f5; /* Light grey background */
+  --card-bg-color: #ffffff; /* White for cards */
+  --border-color: #ddd; /* Light grey border */
+  --text-color-dark: #333;
+  --text-color-light: #666;
+  --header-bg: #e0e0e0; /* Light grey for headers */
+  --input-bg: #f9f9f9; /* Slightly off-white for input */
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --padding-unit: 1.5rem;
+}
+
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Consistent font */
+}
+
+/* Main Parcel Drawer Container */
+#parcel-drawer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Align to start, as it's not a full-height chat */
+  background-color: var(--bg-color);
+  padding: var(--padding-unit); /* Overall padding */
+  margin-top: 4rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
   width: 100%;
+  max-width: 800px; /* Adjust max width for this layout */
+  overflow: hidden;
+  margin-top: 5vh; /* Push content down from the top slightly */
+  margin-bottom: var(--padding-unit); /* Space at the bottom */
+}
+
+/* Form Section (Cadastral Data) */
+.form-title, .display-title {
+  background-color: var(--header-bg);
+  padding: 0.75rem var(--padding-unit);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  h2 {
+    font-size: 1.2rem;
+    color: var(--text-color-dark);
+  }
+}
+.form-description {
+    border-bottom: 1px solid var(--border-color);
+  p {
+    padding: 0.75rem var(--padding-unit);
+    font-size: 1rem;
+    color: var(--text-color-light);
+    text-align: justify;
+  }
+}
+
+.coordinates-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-unit);
+  margin: var(--padding-unit);
 }
 
 .map-container {
   position: relative;
   width: 800px;
-  height: 400px; /* Set a default height */
+  height: 60vh; /* Set a default height */
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   background-color: var(--input-bg);

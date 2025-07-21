@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as L from 'leaflet';
 import { MapMarkerService } from '../../services/map-services/map-marker.service/map-marker.service';
 import { MapShapeService } from '../../services/map-services/map-shape.service/map-shape.service';
@@ -21,11 +22,16 @@ L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-parcel-drawer',
-  imports: [],
+  imports: [
+    TranslateModule,
+  ],
   templateUrl: './parcel-drawer.component.html',
   styleUrl: './parcel-drawer.component.css'
 })
 export class ParcelDrawerComponent {
+  // Translation service
+  private translateService = inject(TranslateService);
+  
   private map: any;
   private states: any;
   private mapMarkerService: MapMarkerService = inject(MapMarkerService)
@@ -43,13 +49,14 @@ export class ParcelDrawerComponent {
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [ 36.71700017969052, -4.499799087394791 ],
-      zoom:3
+      center: [40.463667, -3.74922],
+      zoom: 6
     });
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+    const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 20,
       minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution: 'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
     });
 
     tiles.addTo(this.map);
@@ -100,4 +107,8 @@ export class ParcelDrawerComponent {
     });
   }
 
+  public centerMap(): void {
+  // TODO
+  }
+    
 }

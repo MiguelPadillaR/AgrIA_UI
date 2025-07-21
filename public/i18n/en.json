@@ -98,6 +98,22 @@
     "detailedDescription": "Detailed description.",
     "confirmParcel": "Confirm Parcel"
   },
+    "parcelDrawer": {
+    "title": "Parcel drawer",
+    "description": {
+      "bold1": "Draw your parcel's limits over the map.",
+      "normal1": "When you are done marking your parcel, ",
+      "bold2": "press again on the initial node to finish ",
+      "normal2": "drawing.",
+      "normal3": "In order to get a better evaluation and classification from AgrIA, ",
+      "bold3": "make sure you provide your parcel's crop classifcation.",
+      "normal4": "For that, you may use the SIGAPC classification form below the map."
+    },
+    "coordinates": {
+      "label": "Parcel's coordinates",
+      "button": "Center map"
+    }
+  },
   "chat": {
     "uploadImage": {
       "title": "Image",
