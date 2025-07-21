@@ -28,8 +28,9 @@
 /* Main Parcel Finder Container */
 #parcel-finder {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Align to start, as it's not a full-height chat */
+  align-items: center; /* Align to start, as it's not a full-height chat */
   min-height: 100vh; /* Minimum height for full screen */
   background-color: var(--bg-color);
   padding: var(--padding-unit); /* Overall padding */

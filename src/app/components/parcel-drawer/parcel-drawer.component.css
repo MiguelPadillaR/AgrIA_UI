@@ -1,0 +1,29 @@
+#test {
+  margin: var(--padding-unit);
+  display: flex;
+  width: 100%;
+}
+
+.map-container {
+  position: relative;
+  width: 800px;
+  height: 400px; /* Set a default height */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--input-bg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* Map iframe or div */
+.map-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Inner map element */
+#map {
+  width: 100%;
+  height: 100%;
+}

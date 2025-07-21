@@ -6,6 +6,7 @@ import { IFindParcelresponse } from '../../models/parcel-finder-response.models'
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { NotificationService } from '../../services/notification.service/notification.service';
+import { ParcelDrawerComponent } from "../parcel-drawer/parcel-drawer.component";
 
 @Component({
   selector: 'app-parcel-finder',
@@ -13,6 +14,7 @@ import { NotificationService } from '../../services/notification.service/notific
     FormsModule,
     TranslateModule,
     ProgressBarComponent,
+    ParcelDrawerComponent
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
