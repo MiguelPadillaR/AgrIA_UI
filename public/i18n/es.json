@@ -111,8 +111,10 @@
     },
     "coordinates": {
       "label": "Coordenadas de la Parcela",
-      "button": "Buscar coordenadas",
-      "placeholder": "Ej: 40.4165, -3.70256 ..."
+      "placeholder": "Ej: 40.4165, -3.70256 ...",
+      "search-button": "Buscar Coordenadas",
+      "clear-button": "Reiniciar mapa y coordenadas"
+
     },
     "sigpacForm": {
       "title": "Clasificación SIGPAC ",
@@ -130,7 +132,8 @@
     },
     "button": {
       "send": "Enviar información",
-      "reset": "Borrar selección"
+      "reset": "Borrar selección",
+      "loading": "Cargando..."
     }
 
   },
@@ -176,7 +179,16 @@
     "parcel-drawer": {
       "coordinates": {
         "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:"
-      }
+        },
+        "sigpac-table": {
+          "error": "Error al cargar la clasificación de cultivos:\n"
+        },
+        "missing": {
+          "parcel-drawing":"Error: Nigún polígono detectado en el mapa. Dibuje uno para continuar.",
+          "crop-classification": "Error: Nigún tipo de cultivo seleccionado. Por favor, seleccione al menos un tipo de cultivo.",
+          "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
+        }
+
     },
     "chat": {
       "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",

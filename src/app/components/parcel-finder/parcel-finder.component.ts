@@ -69,6 +69,7 @@ public findParcel() {
       this.selectedParcelInfo = response;
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
       document.body.style.cursor = 'default';
+      console.log("Parcel finder response:", response)
     },
     error: (err) => {
       const errorMessage = err.error.error.includes("No images are available")? 

@@ -74,6 +74,12 @@
   justify-content: center;
   gap: var(--padding-unit);
   margin: var(--padding-unit);
+  .coordinate-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+  }
 }
 
 .map-container {
@@ -189,7 +195,7 @@
 .form-buttons {
   display: flex;
   justify-content: center; /* Center buttons */
-  gap: 15px; /* Space between buttons */
+  gap: 1rem; /* Space between buttons */
   margin-top: 10px; /* Space above buttons */
   flex-wrap: wrap; /* Allow buttons to wrap on small screens */
 }

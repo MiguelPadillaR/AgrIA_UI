@@ -1,7 +1,5 @@
 import { IGeojsonGeometry } from "./parcel-finder-response.models";
 
-export interface IParcelDrawerGeojson {
-  type: string,
-  geometry: IGeojsonGeometry,
+export interface IParcelDrawerGeojson extends IGeojsonGeometry {
   properties: { [key: string]: any}
 }

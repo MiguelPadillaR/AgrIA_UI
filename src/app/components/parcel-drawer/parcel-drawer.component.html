@@ -19,20 +19,27 @@
         <div class="coordinates-container">
             <label class="coordinates-label"> {{ 'parcelDrawer.coordinates.label' | translate }} <span style="font-style: italic;">(lat, lon): </span>
                 <input
-                class="coordinates-input"
-                type="text"
-                name="coordinates"
-                [(ngModel)]="coordinates"
-                placeholder="{{ 'parcelDrawer.coordinates.placeholder' | translate }}"
+                    class="coordinates-input"
+                    type="text"
+                    name="coordinates"
+                    [(ngModel)]="coordinates"
+                    placeholder="{{ 'parcelDrawer.coordinates.placeholder' | translate }}"
                 >
             </label>
-    
-            <button
+    <div class="coordinate-buttons">
+        <button
             class="input-button"
             (click)="centerMapOnCoordinates()"
-            >
-                {{ 'parcelDrawer.coordinates.button' | translate }}
-            </button>
+        >
+            {{ 'parcelDrawer.coordinates.search-button' | translate }}
+        </button>
+        <button
+            class="clear-info-button"
+            (click)="resetMapAndCoordinates()"
+        >
+            {{ 'parcelDrawer.coordinates.clear-button' | translate }}
+        </button>
+    </div>
         </div>
         <div class="map-container">
             <div class="map-frame">
@@ -60,10 +67,10 @@
                                 @for (item of groupedCropClassification[type][subtype]; track item.class) {
                                 <label class="crop-checkbox-label">
                                     <input
-                                    type="checkbox"
-                                    [value]="item.class"
-                                    class="crop-checkbox"
-                                    (click)="toggleSelectedClassification(item)"
+                                        type="checkbox"
+                                        [value]="item.class"
+                                        class="crop-checkbox"
+                                        (click)="toggleSelectedClassification(item)"
                                     />
                                     {{ item.class }} - {{ item.name }}
                                 </label>
@@ -97,11 +104,11 @@
                             <td>{{ item.classification.class }} - {{ item.classification.name }}</td>
                             <td>
                                 <input
-                                type="number"
-                                min="0"
-                                class="surface-input"
-                                [(ngModel)]="item.surface"
-                                [name]="'surface-' + item.classification.class"
+                                    type="number"
+                                    min="0"
+                                    class="surface-input"
+                                    [(ngModel)]="item.surface"
+                                    [name]="'surface-' + item.classification.class"
                                 />
                             </td>
                             </tr>
@@ -115,10 +122,10 @@
             <button
                 class="input-button"
                 [style.cursor]="isLoading() ? 'progress' : 'pointer'"
-                [disabled]="isLoading() || selectedClassifications.length === 0"
+                [disabled]="isLoading()"
                 (click)="sendParcelDrawerInfo()"
             >
-                {{ isLoading() ? ('parcelDrawer.save.loading' | translate) : ('parcelDrawer.button.send' | translate) }}
+                {{ isLoading() ? ('parcelDrawer.button.loading' | translate) : ('parcelDrawer.button.send' | translate) }}
             </button>
             <button
                 class="clear-info-button"

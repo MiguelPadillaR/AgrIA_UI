@@ -43,6 +43,8 @@ export class ParcelDrawerComponent {
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
   // Coordinates attribute
+  public mapCenter: string = '40.400409, -3.631434';
+  // Coordinates attribute
   public coordinates: string = '40.400409, -3.631434'; // TODO: REMOVE Default Madrid coordinates (40.4165, -3.70256)
   // Parcel's geometry attribute
   public parcelDrawing: IParcelDrawerGeojson | null = null;
@@ -59,13 +61,10 @@ export class ParcelDrawerComponent {
 
   // Service to handle parcel finding operations
   private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
+  // Service for notifications
   private notificationService: NotificationService = inject(NotificationService);
   // Utility to get object keys
   public objectKeys = Object.keys;
-  // REMOVE (Leaflet tutorial services)
-  private mapMarkerService: MapMarkerService = inject(MapMarkerService)
-  private mapShapeService: MapShapeService = inject(MapShapeService)
-  //
 
   constructor() { }
   
@@ -78,18 +77,20 @@ export class ParcelDrawerComponent {
    */
   ngAfterViewInit(): void {
     this.initMap();
-    console.log("this.map:", this.map);
 
     // this.mapShapeService.getStateShapes().subscribe(states => {
     //   this.initStatesLayer(states);
     // });
     // this.mapMarkerService.makeCapitalCircleMarkers(this.map);
   }
-
+  
+  /**
+   * Initializes the map with a default center and zoom level, sets up the tile layer, and adds drawing controls.
+   */
   private initMap(): void {
     // Initialize the map with a default center and zoom level
     this.map = L.map('map', {
-      center: [40.4165, -3.70256],
+      center: [Number(this.mapCenter.split(',')[0].trim()), Number(this.mapCenter.split(',')[1].trim())],
       zoom: this.mapZoom,
     });
     // Set the map view to the default coordinates
@@ -137,23 +138,47 @@ export class ParcelDrawerComponent {
     });
   }
 
-public centerMapOnCoordinates(): void {
-  this.mapZoom = this.mapZoom < 17? 17 : this.mapZoom; // Limit zoom level to a maximum of 16
-  if (!this.map || !this.coordinates) return;
+  /**
+   * Centers the map on the provided coordinates and sets a closer zoom level.
+   * 
+   * @returns The current map instance.
+   */
+  public centerMapOnCoordinates(): void {
+    this.mapZoom = this.mapZoom < 17? 17 : this.mapZoom; // Limit zoom level to a maximum of 16
+    if (!this.map || !this.coordinates) return;
 
-  const coords = this.coordinates
-    .split(',')
-    .map(coord => parseFloat(coord.trim()));
+    const coords = this.coordinates
+      .split(',')
+      .map(coord => parseFloat(coord.trim()));
 
-  if (coords.length === 2 && !coords.some(isNaN)) {
-    const latlng = L.latLng(coords[0], coords[1]);
-    this.map.setView(latlng, this.mapZoom);
-  } else {
-    this.notificationService.showNotification("parcel-drawer.coordinates.invalid", this.coordinates, "error", 10000);
-    console.warn('Invalid coordinates format:', this.coordinates);
+    if (coords.length === 2 && !coords.some(isNaN)) {
+      const latlng = L.latLng(coords[0], coords[1]);
+      this.map.setView(latlng, this.mapZoom);
+    } else {
+      this.notificationService.showNotification("parcel-drawer.coordinates.invalid", this.coordinates, "error", 10000);
+      console.warn('Invalid coordinates format:', this.coordinates);
+    }
   }
-}
 
+  /**
+   * Resets the map view to the default coordinates and zoom level, clearing any drawn shapes.
+   */
+  public resetMapAndCoordinates(): void {
+    this.parcelDrawing = null;
+    this.drawnItems.clearLayers();
+    this.mapZoom = 6;
+
+    this.coordinates = this.mapCenter;
+    const coords = this.coordinates.split(',').map(coord => parseFloat(coord.trim()));
+
+    const latlng = L.latLng(coords[0], coords[1]);
+    this.map?.setView(latlng, this.mapZoom);
+    // this.coordinates = '';
+  }
+
+  /**
+   * Loads crop classifications from the service and groups them by type and subtype.
+   */
   private loadCropClassifications() {
     this.parcelFinderService.getCropClassifications().subscribe(
       (cropClassification: ICropClassification[]) => {
@@ -162,6 +187,7 @@ public centerMapOnCoordinates(): void {
 
       },
       (error) => {
+        this.notificationService.showNotification("parcel-finder.sigpac-table.error", `\n${error.error.error}`, "error", 10000);
         console.error('Error loading crop classifications:', error);
       }
     );
@@ -216,63 +242,30 @@ public centerMapOnCoordinates(): void {
   }
 
   public sendParcelDrawerInfo(): void {
+    if (!this.parcelDrawing) {
+      this.notificationService.showNotification("parcel-drawer.missing.parcel-drawing", "", "error", 10000);
+      console.log("No parcel drawing found.");
+      return;
+    } else if ( this.selectedClassifications?.length === 0) {
+      this.notificationService.showNotification("parcel-drawer.missing.crop-classification", "", "error", 10000);
+      console.log("No crop classification selected.");
+      return;
+    } else if (this.selectedClassifications?.some(item => item.surface === null)) {
+        this.notificationService.showNotification("parcel-drawer.missing.surface", "", "error", 10000);
+        console.log("Some selected crop classifications are missing surface values.");
+      return;
+    }
+    this.notificationService.showNotification("parcel-drawer.info.TODO", "", "info");
+
     // TODO
+    console.log("Selected classifications:", this.selectedClassifications);
+    console.log("this.parcelDrawing:", this.parcelDrawing);
     this.isLoading.set(true);
   }
 
   public resetForm(): void {
     // TODO: Work in progress...
     this.selectedClassifications = [];
-    this.mapZoom = 6; // Reset map zoom level
-    if (this.map) {
-      this.map.setView([40.4165, -3.70256], this.mapZoom); // Reset map view
-    }
   }
   
-  // REMOVE (Leaflet tutorial methods)
-  private initStatesLayer(states: any): void {
-    const stateLayer = L.geoJSON(states, {
-      style: (feature) => ({
-        weight: 3,
-        opacity: 0.5,
-        color: '#008f68',
-        fillOpacity: 0.8,
-        fillColor: '#6DB65B'
-      }),
-      onEachFeature: (feature, layer) => (
-        layer.on({
-          mouseover: (e) => (this.highlightFeature(e)),
-          mouseout: (e) => (this.resetFeature(e)),
-        })
-      )
-    });
-
-    this.map?.addLayer(stateLayer);
-    stateLayer.bringToBack();
-  }
-
-  private highlightFeature(e: { target: any; }) {
-    const layer = e.target;
-
-    layer.setStyle({
-      weight: 10,
-      opacity: 1.0,
-      color: '#DFA612',
-      fillOpacity: 1.0,
-      fillColor: '#FAE042'
-    });
-  }
-
-  private resetFeature(e: { target: any; }) {
-    const layer = e.target;
-
-    layer.setStyle({
-      weight: 3,
-      opacity: 0.5,
-      color: '#008f68',
-      fillOpacity: 0.8,
-      fillColor: '#6DB65B'
-    });
-  }
-
 }

@@ -111,9 +111,10 @@
     },
     "coordinates": {
       "label": "Parcel's coordinates",
-      "button": "Search Coordinates",
       "placeholder": "Ex: 40.4165, -3.70256 ...",
-      "invalid": "Invalid coordinates format. Please use the 'latitude, longitude' format.\nInput coordinates:"
+      "invalid": "Invalid coordinates format. Please use the 'latitude, longitude' format.\nInput coordinates:",
+      "search-button": "Search coordinates",
+      "clear-button": "Reset map and coordinates"
     },
     "sigpacForm": {
       "title": "SIGPAC Classification",
@@ -131,7 +132,8 @@
     },
     "button": {
       "send": "Send information",
-      "reset": "Reset selection"
+      "reset": "Reset selection",
+      "loading": "Loading..."
     }
   },
   "chat": {
@@ -175,6 +177,14 @@
       "parcel-drawer": {
         "coordinates": {
           "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:"
+        },
+        "sigpac-table": {
+          "error": "Error when loading crop classifications:\n"
+        },
+        "missing": {
+          "parcel-drawing":"Error: No polygon detected on the map. Draw one to continue.",
+          "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
+          "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
         }
       },
       "chat": {
