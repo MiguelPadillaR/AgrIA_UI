@@ -111,7 +111,8 @@
     },
     "coordinates": {
       "label": "Coordenadas de la Parcela",
-      "button": "Centrar mapa"
+      "button": "Buscar coordenadas",
+      "placeholder": "Ej: 40.4165, -3.70256 ..."
     },
     "sigpacForm": {
       "title": "Clasificación SIGPAC ",
@@ -166,23 +167,27 @@
   "progressBar": {
     "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
   },
-    "notifications": {
-      "parcel-finder": {
-        "searching": "Buscando imagen de las parcelas...",
-        "success": "¡Parcela encontrada!",
-        "error": "Fallo al buscar la parcela:"
-      },
-      "chat": {
-        "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
-        "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",
-        "load-parcel-finder-data-success": "¡Datos de la Parcela cargados con éxito!",
-        "suggestion-info": "Obteniendo respuesta de sugerencia...",
-        "suggestion-error": "Fallo al obtener sugerencia:",
-        "suggestion-success": "¡Sugerencia obtenida con éxito!"
-      },
-      "chat-assistant": {
-        "assistant-error": "Fallo al intentar consguir una respuesta:\n"
+  "notifications": {
+    "parcel-finder": {
+      "searching": "Buscando imagen de las parcelas...",
+      "success": "¡Parcela encontrada!",
+      "error": "Fallo al buscar la parcela:"
+    },
+    "parcel-drawer": {
+      "coordinates": {
+        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:"
       }
-
+    },
+    "chat": {
+      "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
+      "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",
+      "load-parcel-finder-data-success": "¡Datos de la Parcela cargados con éxito!",
+      "suggestion-info": "Obteniendo respuesta de sugerencia...",
+      "suggestion-error": "Fallo al obtener sugerencia:",
+      "suggestion-success": "¡Sugerencia obtenida con éxito!"
+    },
+    "chat-assistant": {
+      "assistant-error": "Fallo al intentar consguir una respuesta:\n"
+    }
   }
 }

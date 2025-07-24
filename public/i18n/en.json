@@ -98,7 +98,7 @@
     "detailedDescription": "Detailed description.",
     "confirmParcel": "Confirm Parcel"
   },
-    "parcelDrawer": {
+  "parcelDrawer": {
     "title": "Parcel drawer",
     "description": {
       "bold1": "Draw your parcel's limits over the map.",
@@ -111,7 +111,9 @@
     },
     "coordinates": {
       "label": "Parcel's coordinates",
-      "button": "Center map"
+      "button": "Search Coordinates",
+      "placeholder": "Ex: 40.4165, -3.70256 ...",
+      "invalid": "Invalid coordinates format. Please use the 'latitude, longitude' format.\nInput coordinates:"
     },
     "sigpacForm": {
       "title": "SIGPAC Classification",
@@ -169,6 +171,11 @@
         "searching": "Searching for parcel image...",
         "success": "Parcel found!",
         "error": "Error when searching for parcel:"
+      },
+      "parcel-drawer": {
+        "coordinates": {
+          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:"
+        }
       },
       "chat": {
         "load-parcel-finder-data-info": "Getting parcel finder data...",

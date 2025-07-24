@@ -18,10 +18,19 @@
         </div>
         <div class="coordinates-container">
             <label class="coordinates-label"> {{ 'parcelDrawer.coordinates.label' | translate }} <span style="font-style: italic;">(lat, lon): </span>
-                <input class="coordinates-input" type="text" name="coordinates" id="">
+                <input
+                class="coordinates-input"
+                type="text"
+                name="coordinates"
+                [(ngModel)]="coordinates"
+                placeholder="{{ 'parcelDrawer.coordinates.placeholder' | translate }}"
+                >
             </label>
     
-            <button class="input-button" (click)="centerMap()">
+            <button
+            class="input-button"
+            (click)="centerMapOnCoordinates()"
+            >
                 {{ 'parcelDrawer.coordinates.button' | translate }}
             </button>
         </div>
@@ -117,5 +126,10 @@
             >
                 {{ 'parcelDrawer.button.reset' | translate }}
             </button>
+        <app-progress-bar
+        [isProcessing]="isLoading()"
+        [durationInSeconds]="60"
+        >
+        </app-progress-bar>
     </div>
 </div>

@@ -1,6 +1,6 @@
 export interface IFindParcelresponse {
   cadastralReference: string,
-  geometry: ICadastralGeometry,
+  geometry: IGeojsonGeometry,
   imagePath: string,
   metadata: ICadastralMetadata,
   isDetailedDescription: boolean,
@@ -8,8 +8,8 @@ export interface IFindParcelresponse {
   parcelInfo: string,
 }
 
-export interface ICadastralGeometry {
-  CRS: string,
+export interface IGeojsonGeometry {
+  CRS: string | null,
   coordinates: [number, number][];
   type:string
 }
