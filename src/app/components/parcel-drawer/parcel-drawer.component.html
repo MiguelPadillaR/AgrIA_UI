@@ -21,7 +21,7 @@
                 <input class="coordinates-input" type="text" name="coordinates" id="">
             </label>
     
-            <button class="coordinates-button" (click)="centerMap()">
+            <button class="input-button" (click)="centerMap()">
                 {{ 'parcelDrawer.coordinates.button' | translate }}
             </button>
         </div>
@@ -31,7 +31,12 @@
             </div>
         </div>
         <div class="crop-classification-container">
-            <h2 class="form-title">{{ "parcelDrawer.sigpac-form.title" | translate}}</h2>
+            <h2 class="form-title">{{ "parcelDrawer.sigpacForm.title" | translate}}</h2>
+            <div class="form-description">
+                <p>
+                    <span style="font-weight: bold;">{{"parcelDrawer.sigpacForm.description.bold1" | translate}}</span>{{"parcelDrawer.sigpacForm.description.normal1" | translate}}
+                </p>
+            </div>
             <form class="form">
                 <div class="crop-classification-tree">
                     @for (type of (objectKeys(groupedCropClassification)); track type) {
@@ -62,6 +67,12 @@
                 </div>
             </form>
             @if (selectedClassifications.length > 0) {
+                <div class="form-description">
+                <p>
+                    <span style="font-weight: bold;">{{"parcelDrawer.sigpacForm.description.bold2" | translate}}</span>{{"parcelDrawer.sigpacForm.description.normal2" | translate}}
+                </p>
+
+                </div>
                 <div class="selected-crops-table">
                     <h3>{{ "parcelDrawer.sigpac-table.title" | translate}}</h3>
                     <table>
@@ -91,5 +102,20 @@
                 </div>
             }
         </div>
+        <div class="form-buttons">
+            <button
+                class="input-button"
+                [style.cursor]="isLoading() ? 'progress' : 'pointer'"
+                [disabled]="isLoading() || selectedClassifications.length === 0"
+                (click)="sendParcelDrawerInfo()"
+            >
+                {{ isLoading() ? ('parcelDrawer.save.loading' | translate) : ('parcelDrawer.button.send' | translate) }}
+            </button>
+            <button
+                class="clear-info-button"
+                (click)="resetForm()"
+            >
+                {{ 'parcelDrawer.button.reset' | translate }}
+            </button>
     </div>
 </div>

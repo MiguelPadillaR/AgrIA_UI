@@ -113,13 +113,23 @@
       "label": "Parcel's coordinates",
       "button": "Center map"
     },
-    "sigpac-form": {
-      "title": "SIGPAC Classification"
+    "sigpacForm": {
+      "title": "SIGPAC Classification",
+      "description": {
+        "bold1": "Use the following form to indicate all of your states's crop types. ",
+        "normal1": "These follow SIGPAC classification. Pertinent information should be available at SIGPAC's website or property-related documents.",
+        "bold2": "Use the following table to indicate the total surface taken by each crop type, ",
+        "normal2": "even if it may be shared among different parcels."
+      }
     },
     "sigpac-table": {
       "title": "Selected Crops",
       "header1": "SIGPAC Type",
       "header2": "Surface (ha)"
+    },
+    "button": {
+      "send": "Send information",
+      "reset": "Reset selection"
     }
   },
   "chat": {

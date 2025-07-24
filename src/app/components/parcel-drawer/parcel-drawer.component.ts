@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import * as L from 'leaflet';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
@@ -38,11 +38,15 @@ export class ParcelDrawerComponent {
   // Grouped crop classifications by type and subtype
   public groupedCropClassification: IGroupedCropClassification = {};
   // Selected crop classifications
-public selectedClassifications: ISelectedCrop[] = [];
-  
+  public selectedClassifications: ISelectedCrop[] = [];
+  // Map zoom level attribute
+  mapZoom: number = 6;
+  // Loading process flag
+  public isLoading: Signal<boolean> = signal(false);
+
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
-      // Utility to get object keys
+  // Utility to get object keys
   public objectKeys = Object.keys;
 
   private map: any;
@@ -56,21 +60,22 @@ public selectedClassifications: ISelectedCrop[] = [];
   }
 
   /**
-   * Initializes the map and loads the states layer.
-   * This method is called after the view has been initialized.
+   * Initializes the map and loads the provider layer.
    */
   ngAfterViewInit(): void {
     this.initMap();
-    this.mapShapeService.getStateShapes().subscribe(states => {
-      this.initStatesLayer(states);
-    });
-    this.mapMarkerService.makeCapitalCircleMarkers(this.map);
+    console.log("this.map:", this.map);
+
+    // this.mapShapeService.getStateShapes().subscribe(states => {
+    //   this.initStatesLayer(states);
+    // });
+    // this.mapMarkerService.makeCapitalCircleMarkers(this.map);
   }
 
   private initMap(): void {
     this.map = L.map('map', {
       center: [40.4165, -3.70256],
-      zoom: 6
+      zoom: this.mapZoom,
     });
 
     const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -80,8 +85,88 @@ public selectedClassifications: ISelectedCrop[] = [];
     });
 
     tiles.addTo(this.map);
+
   }
 
+  public centerMap(): void {
+  // TODO
+  }
+
+  private loadCropClassifications() {
+    this.parcelFinderService.getCropClassifications().subscribe(
+      (cropClassification: ICropClassification[]) => {
+        this.cropClassification = cropClassification;
+        this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
+
+      },
+      (error) => {
+        console.error('Error loading crop classifications:', error);
+      }
+    );
+  }
+
+  /**
+   * Groups crop classifications by type and subtype.
+   * 
+   * @param data - Array of crop classifications to be grouped.
+   * @returns An object where keys are types and values are objects with subtypes as keys.
+   */
+  private groupByTypeAndSubtype(data: ICropClassification[]) {
+    const grouped: any = {};
+      for (const item of data) {
+        const type = item.type || 'Unknown';
+        const subtype = item.subtype1 || item.subtype2 || 'Otro';
+        if (!grouped[type]) grouped[type] = {};
+        if (!grouped[type][subtype]) grouped[type][subtype] = [];
+        grouped[type][subtype].push(item);
+      }
+      return grouped;
+  }
+
+  /**
+   * Toggles the selection state of a crop classification item and adds/removes it to/from selection.
+   * 
+   * @param clickedItem - The crop classification item to toggle.
+   */
+  public toggleSelectedClassification(clickedItem: ICropClassification): void {
+    const index = this.selectedClassifications.findIndex(
+      (entry) => entry.classification === clickedItem
+    );
+
+    if (index === -1) {
+      this.selectedClassifications.push({
+        classification: clickedItem,
+        surface: null
+      });
+    } else {
+      this.selectedClassifications.splice(index, 1);
+    }
+  }
+
+  /**
+   * Checks if a crop classification item is selected.
+   * 
+   * @param item - The selected crop classification item.
+   * @returns The class (title) of the item if it is selected, otherwise an empty string.
+   */
+  public trackClassification(item: ISelectedCrop): string {
+    return item.classification.class;
+  }
+
+  public sendParcelDrawerInfo(): void {
+    // TODO
+  }
+
+  public resetForm(): void {
+    // TODO: Work in progress...
+    this.selectedClassifications = [];
+    this.mapZoom = 6; // Reset map zoom level
+    if (this.map) {
+      this.map.setView([40.4165, -3.70256], this.mapZoom); // Reset map view
+    }
+  }
+  
+  // REMOVE (Leaflet tutorial methods)
   private initStatesLayer(states: any): void {
     const stateLayer = L.geoJSON(states, {
       style: (feature) => ({
@@ -127,64 +212,4 @@ public selectedClassifications: ISelectedCrop[] = [];
     });
   }
 
-  public centerMap(): void {
-  // TODO
-  }
-
-  private loadCropClassifications() {
-    this.parcelFinderService.getCropClassifications().subscribe(
-      (cropClassification: ICropClassification[]) => {
-        this.cropClassification = cropClassification;
-        this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
-
-      },
-      (error) => {
-        console.error('Error loading crop classifications:', error);
-      }
-    );
-  }
-
-  /**
-   * Toggles the selection state of a crop classification item.
-   * If the item is already selected, it will be removed from the selection.
-   * If the item is not selected, it will be added to the selection.
-   * 
-   * @param clickedItem - The crop classification item to toggle.
-   */
-  public toggleSelectedClassification(clickedItem: ICropClassification): void {
-    const index = this.selectedClassifications.findIndex(
-      (entry) => entry.classification === clickedItem
-    );
-
-    if (index === -1) {
-      this.selectedClassifications.push({
-        classification: clickedItem,
-        surface: null
-      });
-    } else {
-      this.selectedClassifications.splice(index, 1);
-    }
-  }
-
-  public trackClassification(item: ISelectedCrop): string {
-  return item.classification.class;
-}
-  
-  /**
-   * Groups crop classifications by type and subtype.
-   * 
-   * @param data - Array of crop classifications to be grouped.
-   * @returns An object where keys are types and values are objects with subtypes as keys.
-   */
-  private groupByTypeAndSubtype(data: ICropClassification[]) {
-    const grouped: any = {};
-      for (const item of data) {
-        const type = item.type || 'Unknown';
-        const subtype = item.subtype1 || item.subtype2 || 'Otro';
-        if (!grouped[type]) grouped[type] = {};
-        if (!grouped[type][subtype]) grouped[type][subtype] = [];
-        grouped[type][subtype].push(item);
-      }
-      return grouped;
-    }
 }

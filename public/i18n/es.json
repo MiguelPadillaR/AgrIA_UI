@@ -113,14 +113,25 @@
       "label": "Coordenadas de la Parcela",
       "button": "Centrar mapa"
     },
-    "sigpac-form": {
-      "title": "Clasificación SIGPAC "
+    "sigpacForm": {
+      "title": "Clasificación SIGPAC ",
+      "description": {
+        "bold1": "Use el siguiente formulario para indicar todos los tipos de cultivo en su finca. ",
+        "normal1": "Estos tipos siguen la clasificación SIGPAC. La información al resepcto debería estar disponible en la web de SIGPAC o en documentos relacionados con la propiedad.",
+        "bold2": "Use la tabla a continuación para indicar la superficie total ocupada por cada tipo de cultivo, ",
+        "normal2": "incluso si se encuentra repartida entre varias parcelas."
+      }
     },
       "sigpac-table": {
       "title": "Cultivos seleccionados",
       "header1": "Tipo SIGPAC",
       "header2": "Superficie (ha)"
+    },
+    "button": {
+      "send": "Enviar información",
+      "reset": "Borrar selección"
     }
+
   },
   "chat": {
     "uploadImage": {
