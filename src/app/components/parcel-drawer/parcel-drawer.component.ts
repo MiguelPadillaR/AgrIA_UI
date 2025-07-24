@@ -4,27 +4,10 @@ import 'leaflet-draw';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { ICropClassification, IGroupedCropClassification, ISelectedCrop } from '../../models/parcel-finder.models';
-import { MapMarkerService } from '../../services/map-services/map-marker.service/map-marker.service';
-import { MapShapeService } from '../../services/map-services/map-shape.service/map-shape.service';
 import { FormsModule } from '@angular/forms'; // <-- Add this import
 import { IParcelDrawerGeojson } from '../../models/parcel-drawer.models';
 import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
 import { NotificationService } from '../../services/notification.service/notification.service';
-
-const iconRetinaUrl = 'public/leaflet/marker-icon-2x.png';
-const iconUrl = 'public/leaflet/marker-icon.png';
-const shadowUrl = 'public/leaflet/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = iconDefault;
 
 
 @Component({
@@ -40,6 +23,8 @@ L.Marker.prototype.options.icon = iconDefault;
 export class ParcelDrawerComponent {
   // Leaflet map instance
   private map: L.DrawMap | null = null;
+  // Map zoom level attribute
+  mapZoom: number = 6;
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
   // Coordinates attribute
@@ -54,8 +39,6 @@ export class ParcelDrawerComponent {
   public groupedCropClassification: IGroupedCropClassification = {};
   // Selected crop classifications
   public selectedClassifications: ISelectedCrop[] = [];
-  // Map zoom level attribute
-  mapZoom: number = 6;
   // Loading process flag
   public isLoading: WritableSignal<boolean> = signal(false);
 
@@ -257,10 +240,11 @@ export class ParcelDrawerComponent {
     }
     this.notificationService.showNotification("parcel-drawer.info.TODO", "", "info");
 
-    // TODO
     console.log("Selected classifications:", this.selectedClassifications);
     console.log("this.parcelDrawing:", this.parcelDrawing);
     this.isLoading.set(true);
+    // TODO: Get full parcel image from server
+
   }
 
   public resetForm(): void {

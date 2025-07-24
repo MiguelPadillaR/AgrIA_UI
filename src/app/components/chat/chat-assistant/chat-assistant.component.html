@@ -3,7 +3,7 @@
     <div class="message {{ msg.role }}">
       <div class="bubble">
         @if (msg.loading) {
-          <img src="message-icon.png" class="typing-icon" alt="Assistant is thinking...">
+          <img src="img/message-icon.png" class="typing-icon" alt="Assistant is thinking...">
         } @else {
           <markdown [data]="msg.revealProgress ?? msg.content"></markdown>
         }
