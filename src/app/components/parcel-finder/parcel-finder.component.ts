@@ -37,6 +37,8 @@ export class ParcelFinderComponent {
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
 
+  public activeTab: 'finder' | 'drawer' = 'finder';
+
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
   // Translation service

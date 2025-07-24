@@ -96,7 +96,12 @@
     "previewAlt": "Vista previa",
     "uploadImageAlt": "Subir imagen",
     "detailedDescription": "Descripción detallada",
-    "confirmParcel": "Confirmar Parcela"
+    "confirmParcel": "Confirmar Parcela",
+    "tab": {
+      "finder": "Buscar por referencia catastral.",
+      "drawer": "Buscar dibujando los límites."
+    }
+
   },
   "parcelDrawer": {
     "title": "Delimitador de Parcelas",

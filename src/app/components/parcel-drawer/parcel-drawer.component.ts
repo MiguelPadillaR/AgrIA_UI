@@ -24,7 +24,7 @@ export class ParcelDrawerComponent {
   // Leaflet map instance
   private map: L.DrawMap | null = null;
   // Map zoom level attribute
-  mapZoom: number = 6;
+  mapZoom: number = 5;
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
   // Coordinates attribute
@@ -149,7 +149,7 @@ export class ParcelDrawerComponent {
   public resetMapAndCoordinates(): void {
     this.parcelDrawing = null;
     this.drawnItems.clearLayers();
-    this.mapZoom = 6;
+    this.mapZoom = 5;
 
     this.coordinates = this.mapCenter;
     const coords = this.coordinates.split(',').map(coord => parseFloat(coord.trim()));

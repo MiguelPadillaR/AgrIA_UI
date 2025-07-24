@@ -14,6 +14,7 @@
   --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
   --padding-unit: 1.5rem;
+  --max-width: 1000px; /* Consistent max width for content */
 }
 
 /* Basic Reset */
@@ -30,8 +31,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center; /* Align to start, as it's not a full-height chat */
+  min-height: 100vh; /* Minimum height for full screen */
   background-color: var(--bg-color);
-  padding: var(--padding-unit); /* Overall padding */
 }
 
 .content {
@@ -41,7 +42,7 @@
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   width: 100%;
-  max-width: 800px; /* Adjust max width for this layout */
+  max-width: var(--max-width); /* Adjust max width for this layout */
   overflow: hidden;
   margin-bottom: var(--padding-unit); /* Space at the bottom */
 }
@@ -84,7 +85,7 @@
 
 .map-container {
   position: relative;
-  width: 800px;
+  width: auto;
   height: 60vh; /* Set a default height */
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -111,7 +112,6 @@
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   padding: var(--padding-unit);
-  max-width: 800px;
   width: 100%;
 }
 
@@ -247,12 +247,20 @@
 
 /* Responsive Styles for Smaller Screens */
 @media (max-width: 768px) {
+  #parcel-drawer {
+    border-radius: 0;
+  }
   .content,
   .map-container,
   .crop-classification-container {
     max-width: 100%;
     width: 100%;
-    margin: 1rem 0.5rem;
+  }
+
+  .content {
+    border-radius: 0; /* Full width, no rounded corners */
+    box-shadow: none; /* No shadow */
+    min-height: 100vh; /* Take full vertical space */
   }
 
   .coordinates-container {
@@ -269,14 +277,9 @@
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
-  .form-title h2,
-  .display-title h2 {
-    font-size: 1rem;
-  }
-
   .form-description p {
-    font-size: 0.9rem;
     padding: 0.5rem;
+    margin: 0 0.7rem;
   }
 
   .selected-crops-table th,

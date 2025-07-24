@@ -96,7 +96,11 @@
     "previewAlt": "Parcel Image",
     "uploadImageAlt": "Upload image",
     "detailedDescription": "Detailed description.",
-    "confirmParcel": "Confirm Parcel"
+    "confirmParcel": "Confirm Parcel",
+    "tab": {
+      "finder": "Search by cadastral reference.",
+      "drawer": "Search by drawing parcel limits."
+    }
   },
   "parcelDrawer": {
     "title": "Parcel drawer",
