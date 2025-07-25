@@ -336,6 +336,9 @@ app-chat-assistant {
 /* ================================== */
 
 @media (max-width: 992px) {
+  #chat {
+    padding: 0.5rem; /* Reduce padding on smaller screens */
+  }
   .top-section {
     grid-template-columns: 1fr; /* Stack image and chat vertically */
     gap: var(--padding-unit);
@@ -392,12 +395,12 @@ app-chat-assistant {
 
 @media (max-width: 600px) {
   :host {
-    --padding-unit: 1rem; /* Reduce overall padding on very small screens */
+    --padding-unit: 0.5rem; /* Reduce overall padding on very small screens */
   }
 
   #chat {
     padding: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .content {

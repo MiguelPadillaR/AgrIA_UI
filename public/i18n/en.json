@@ -96,7 +96,50 @@
     "previewAlt": "Parcel Image",
     "uploadImageAlt": "Upload image",
     "detailedDescription": "Detailed description.",
-    "confirmParcel": "Confirm Parcel"
+    "confirmParcel": "Confirm Parcel",
+    "tab": {
+      "finder": "Search by cadastral reference.",
+      "drawer": "Search by drawing parcel limits."
+    }
+  },
+  "parcelDrawer": {
+    "title": "Parcel drawer",
+    "description": {
+      "bold1": "Draw your parcel's limits over the map.",
+      "normal1": "When you are done marking your parcel, ",
+      "bold2": "press again on the initial node to finish ",
+      "normal2": "drawing.",
+      "normal3": "In order to get a better evaluation and classification from AgrIA, ",
+      "bold3": "make sure you provide your parcel's crop classifcation.",
+      "normal4": "For that, you may use the SIGAPC classification form below the map."
+    },
+    "coordinates": {
+      "label": "Parcel's coordinates",
+      "placeholder": "Ex: 40.4165, -3.70256 ...",
+      "invalid": "Invalid coordinates format. Please use the 'latitude, longitude' format.\nInput coordinates:",
+      "search-button": "Search coordinates",
+      "clear-button": "Reset map and coordinates"
+    },
+    "sigpacForm": {
+      "title": "SIGPAC Classification",
+      "description": {
+        "bold1": "Use the following form to indicate all of your states's crop types. ",
+        "normal1": "These follow SIGPAC classification. Pertinent information should be available at SIGPAC's website or property-related documents.",
+        "bold2": "Use the following table to indicate the total surface taken by each crop type, ",
+        "normal2": "even if it may be shared among different parcels."
+      }
+    },
+    "sigpac-table": {
+      "title": "Selected Crops",
+      "header1": "SIGPAC Type",
+      "header2": "Surface (ha)",
+      "header3": "Irrigation Coef. (%)"
+    },
+    "button": {
+      "send": "Send information",
+      "reset": "Reset selection",
+      "loading": "Loading..."
+    }
   },
   "chat": {
     "uploadImage": {
@@ -135,6 +178,19 @@
         "searching": "Searching for parcel image...",
         "success": "Parcel found!",
         "error": "Error when searching for parcel:"
+      },
+      "parcel-drawer": {
+        "coordinates": {
+          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:"
+        },
+        "sigpac-table": {
+          "error": "Error when loading crop classifications:\n"
+        },
+        "missing": {
+          "parcel-drawing":"Error: No polygon detected on the map. Draw one to continue.",
+          "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
+          "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
+        }
       },
       "chat": {
         "load-parcel-finder-data-info": "Getting parcel finder data...",

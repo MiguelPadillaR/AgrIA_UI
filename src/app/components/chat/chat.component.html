@@ -9,7 +9,7 @@
                     @if(imagePreviewUrl){
                         <img [src]="imagePreviewUrl" alt="{{ 'parcelFinder.previewAlt' | translate }}" />
                     } @else {
-                        <img class="image-icon" src="image-icon.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" />
+                        <img class="image-icon" src="img/image-icon.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" />
                     }
                 </div>
                 @if (imagePreviewUrl) {
@@ -31,7 +31,7 @@
 
         <div id="input">
             <label class="custom-file-upload">
-              <img src="upload-icon1.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" title="{{ 'parcelFinder.uploadImageAlt' | translate }}"/>
+              <img src="img/upload-icon1.png" alt="{{ 'parcelFinder.uploadImageAlt' | translate }}" title="{{ 'parcelFinder.uploadImageAlt' | translate }}"/>
               <input 
                 type="file" 
                 accept="image/*"

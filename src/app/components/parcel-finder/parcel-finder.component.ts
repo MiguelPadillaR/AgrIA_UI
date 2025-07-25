@@ -2,10 +2,11 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.models';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { NotificationService } from '../../services/notification.service/notification.service';
+import { ParcelDrawerComponent } from "../parcel-drawer/parcel-drawer.component";
 
 @Component({
   selector: 'app-parcel-finder',
@@ -13,6 +14,7 @@ import { NotificationService } from '../../services/notification.service/notific
     FormsModule,
     TranslateModule,
     ProgressBarComponent,
+    ParcelDrawerComponent
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
@@ -35,6 +37,8 @@ export class ParcelFinderComponent {
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
 
+  public activeTab: 'finder' | 'drawer' = 'finder';
+
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
   // Translation service
@@ -45,10 +49,7 @@ export class ParcelFinderComponent {
   private router: Router = inject(Router);
 
   constructor() {}
-
-  ngOnInit(): void {
-    // Empty the observable by emitting null
-  }
+ 
  
  /**
  * Finds a parcel based on the provided cadastral reference and selected date.
@@ -63,6 +64,7 @@ public findParcel() {
   const formData = new FormData();
   formData.append('cadastralReference', this.cadastralReference);
   formData.append('selectedDate', this.selectedDate);
+  formData.append('isFromCadastralReference', "True");
 
   this.parcelFinderService.findParcel(formData).subscribe({
     next: (response: IFindParcelresponse) => {
@@ -70,6 +72,7 @@ public findParcel() {
       this.selectedParcelInfo = response;
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
       document.body.style.cursor = 'default';
+      console.log("Parcel finder response:", response)
     },
     error: (err) => {
       const errorMessage = err.error.error.includes("No images are available")? 

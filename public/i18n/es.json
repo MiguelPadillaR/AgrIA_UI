@@ -96,7 +96,52 @@
     "previewAlt": "Vista previa",
     "uploadImageAlt": "Subir imagen",
     "detailedDescription": "Descripción detallada",
-    "confirmParcel": "Confirmar Parcela"
+    "confirmParcel": "Confirmar Parcela",
+    "tab": {
+      "finder": "Buscar por referencia catastral.",
+      "drawer": "Buscar dibujando los límites."
+    }
+
+  },
+  "parcelDrawer": {
+    "title": "Delimitador de Parcelas",
+    "description": {
+      "bold1": "Dibuje los límites de su parcela sobre el mapa.",
+      "normal1": "Cuando haya terminado de delimitar la parcela, ",
+      "bold2": "vuelva a pulsar sobre el vértice inicial para terminar",
+      "normal2": "de dibujar.",
+      "normal3": "Para una mejor evaluación y clasificación por AgrIA, ",
+      "bold3": "asegúrese de proveer la clasificación de los cultivos de su parcela.",
+      "normal4": "Para ello, puede disponer del formulario de clasificación SIGPAC debajo del mapa."
+    },
+    "coordinates": {
+      "label": "Coordenadas de la Parcela",
+      "placeholder": "Ej: 40.4165, -3.70256 ...",
+      "search-button": "Buscar Coordenadas",
+      "clear-button": "Reiniciar mapa y coordenadas"
+
+    },
+    "sigpacForm": {
+      "title": "Clasificación SIGPAC ",
+      "description": {
+        "bold1": "Use el siguiente formulario para indicar todos los tipos de cultivo en su finca. ",
+        "normal1": "Estos tipos siguen la clasificación SIGPAC. La información al resepcto debería estar disponible en la web de SIGPAC o en documentos relacionados con la propiedad.",
+        "bold2": "Use la tabla a continuación para indicar la superficie total ocupada por cada tipo de cultivo, ",
+        "normal2": "incluso si se encuentra repartida entre varias parcelas."
+      }
+    },
+      "sigpac-table": {
+      "title": "Cultivos seleccionados",
+      "header1": "Tipo SIGPAC",
+      "header2": "Superficie (ha)",
+      "header3": "Coef. Regadío (%)"
+    },
+    "button": {
+      "send": "Enviar información",
+      "reset": "Borrar selección",
+      "loading": "Cargando..."
+    }
+
   },
   "chat": {
     "uploadImage": {
@@ -131,23 +176,36 @@
   "progressBar": {
     "completed": "El proceso a veces puede tardar hasta 1 minuto aprox..."
   },
-    "notifications": {
-      "parcel-finder": {
-        "searching": "Buscando imagen de las parcelas...",
-        "success": "¡Parcela encontrada!",
-        "error": "Fallo al buscar la parcela:"
-      },
-      "chat": {
-        "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
-        "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",
-        "load-parcel-finder-data-success": "¡Datos de la Parcela cargados con éxito!",
-        "suggestion-info": "Obteniendo respuesta de sugerencia...",
-        "suggestion-error": "Fallo al obtener sugerencia:",
-        "suggestion-success": "¡Sugerencia obtenida con éxito!"
-      },
-      "chat-assistant": {
-        "assistant-error": "Fallo al intentar consguir una respuesta:\n"
-      }
+  "notifications": {
+    "parcel-finder": {
+      "searching": "Buscando imagen de las parcelas...",
+      "success": "¡Parcela encontrada!",
+      "error": "Fallo al buscar la parcela:"
+    },
+    "parcel-drawer": {
+      "coordinates": {
+        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:"
+        },
+        "sigpac-table": {
+          "error": "Error al cargar la clasificación de cultivos:\n"
+        },
+        "missing": {
+          "parcel-drawing":"Error: Nigún polígono detectado en el mapa. Dibuje uno para continuar.",
+          "crop-classification": "Error: Nigún tipo de cultivo seleccionado. Por favor, seleccione al menos un tipo de cultivo.",
+          "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
+        }
 
+    },
+    "chat": {
+      "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
+      "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",
+      "load-parcel-finder-data-success": "¡Datos de la Parcela cargados con éxito!",
+      "suggestion-info": "Obteniendo respuesta de sugerencia...",
+      "suggestion-error": "Fallo al obtener sugerencia:",
+      "suggestion-success": "¡Sugerencia obtenida con éxito!"
+    },
+    "chat-assistant": {
+      "assistant-error": "Fallo al intentar consguir una respuesta:\n"
+    }
   }
 }

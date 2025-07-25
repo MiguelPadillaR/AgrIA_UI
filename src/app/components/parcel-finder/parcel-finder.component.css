@@ -15,6 +15,7 @@
   --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
   --padding-unit: 1.5rem;
+  --max-width: 1000px; /* Consistent max width for content */
 }
 
 /* Basic Reset */
@@ -28,12 +29,56 @@
 /* Main Parcel Finder Container */
 #parcel-finder {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Align to start, as it's not a full-height chat */
+  align-items: center; /* Align to start, as it's not a full-height chat */
   min-height: 100vh; /* Minimum height for full screen */
   background-color: var(--bg-color);
   padding: var(--padding-unit); /* Overall padding */
-  margin-top: 4rem;
+}
+
+.custom-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-top: 5rem;
+}
+
+.custom-tab {
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--bg-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%; /* Full width for tabs */
+}
+
+.custom-tab:hover {
+  background-color: var(--bg-color);
+}
+
+.custom-tab.active {
+  background-color: var(--secondary-color);
+  color: white;
+  border-color: var(--blue-button-color);
+}
+
+.tab-pane {
+  animation: fadeIn 0.2s ease-in-out;
+  padding: 0 0.5rem;
+  font-size: 0.96rem;
+  /* Optional: max-width if you want to align with content */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .content {
@@ -43,9 +88,8 @@
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   width: 100%;
-  max-width: 800px; /* Adjust max width for this layout */
+  max-width: var(--max-width); /* Adjust max width for this layout */
   overflow: hidden;
-  margin-top: 5vh; /* Push content down from the top slightly */
   margin-bottom: var(--padding-unit); /* Space at the bottom */
 }
 
