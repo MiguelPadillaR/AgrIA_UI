@@ -1,7 +1,7 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
 import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../models/parcel-drawer.models';
@@ -31,16 +31,15 @@ export class ParcelDrawerComponent {
   // Coordinates attribute
   public mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
-  public coordinates: string = '40.400409, -3.631434'; // TODO: REMOVE Default Madrid coordinates (40.4165, -3.70256)
+  public coordinates: string = this.mapCenter; // TODO: REMOVE Center coordinates (40.4165, -3.70256)
   // Date for which the parcel image is requested
   public selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker
   public today: string = new Date().toISOString().split('T')[0];
   // Parcel's geometry attribute
-  public parcelGeometry: IParcelDrawerGeojson | null = null;translateService: any;
-
+  public parcelGeometry: IParcelDrawerGeojson | null = null;
+  // Detail description flag
   public isDetailedDescription: boolean = false;
-;
   // List of SIGPAC's crop classifications
   public cropClassification: ICropClassification[] = [];
   // Grouped crop classifications by type and subtype
@@ -80,6 +79,8 @@ export class ParcelDrawerComponent {
   private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
   // Service for notifications
   private notificationService: NotificationService = inject(NotificationService);
+  // Translation service
+  private translateService: TranslateService = inject(TranslateService);
   // Utility to get object keys
   public objectKeys = Object.keys;
   // Router for navigation
@@ -142,12 +143,13 @@ export class ParcelDrawerComponent {
     // Event listener: what happens when a shape is created
     this.map.on(L.Draw.Event.CREATED, (event: any) => {
       this.drawnItems.clearLayers();
-
+      
+      // Add the drawn layer to the drawnItems FeatureGroup
       const layer = event.layer;
       this.drawnItems.addLayer(layer);
-      console.log('LAYER:', layer);
-      
+      // Convert  to GeoJSON and store it in parcelGeometry
       this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
+      this.parcelGeometry.CRS = 'epsg:4326'; // Set CRS to WGS84
       console.log('Shape drawn:', this.parcelGeometry);
     });
   }
@@ -256,7 +258,15 @@ export class ParcelDrawerComponent {
     return item.classification.class;
   }
 
+  /**
+   * Sends the parcel geometry and metadata to the backend for processing.
+   *  
+   */
   public sendParcelDrawerInfo(): void {
+    this.isLoading.set(true);
+    document.body.style.cursor = 'progress';
+
+    // Validate the parcel geometry and selected classifications before sending
     if (!this.parcelGeometry) {
       this.notificationService.showNotification("parcel-drawer.missing.parcel-drawing", "", "error", 10000);
       console.log("No parcel drawing found.");
@@ -274,34 +284,33 @@ export class ParcelDrawerComponent {
 
     console.log("Selected classifications:", this.selectedClassifications);
     console.log("this.parcelDrawing:", this.parcelGeometry);
-    this.isLoading.set(true);
-    // TODO: Get full parcel image from server  
     console.log("this.selectedClassifications)", this.selectedClassifications);
-    var i = 0
+    
+    // Add essential metadata from corp classification to request
+    var i = 0;
     for (const classification of this.selectedClassifications) {
       const item = classification.classification
-      this.parcelMetadata.query.push({
-        dn_surface: Number(classification.surface),
-        uso_sigpac: `${item.class}-${item.name}`,
-        superficie_admisible: Number(classification.surface),
-        recinto: i++,
-        coef_regadio: classification.irrigation ?? 0,
-        admisibilidad: 0,
-        altitud: 0,
-        incidencias: '',
-        inctexto: '',
-        pendiente_media: 0,
-        region: ''
-      });
+        this.parcelMetadata.query.push({
+          dn_surface: Number(classification.surface)*10000,
+          uso_sigpac: `${item.class}-${item.name}`,
+          superficie_admisible: Number(classification.surface)*10000,
+          recinto: i++,
+          coef_regadio: classification.irrigation ?? 0,
+          admisibilidad: 0,
+          altitud: 0,
+          incidencias: '',
+          inctexto: '',
+          pendiente_media: 0,
+          region: ''
+        });
       console.log("Classification:", `${item.class}-${item.name}`);
       console.log("Surface:", classification.surface);
-    }
+    };
     const formData = new FormData();
     formData.append('parcelGeometry', JSON.stringify(this.parcelGeometry));
     formData.append('parcelMetadata', JSON.stringify(this.parcelMetadata));
     formData.append('selectedDate', this.selectedDate);
     formData.append('isFromCadastralReference', "False");
-
       this.parcelFinderService.findParcel(formData).subscribe({
         next: (response: IFindParcelresponse) => {
           this.notificationService.showNotification("parcel-finder.success","","success")
@@ -313,7 +322,7 @@ export class ParcelDrawerComponent {
         error: (err) => {
           const errorMessage = err.error.error.includes("No images are available")? 
             this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
-              : "No images are available for the selected date, images are processed at the end of each month."
+            : "No images are available for the selected date, images are processed at the end of each month."
             : err.error.error
           this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
           console.error('Parcel fetch failed', err);
