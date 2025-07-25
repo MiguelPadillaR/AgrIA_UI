@@ -249,6 +249,19 @@ export class ParcelDrawerComponent {
   }
 
   /**
+   * Checks if a crop classification item is selected.∫
+   * 
+   * @param item - The crop classification item to check.
+   * @returns 
+   */
+  public isSelected(item: ICropClassification): boolean {
+  return this.selectedClassifications.some(
+    (entry) => entry.classification === item
+  );
+}
+
+
+  /**
    * Checks if a crop classification item is selected.
    * 
    * @param item - The selected crop classification item.
@@ -280,7 +293,7 @@ export class ParcelDrawerComponent {
         console.log("Some selected crop classifications are missing surface values.");
       return;
     }
-    this.notificationService.showNotification("parcel-drawer.info.TODO", "", "info");
+  this.notificationService.showNotification("parcel-finder.searching", "", "info")
 
     console.log("Selected classifications:", this.selectedClassifications);
     console.log("this.parcelDrawing:", this.parcelGeometry);

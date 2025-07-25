@@ -83,6 +83,7 @@
                                         [value]="item.class"
                                         class="crop-checkbox"
                                         (click)="toggleSelectedClassification(item)"
+                                        [checked]="isSelected(item)"
                                     />
                                     {{ item.class }} - {{ item.name }}
                                 </label>
