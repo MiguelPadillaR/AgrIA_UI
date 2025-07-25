@@ -161,5 +161,17 @@
             >
                 {{ 'parcelDrawer.button.reset' | translate }}
             </button>
-    </div>
+        </div>
+
+        <div class="checkbox-container">
+            <label class="detailed-description-checkbox">
+                <input 
+                type="checkbox"
+                class="description-length"
+                [(ngModel)]="isDetailedDescription"
+                >
+                {{ 'parcelFinder.detailedDescription' | translate }}
+            </label>
+        </div>
+
 </div>
