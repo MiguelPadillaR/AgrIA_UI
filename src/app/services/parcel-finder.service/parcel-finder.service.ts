@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { ICropClassification } from '../../models/parcel-finder.models';
+import { ICropClassification } from '../../models/parcel-drawer.models';
 import { environment } from '../../../environments/environment';
-import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.models';
 
 @Injectable({
   providedIn: 'root'

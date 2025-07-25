@@ -132,7 +132,8 @@
     "sigpac-table": {
       "title": "Selected Crops",
       "header1": "SIGPAC Type",
-      "header2": "Surface (ha)"
+      "header2": "Surface (ha)",
+      "header3": "Irrigation Coef. (%)"
     },
     "button": {
       "send": "Send information",

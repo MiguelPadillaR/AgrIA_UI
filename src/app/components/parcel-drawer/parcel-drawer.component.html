@@ -26,20 +26,32 @@
                     placeholder="{{ 'parcelDrawer.coordinates.placeholder' | translate }}"
                 >
             </label>
-    <div class="coordinate-buttons">
-        <button
-            class="input-button"
-            (click)="centerMapOnCoordinates()"
-        >
-            {{ 'parcelDrawer.coordinates.search-button' | translate }}
-        </button>
-        <button
-            class="clear-info-button"
-            (click)="resetMapAndCoordinates()"
-        >
-            {{ 'parcelDrawer.coordinates.clear-button' | translate }}
-        </button>
-    </div>
+            <div class="date-field">
+                <label class="form-label">
+                    {{ 'parcelFinder.selectDate' | translate }}:
+                    <input class="form-input"
+                    class="date-input-field"
+                    type="date"
+                    placeholder="{{ 'parcelFinder.datePlaceholder' | translate }}"
+                    [(ngModel)]="selectedDate"
+                    [max]="today"
+                    />
+                </label>
+            </div>
+            <div class="coordinate-buttons">
+                <button
+                    class="input-button"
+                    (click)="centerMapOnCoordinates()"
+                >
+                    {{ 'parcelDrawer.coordinates.search-button' | translate }}
+                </button>
+                <button
+                    class="clear-info-button"
+                    (click)="resetMapAndCoordinates()"
+                >
+                    {{ 'parcelDrawer.coordinates.clear-button' | translate }}
+                </button>
+            </div>
         </div>
         <div class="map-container">
             <div class="map-frame">
@@ -96,6 +108,7 @@
                         <tr>
                             <th>{{ "parcelDrawer.sigpac-table.header1" | translate}}</th>
                             <th>{{ "parcelDrawer.sigpac-table.header2" | translate}}</th>
+                            <th>{{ "parcelDrawer.sigpac-table.header3" | translate}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -106,9 +119,20 @@
                                 <input
                                     type="number"
                                     min="0"
-                                    class="surface-input"
+                                    class="table-input"
                                     [(ngModel)]="item.surface"
                                     [name]="'surface-' + item.classification.class"
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    class="table-input"
+                                    [(ngModel)]="item.irrigation"
+                                    [name]="'irrigation-' + item.classification.class"
+                                    (ngModelChange)="item.irrigation = item.irrigation ?? 0"
                                 />
                             </td>
                             </tr>

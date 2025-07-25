@@ -2,7 +2,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.models';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { NotificationService } from '../../services/notification.service/notification.service';
@@ -64,6 +64,7 @@ public findParcel() {
   const formData = new FormData();
   formData.append('cadastralReference', this.cadastralReference);
   formData.append('selectedDate', this.selectedDate);
+  formData.append('isFromCadastralReference', "True");
 
   this.parcelFinderService.findParcel(formData).subscribe({
     next: (response: IFindParcelresponse) => {

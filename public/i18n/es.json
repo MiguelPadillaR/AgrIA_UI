@@ -133,7 +133,8 @@
       "sigpac-table": {
       "title": "Cultivos seleccionados",
       "header1": "Tipo SIGPAC",
-      "header2": "Superficie (ha)"
+      "header2": "Superficie (ha)",
+      "header3": "Coef. Regadío (%)"
     },
     "button": {
       "send": "Enviar información",

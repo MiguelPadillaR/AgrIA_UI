@@ -7,7 +7,7 @@ import { ParcelFinderService } from '../../services/parcel-finder.service/parcel
 import { ChatService } from '../../services/chat.services/chat.service';
 import { IChatParcelResponse } from '../../models/chat.models';
 import { take } from 'rxjs';
-import { IFindParcelresponse } from '../../models/parcel-finder-response.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.models';
 import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({

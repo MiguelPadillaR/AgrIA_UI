@@ -3,11 +3,12 @@ import * as L from 'leaflet';
 import 'leaflet-draw';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
-import { ICropClassification, IGroupedCropClassification, ISelectedCrop } from '../../models/parcel-finder.models';
-import { FormsModule } from '@angular/forms'; // <-- Add this import
-import { IParcelDrawerGeojson } from '../../models/parcel-drawer.models';
+import { FormsModule } from '@angular/forms';
+import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../models/parcel-drawer.models';
 import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
 import { NotificationService } from '../../services/notification.service/notification.service';
+import { IFindParcelresponse, IParcelMetadata } from '../../models/parcel-finder.models';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,21 +25,54 @@ export class ParcelDrawerComponent {
   // Leaflet map instance
   private map: L.DrawMap | null = null;
   // Map zoom level attribute
-  mapZoom: number = 5;
+  private mapZoom: number = 5;
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
   // Coordinates attribute
   public mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
   public coordinates: string = '40.400409, -3.631434'; // TODO: REMOVE Default Madrid coordinates (40.4165, -3.70256)
+  // Date for which the parcel image is requested
+  public selectedDate: string  = new Date().toISOString().split('T')[0];
+  // Max date allowed for the date picker
+  public today: string = new Date().toISOString().split('T')[0];
   // Parcel's geometry attribute
-  public parcelDrawing: IParcelDrawerGeojson | null = null;
+  public parcelGeometry: IParcelDrawerGeojson | null = null;translateService: any;
+
+  public isDetailedDescription: boolean = false;
+;
   // List of SIGPAC's crop classifications
   public cropClassification: ICropClassification[] = [];
   // Grouped crop classifications by type and subtype
   public groupedCropClassification: IGroupedCropClassification = {};
   // Selected crop classifications
   public selectedClassifications: ISelectedCrop[] = [];
+  // Parcel Metadata
+  private parcelMetadata: IParcelMetadata = {
+    query: [],
+    arboles: [],
+    convergencia: {
+      cat_fechaultimaconv: ''
+    },
+    id: [],
+    isRecin: false,
+    parcelaInfo: {
+      agregado: 0,
+      dn_surface: 0,
+      municipio: '',
+      parcela: 0,
+      poligono: 0,
+      provincia: '',
+      referencia_cat: ''
+    },
+    usos: [],
+    vigencia: '',
+    vuelo: {
+      fecha_vuelo: 0
+    }
+  };
+  // Selected parcel response information
+  private selectedParcelInfo: IFindParcelresponse | null = null;
   // Loading process flag
   public isLoading: WritableSignal<boolean> = signal(false);
 
@@ -48,6 +82,8 @@ export class ParcelDrawerComponent {
   private notificationService: NotificationService = inject(NotificationService);
   // Utility to get object keys
   public objectKeys = Object.keys;
+  // Router for navigation
+  private router: Router = inject(Router);
 
   constructor() { }
   
@@ -60,11 +96,6 @@ export class ParcelDrawerComponent {
    */
   ngAfterViewInit(): void {
     this.initMap();
-
-    // this.mapShapeService.getStateShapes().subscribe(states => {
-    //   this.initStatesLayer(states);
-    // });
-    // this.mapMarkerService.makeCapitalCircleMarkers(this.map);
   }
   
   /**
@@ -116,8 +147,8 @@ export class ParcelDrawerComponent {
       this.drawnItems.addLayer(layer);
       console.log('LAYER:', layer);
       
-      this.parcelDrawing = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
-      console.log('Shape drawn:', this.parcelDrawing);
+      this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
+      console.log('Shape drawn:', this.parcelGeometry);
     });
   }
 
@@ -147,7 +178,7 @@ export class ParcelDrawerComponent {
    * Resets the map view to the default coordinates and zoom level, clearing any drawn shapes.
    */
   public resetMapAndCoordinates(): void {
-    this.parcelDrawing = null;
+    this.parcelGeometry = null;
     this.drawnItems.clearLayers();
     this.mapZoom = 5;
 
@@ -207,7 +238,8 @@ export class ParcelDrawerComponent {
     if (index === -1) {
       this.selectedClassifications.push({
         classification: clickedItem,
-        surface: null
+        surface: null,
+        irrigation: null
       });
     } else {
       this.selectedClassifications.splice(index, 1);
@@ -225,7 +257,7 @@ export class ParcelDrawerComponent {
   }
 
   public sendParcelDrawerInfo(): void {
-    if (!this.parcelDrawing) {
+    if (!this.parcelGeometry) {
       this.notificationService.showNotification("parcel-drawer.missing.parcel-drawing", "", "error", 10000);
       console.log("No parcel drawing found.");
       return;
@@ -241,10 +273,66 @@ export class ParcelDrawerComponent {
     this.notificationService.showNotification("parcel-drawer.info.TODO", "", "info");
 
     console.log("Selected classifications:", this.selectedClassifications);
-    console.log("this.parcelDrawing:", this.parcelDrawing);
+    console.log("this.parcelDrawing:", this.parcelGeometry);
     this.isLoading.set(true);
-    // TODO: Get full parcel image from server
+    // TODO: Get full parcel image from server  
+    console.log("this.selectedClassifications)", this.selectedClassifications);
+    var i = 0
+    for (const classification of this.selectedClassifications) {
+      const item = classification.classification
+      this.parcelMetadata.query.push({
+        dn_surface: Number(classification.surface),
+        uso_sigpac: `${item.class}-${item.name}`,
+        superficie_admisible: Number(classification.surface),
+        recinto: i++,
+        coef_regadio: classification.irrigation ?? 0,
+        admisibilidad: 0,
+        altitud: 0,
+        incidencias: '',
+        inctexto: '',
+        pendiente_media: 0,
+        region: ''
+      });
+      console.log("Classification:", `${item.class}-${item.name}`);
+      console.log("Surface:", classification.surface);
+    }
+    const formData = new FormData();
+    formData.append('parcelGeometry', JSON.stringify(this.parcelGeometry));
+    formData.append('parcelMetadata', JSON.stringify(this.parcelMetadata));
+    formData.append('selectedDate', this.selectedDate);
+    formData.append('isFromCadastralReference', "False");
 
+      this.parcelFinderService.findParcel(formData).subscribe({
+        next: (response: IFindParcelresponse) => {
+          this.notificationService.showNotification("parcel-finder.success","","success")
+          this.selectedParcelInfo = response;
+          // this.parcelImageUrl = this.selectedParcelInfo.imagePath;
+          document.body.style.cursor = 'default';
+          console.log("Parcel finder response:", response)
+        },
+        error: (err) => {
+          const errorMessage = err.error.error.includes("No images are available")? 
+            this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
+              : "No images are available for the selected date, images are processed at the end of each month."
+            : err.error.error
+          this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
+          console.error('Parcel fetch failed', err);
+          document.body.style.cursor = 'default';
+          this.isLoading.set(false);
+        },
+        complete: () => {
+          this.isLoading.set(false);
+          document.body.style.cursor = 'default';
+          if (this.selectedParcelInfo) {
+            this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
+            this.selectedParcelInfo.hasBeenDescribed = false;
+            this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
+            this.router.navigate(['/chat']);
+          }
+
+        }
+      });
+    
   }
 
   public resetForm(): void {
