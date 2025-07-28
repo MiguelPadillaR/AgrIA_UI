@@ -99,13 +99,21 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
-      "drawer": "Buscar dibujando los límites."
+      "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
   },
   "parcelDrawer": {
-    "title": "Delimitador de Parcelas",
+    "title": "Datos Geográficos",
     "description": {
+      "intro":"En este módulo, puede usar una de las siguientes opciones para encontrar su parcela. En ambos, se utlizará la fecha para extraer la imagen.",
+      "header1": "Búsqueda por coordenadas:",
+      "header2": "Búsqueda por delimitación de parcela:",
+      "bold0":"Utilice un conjunto de coordenadas (latitud, longitud) que se ubiquen en el interior de los límites de su finca ",
+      "normal0":"de acuerdo con los datos catastrales de la propiedad para poder encontrarla.",
+      "normal01": "Esta opción permite la ",
+      "bold01": "extracción automática de la clasificación SIGPAC",
+      "normal02": " de los cultivos de la parcela.",
       "bold1": "Dibuje los límites de su parcela sobre el mapa.",
       "normal1": "Cuando haya terminado de delimitar la parcela, ",
       "bold2": "vuelva a pulsar sobre el vértice inicial para terminar",
@@ -119,7 +127,6 @@
       "placeholder": "Ej: 40.4165, -3.70256 ...",
       "search-button": "Buscar Coordenadas",
       "clear-button": "Reiniciar mapa y coordenadas"
-
     },
     "sigpacForm": {
       "title": "Clasificación SIGPAC ",
@@ -184,7 +191,10 @@
     },
     "parcel-drawer": {
       "coordinates": {
-        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:"
+        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:",
+        "new-coordinates": "Coordenadas actualizadas: ",
+        "new-coordinates-error": "Error al actualizar coordenadas: "
+
         },
         "sigpac-table": {
           "error": "Error al cargar la clasificación de cultivos:\n"

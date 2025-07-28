@@ -10,6 +10,15 @@ import { NotificationService } from '../../services/notification.service/notific
 import { IFindParcelresponse, IParcelMetadata } from '../../models/parcel-finder.models';
 import { Router } from '@angular/router';
 
+const iconRetinaUrl = 'public/leaflet/marker-icon-2x.png';
+const iconUrl = 'public/leaflet/marker-icon.png';
+const shadowUrl = 'public/leaflet/marker-shadow.png';
+const iconDefault = L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl
+});
+L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-parcel-drawer',
@@ -23,11 +32,15 @@ import { Router } from '@angular/router';
 })
 export class ParcelDrawerComponent {
   // Leaflet map instance
-  private map: L.DrawMap | null = null;
+  private map!: L.DrawMap;
+  // Coordinates marker
+  private activeMarker: L.Marker | null = null;
   // Map zoom level attribute
   private mapZoom: number = 5;
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
+  // Flag for when a shape is being drawn
+  private isDrawing: WritableSignal<boolean> = signal(false);
   // Coordinates attribute
   public mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
@@ -139,9 +152,15 @@ export class ParcelDrawerComponent {
     });
 
     this.map.addControl(drawControl);
+    
+    // Event listener: what happens when a shape is being drawn
+    this.map.on(L.Draw.Event.DRAWSTART, () => {
+      this.isDrawing.set(true);
+    });
 
     // Event listener: what happens when a shape is created
     this.map.on(L.Draw.Event.CREATED, (event: any) => {
+      this.isDrawing.set(false);
       this.drawnItems.clearLayers();
       
       // Add the drawn layer to the drawnItems FeatureGroup
@@ -151,6 +170,42 @@ export class ParcelDrawerComponent {
       this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
       this.parcelGeometry.CRS = 'epsg:4326'; // Set CRS to WGS84
       console.log('Shape drawn:', this.parcelGeometry);
+    });
+    // Event listener: get coordinates from marker click
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      if (this.isDrawing()) {
+        return;
+      }
+
+      const lat = e.latlng.lat.toFixed(6);
+      const lng = e.latlng.lng.toFixed(6);
+      const coords = `${lat}, ${lng}`;
+      console.log('Clicked coordinates:', coords);
+
+      // Optionally, copy to clipboard
+      navigator.clipboard.writeText(coords)
+      .then(() => {
+        if (this.map) {
+          // Remove previous marker if it exists
+          if (this.activeMarker) {
+            this.map.removeLayer(this.activeMarker);
+          }
+
+        // Create new marker
+        this.activeMarker = L.marker([e.latlng.lat, e.latlng.lng])
+          .addTo(this.map)
+          .bindPopup(`Coordinates: ${coords}`)
+          .openPopup();
+
+          // Update coordinates in the component
+          this.coordinates = coords; 
+          this.notificationService.showNotification('parcel-drawer.coordinates.new-coordinates', coords, 'info');
+        }
+      })
+      .catch(err => {
+        console.error('Failed to copy coordinates:', err);
+        this.notificationService.showNotification('parcel-drawer.coordinates.new-coordinates', err, 'error');
+      });
     });
   }
 
@@ -183,6 +238,9 @@ export class ParcelDrawerComponent {
     this.parcelGeometry = null;
     this.drawnItems.clearLayers();
     this.mapZoom = 5;
+    if (this.activeMarker) {
+      this.map.removeLayer(this.activeMarker);
+    }
 
     this.coordinates = this.mapCenter;
     const coords = this.coordinates.split(',').map(coord => parseFloat(coord.trim()));
@@ -293,13 +351,10 @@ export class ParcelDrawerComponent {
         console.log("Some selected crop classifications are missing surface values.");
       return;
     }
+    
   this.notificationService.showNotification("parcel-finder.searching", "", "info")
 
-    console.log("Selected classifications:", this.selectedClassifications);
-    console.log("this.parcelDrawing:", this.parcelGeometry);
-    console.log("this.selectedClassifications)", this.selectedClassifications);
-    
-    // Add essential metadata from corp classification to request
+    // Add essential metadata from crop classification to request
     var i = 0;
     for (const classification of this.selectedClassifications) {
       const item = classification.classification

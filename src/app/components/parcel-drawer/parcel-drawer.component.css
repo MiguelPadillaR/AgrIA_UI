@@ -60,12 +60,14 @@
 }
 .form-description {
     border-bottom: 1px solid var(--border-color);
-  p {
-    padding: 0.75rem var(--padding-unit);
-    font-size: 1rem;
-    color: var(--text-color-light);
-    text-align: justify;
-  }
+    p, h3 {
+      padding: 0.75rem var(--padding-unit);
+      color: var(--text-color-light);
+      text-align: justify;
+    }
+    p {
+      font-size: 1rem;
+    }
 }
 
 .coordinates-container {
@@ -325,14 +327,14 @@
   }
 
   .map-container {
-    height: 300px; /* Adjust height for smaller screens */
+    height: 70vh; /* Adjust height for smaller screens */
   }
 
   .checkbox-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
-  .form-description p {
+  .form-description p, h3 {
     padding: 0.5rem;
     margin: 0 0.7rem;
   }
@@ -347,9 +349,9 @@
     font-size: 0.9rem;
   }
 
-  .parcel-finder-buttons {
+  .form-buttons {
     flex-direction: column; /* Stack buttons vertically */
-    gap: 10px; /* Space between stacked buttons */
+    gap: 0px; /* Space between stacked buttons */
   }
 
   .input-button, .clear-info-button {
