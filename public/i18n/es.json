@@ -200,7 +200,7 @@
           "error": "Error al cargar la clasificación de cultivos:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: Nigún polígono detectado en el mapa. Dibuje uno para continuar.",
+          "parcel-drawing":"Error: Nigún polígono ni marcador de coordenadas detectado en el mapa. Dibuje un polígono o use un marcador de coordenadas para continuar.",
           "crop-classification": "Error: Nigún tipo de cultivo seleccionado. Por favor, seleccione al menos un tipo de cultivo.",
           "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
         }

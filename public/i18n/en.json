@@ -197,7 +197,7 @@
           "error": "Error when loading crop classifications:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: No polygon detected on the map. Draw one to continue.",
+          "parcel-drawing":"Error: No polygon or coordinate marker detected on the map. Draw a polygon or use a coordinate marker.",
           "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
         }
