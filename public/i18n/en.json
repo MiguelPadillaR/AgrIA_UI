@@ -99,12 +99,20 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
-      "drawer": "Search by drawing parcel limits."
+      "drawer": "Search by coordinates / drawing parcel limits."
     }
   },
   "parcelDrawer": {
-    "title": "Parcel drawer",
+    "title": "Geographical Data",
     "description": {
+      "intro":"In this module, you may use one of the two options available to find your parcel. In both, the date will be used to extract the image.",
+      "header1": "Coordinates Search:",
+      "header2": "Parcel Drawing Search:",
+      "bold0":"Introduce a set of coordinates (latitude, longitude) that are within your state's limits ",
+      "normal0":" as per the property's cadastral data in order to find it.",
+      "normal01": "This options allows the ",
+      "bold01": "automatic extraction of the SIPAC classification",
+      "normal02": " of your parcel's crops.",
       "bold1": "Draw your parcel's limits over the map.",
       "normal1": "When you are done marking your parcel, ",
       "bold2": "press again on the initial node to finish ",
@@ -181,13 +189,15 @@
       },
       "parcel-drawer": {
         "coordinates": {
-          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:"
+          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:",
+          "new-coordinates": "Updated coordinates: ",
+          "new-coordinates-error": "Error when updating coordinates: "
         },
         "sigpac-table": {
           "error": "Error when loading crop classifications:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: No polygon detected on the map. Draw one to continue.",
+          "parcel-drawing":"Error: No polygon or coordinate marker detected on the map. Draw a polygon or use a coordinate marker.",
           "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
         }

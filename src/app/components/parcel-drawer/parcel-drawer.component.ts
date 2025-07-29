@@ -10,6 +10,14 @@ import { NotificationService } from '../../services/notification.service/notific
 import { IFindParcelresponse, IParcelMetadata } from '../../models/parcel-finder.models';
 import { Router } from '@angular/router';
 
+// Set default icon paths
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "public/leaflet/marker-icon-2x.png",
+  iconUrl: 'public/leaflet/marker-icon.png',
+  shadowUrl: 'public/leaflet/marker-shadow.png',
+});
 
 @Component({
   selector: 'app-parcel-drawer',
@@ -23,11 +31,15 @@ import { Router } from '@angular/router';
 })
 export class ParcelDrawerComponent {
   // Leaflet map instance
-  private map: L.DrawMap | null = null;
+  private map!: L.DrawMap;
+  // Coordinates marker
+  private activeMarker: L.Marker | null = null;
   // Map zoom level attribute
   private mapZoom: number = 5;
   // Feature group to hold drawn items
   private drawnItems = new L.FeatureGroup();
+  // Flag for when a shape is being drawn
+  private isDrawing: WritableSignal<boolean> = signal(false);
   // Coordinates attribute
   public mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
@@ -139,19 +151,106 @@ export class ParcelDrawerComponent {
     });
 
     this.map.addControl(drawControl);
+    
+    this.mapEventHandling();
+  }
 
-    // Event listener: what happens when a shape is created
+  /**
+   * Handler for relevant map events.
+   * 
+   */
+  private mapEventHandling() {
+    this.setupDrawEvents();
+    this.setupClickHandler();
+  }
+
+  /**
+   * Drawing, editing and deleting layers' event handlers.
+   * 
+   */
+  private setupDrawEvents() {
+    // Start of drawing/editing/deleting → enable drawing state
+    this.map.on(L.Draw.Event.DRAWSTART, () => this.isDrawing.set(true));
+    this.map.on(L.Draw.Event.EDITSTART, () => this.isDrawing.set(true));
+    this.map.on(L.Draw.Event.DELETESTART, () => this.isDrawing.set(true));
+
+    // End of drawing/editing/deleting → disable drawing state
+    this.map.on(L.Draw.Event.DRAWSTOP, () => this.isDrawing.set(false));
+    this.map.on(L.Draw.Event.EDITSTOP, () => this.isDrawing.set(false));
+    this.map.on(L.Draw.Event.DELETESTOP, () => this.isDrawing.set(false));
+
+    // When a new shape is created
     this.map.on(L.Draw.Event.CREATED, (event: any) => {
       this.drawnItems.clearLayers();
-      
-      // Add the drawn layer to the drawnItems FeatureGroup
       const layer = event.layer;
       this.drawnItems.addLayer(layer);
+
       // Convert  to GeoJSON and store it in parcelGeometry
       this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
-      this.parcelGeometry.CRS = 'epsg:4326'; // Set CRS to WGS84
-      console.log('Shape drawn:', this.parcelGeometry);
+      this.parcelGeometry.CRS = 'epsg:4326';
     });
+
+    // When features are deleted
+    this.map.on(L.Draw.Event.DELETED, () => {
+      this.parcelGeometry = null;
+    });
+  }
+
+  /**
+   * Coordinates markers' related click event handler.
+   */
+  private setupClickHandler() {
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      if (this.isDrawing()) {
+        return;
+      }
+
+      const lat = e.latlng.lat.toFixed(6);
+      const lng = e.latlng.lng.toFixed(6);
+      const coords = `${lat}, ${lng}`;
+      console.log('Clicked coordinates:', coords);
+
+        // Copy coordinates to clipboard
+        navigator.clipboard.writeText(coords)
+        .then(() => {
+          if (this.map) {
+            this.resetCoordinatesMarker(parseFloat(lat), parseFloat(lng));
+            this.coordinates = coords;
+            this.notificationService.showNotification(
+              'parcel-drawer.coordinates.new-coordinates',
+              coords,
+              'info'
+            );
+          }
+        })
+        .catch(err => {
+          console.error('Failed to copy coordinates:', err);
+          this.notificationService.showNotification(
+            'parcel-drawer.coordinates.new-coordinates',
+            err,
+            'error'
+          );
+        });
+    });
+  }
+
+  /**
+   * Reset coordinate marker plarcing and info.
+   * 
+   * @param lat - latitude component.
+   * @param lng - Longitude component.
+   */
+  private resetCoordinatesMarker(lat: number, lng: number) {
+    if (this.activeMarker) {
+      this.map.removeLayer(this.activeMarker);
+    }
+    const coords = `${lat}, ${lng}`;
+
+    // Create new marker
+    this.activeMarker = L.marker([lat, lng])
+      .addTo(this.map)
+      .bindPopup(`Coord: ${coords}`)
+      .openPopup();
   }
 
   /**
@@ -174,7 +273,21 @@ export class ParcelDrawerComponent {
       this.notificationService.showNotification("parcel-drawer.coordinates.invalid", this.coordinates, "error", 10000);
       console.warn('Invalid coordinates format:', this.coordinates);
     }
+
+    this.resetCoordinatesMarker(coords[0], coords[1])
+    this.scrollToMap();
   }
+
+  /**
+   * Scrolls view to map element.
+   */
+  private scrollToMap(): void {
+    const mapElement = document.getElementById('map');
+    if (mapElement) {
+      mapElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
 
   /**
    * Resets the map view to the default coordinates and zoom level, clearing any drawn shapes.
@@ -183,6 +296,9 @@ export class ParcelDrawerComponent {
     this.parcelGeometry = null;
     this.drawnItems.clearLayers();
     this.mapZoom = 5;
+    if (this.activeMarker) {
+      this.map.removeLayer(this.activeMarker);
+    }
 
     this.coordinates = this.mapCenter;
     const coords = this.coordinates.split(',').map(coord => parseFloat(coord.trim()));
@@ -260,7 +376,6 @@ export class ParcelDrawerComponent {
   );
 }
 
-
   /**
    * Checks if a crop classification item is selected.
    * 
@@ -276,71 +391,57 @@ export class ParcelDrawerComponent {
    *  
    */
   public sendParcelDrawerInfo(): void {
-    this.isLoading.set(true);
-    document.body.style.cursor = 'progress';
+    try {
+      // Validate request inputs
+      this.validateInput();
+      this.isLoading.set(true);
+      document.body.style.cursor = 'progress';
+      this.notificationService.showNotification("parcel-finder.searching", "", "info")
 
-    // Validate the parcel geometry and selected classifications before sending
-    if (!this.parcelGeometry) {
-      this.notificationService.showNotification("parcel-drawer.missing.parcel-drawing", "", "error", 10000);
-      console.log("No parcel drawing found.");
-      return;
-    } else if ( this.selectedClassifications?.length === 0) {
-      this.notificationService.showNotification("parcel-drawer.missing.crop-classification", "", "error", 10000);
-      console.log("No crop classification selected.");
-      return;
-    } else if (this.selectedClassifications?.some(item => item.surface === null)) {
-        this.notificationService.showNotification("parcel-drawer.missing.surface", "", "error", 10000);
-        console.log("Some selected crop classifications are missing surface values.");
-      return;
-    }
-  this.notificationService.showNotification("parcel-finder.searching", "", "info")
+      // Add essential metadata from crop classification to request
+      this.parcelMetadata.query = [];  // Reset metadata info
+      for (const classification of this.selectedClassifications) {
+        const item = classification.classification
+          this.parcelMetadata.query.push({
+            dn_surface: Number(classification.surface) * 10000,
+            uso_sigpac: `${item.class}-${item.name}`,
+            superficie_admisible: Number(classification.surface) * 10000,
+            recinto: 0,
+            coef_regadio: classification.irrigation ?? 0,
+            admisibilidad: 0,
+            altitud: 0,
+            incidencias: '',
+            inctexto: '',
+            pendiente_media: 0,
+            region: ''
+          });
+      };
 
-    console.log("Selected classifications:", this.selectedClassifications);
-    console.log("this.parcelDrawing:", this.parcelGeometry);
-    console.log("this.selectedClassifications)", this.selectedClassifications);
-    
-    // Add essential metadata from corp classification to request
-    var i = 0;
-    for (const classification of this.selectedClassifications) {
-      const item = classification.classification
-        this.parcelMetadata.query.push({
-          dn_surface: Number(classification.surface)*10000,
-          uso_sigpac: `${item.class}-${item.name}`,
-          superficie_admisible: Number(classification.surface)*10000,
-          recinto: i++,
-          coef_regadio: classification.irrigation ?? 0,
-          admisibilidad: 0,
-          altitud: 0,
-          incidencias: '',
-          inctexto: '',
-          pendiente_media: 0,
-          region: ''
-        });
-      console.log("Classification:", `${item.class}-${item.name}`);
-      console.log("Surface:", classification.surface);
-    };
-    const formData = new FormData();
-    formData.append('parcelGeometry', JSON.stringify(this.parcelGeometry));
-    formData.append('parcelMetadata', JSON.stringify(this.parcelMetadata));
-    formData.append('selectedDate', this.selectedDate);
-    formData.append('isFromCadastralReference', "False");
+      // Build and send request form
+      const formData = new FormData();
+      formData.append('parcelGeometry', this.parcelGeometry ? JSON.stringify(this.parcelGeometry) : 'None');
+      formData.append('parcelMetadata', this.parcelMetadata ? JSON.stringify(this.parcelMetadata) : 'None');
+      console.log("this.parcelMetadata", this.parcelMetadata)
+      formData.append('coordinates', this.coordinates ? this.coordinates : 'None');
+      formData.append('selectedDate', this.selectedDate);
+      formData.append('isFromCadastralReference', "False");
+
       this.parcelFinderService.findParcel(formData).subscribe({
         next: (response: IFindParcelresponse) => {
           this.notificationService.showNotification("parcel-finder.success","","success")
           this.selectedParcelInfo = response;
-          // this.parcelImageUrl = this.selectedParcelInfo.imagePath;
           document.body.style.cursor = 'default';
           console.log("Parcel finder response:", response)
         },
         error: (err) => {
-          const errorMessage = err.error.error.includes("No images are available")? 
+          this.isLoading.set(false);
+          const errorMessage = err?.error?.error?.includes("No images are available")? 
             this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
             : "No images are available for the selected date, images are processed at the end of each month."
             : err.error.error
           this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
           console.error('Parcel fetch failed', err);
           document.body.style.cursor = 'default';
-          this.isLoading.set(false);
         },
         complete: () => {
           this.isLoading.set(false);
@@ -351,10 +452,42 @@ export class ParcelDrawerComponent {
             this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
             this.router.navigate(['/chat']);
           }
-
         }
       });
-    
+    } catch (err) {
+      // Optional: additional logging or handling
+      this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
+      console.error("Validation Error:", err);
+    }
+  }
+
+  /**
+   * Validate the parcel geometry and selected classifications
+   */
+  private validateInput() {
+    if (!this.parcelGeometry && !this.activeMarker) { // TODO: REMOVE WHEN IMPLEMENTED
+      const message = "No parcel drawing / marker found.";
+      this.notificationService.showNotification(
+        "parcel-drawer.missing.parcel-drawing", "", "error", 10000
+      );
+      throw new Error(message);
+    }
+    else if (this.parcelGeometry) {
+      if (!this.selectedClassifications || this.selectedClassifications.length === 0) {
+        const message = "No crop classification selected for parcel geometry.";
+        this.notificationService.showNotification(
+          "parcel-drawer.missing.crop-classification", "", "error", 10000
+        );
+        throw new Error(message);
+      }
+      if (this.selectedClassifications.some(item => item.surface === null)) {
+        const message = "Some selected crop classifications have missing surface values.";
+        this.notificationService.showNotification(
+          "parcel-drawer.missing.surface", "", "error", 10000
+        );
+        throw new Error(message);
+      }
+    }
   }
 
   public resetForm(): void {
