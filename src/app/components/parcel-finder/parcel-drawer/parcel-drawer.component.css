@@ -109,6 +109,14 @@
   height: 100%;
 }
 
+.custom-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-top: 5rem;
+}
+
 .crop-classification-container {
   background-color: var(--card-bg-color);
   border-radius: var(--border-radius);

@@ -1,20 +1,19 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IFindParcelresponse } from '../../models/parcel-finder.models';
-import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { NotificationService } from '../../services/notification.service/notification.service';
-import { ParcelDrawerComponent } from "../parcel-drawer/parcel-drawer.component";
+import { ParcelDrawerComponent } from "./parcel-drawer/parcel-drawer.component";
+import { ParcelDisplayComponent } from "./parcel-display/parcel-display.component";
 
 @Component({
   selector: 'app-parcel-finder',
   imports: [
     FormsModule,
     TranslateModule,
-    ProgressBarComponent,
-    ParcelDrawerComponent
+    ParcelDrawerComponent,
+    ParcelDisplayComponent
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
@@ -30,13 +29,11 @@ export class ParcelFinderComponent {
   public isLoading: WritableSignal<boolean> = signal(false)
   // Maximum seconds set for the progress bar
   public progressMaxDuration: number = 40;
-  // User preference for longer image description
-  public isDetailedDescription: boolean = false;
   // Selected parcel information
-  private selectedParcelInfo: IFindParcelresponse | null = null;
+  protected selectedParcelInfo: IFindParcelresponse | null = null;
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
-
+  // Active tab attribute
   public activeTab: 'finder' | 'drawer' = 'finder';
 
   // Service to handle parcel finding operations
@@ -45,8 +42,6 @@ export class ParcelFinderComponent {
   private translateService = inject(TranslateService);
   // Service for notifications
   private notificationService = inject(NotificationService)
-  // Router for navigation
-  private router: Router = inject(Router);
 
   constructor() {}
  
@@ -96,13 +91,4 @@ public findParcel() {
     this.selectedDate = new Date().toISOString().split('T')[0];
   }
 
-  /* Reroute to chat while sending parcel image file */
-  public confirmParcel(): void {
-    if (this.selectedParcelInfo) {
-      this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
-      this.selectedParcelInfo.hasBeenDescribed = false;
-      this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
-      this.router.navigate(['/chat']);
-    }
-  }
 }

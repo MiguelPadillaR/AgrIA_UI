@@ -27,7 +27,7 @@
       "title": "Características Principales",
       "parcelLocation": {
         "title": "Localización de Parcela",
-        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral."
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral o localizándola en el mapa."
       },
       "satelliteImageAnalysis": {
         "title": "Análisis de Imagen Satelital",

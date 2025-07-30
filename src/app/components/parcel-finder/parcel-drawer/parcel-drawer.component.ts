@@ -1,13 +1,13 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
+import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
-import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../models/parcel-drawer.models';
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
-import { NotificationService } from '../../services/notification.service/notification.service';
-import { IFindParcelresponse, IParcelMetadata } from '../../models/parcel-finder.models';
+import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.models';
+import { ProgressBarComponent } from "../../progress-bar/progress-bar.component";
+import { NotificationService } from '../../../services/notification.service/notification.service';
+import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.models';
 import { Router } from '@angular/router';
 
 // Set default icon paths
@@ -50,8 +50,8 @@ export class ParcelDrawerComponent {
   public today: string = new Date().toISOString().split('T')[0];
   // Parcel's geometry attribute
   public parcelGeometry: IParcelDrawerGeojson | null = null;
-  // Detail description flag
-  public isDetailedDescription: boolean = false;
+  // Active Tab flag
+  public activeTab: 'sigpac' | 'address' = 'sigpac';
   // List of SIGPAC's crop classifications
   public cropClassification: ICropClassification[] = [];
   // Grouped crop classifications by type and subtype
@@ -84,6 +84,8 @@ export class ParcelDrawerComponent {
   };
   // Selected parcel response information
   private selectedParcelInfo: IFindParcelresponse | null = null;
+  // Detailed description flag
+  public isDetailedDescription: boolean = false;
   // Loading process flag
   public isLoading: WritableSignal<boolean> = signal(false);
 
@@ -97,6 +99,7 @@ export class ParcelDrawerComponent {
   public objectKeys = Object.keys;
   // Router for navigation
   private router: Router = inject(Router);
+  
 
   constructor() { }
   

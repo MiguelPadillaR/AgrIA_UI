@@ -27,7 +27,7 @@
       "title": "Main Features",
       "parcelLocation": {
         "title": "Parcel Location",
-        "description": "Automatically find your parcel by simply using its cadastral reference."
+        "description": "Automatically find your parcel by simply using its cadastral reference or locating it on the map."
       },
       "satelliteImageAnalysis": {
         "title": "Satellite Image Analysis",

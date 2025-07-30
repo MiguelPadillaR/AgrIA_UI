@@ -48,7 +48,7 @@ export class NavbarComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    this.isAtTop = scrollTop < 5;
+    this.isAtTop = scrollTop < 80;
 
     if (scrollTop < this.lastScrollTop) {
       this.isVisible = true; // Scrolling up
