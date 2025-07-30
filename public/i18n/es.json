@@ -99,6 +99,7 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
+      "locator": "Buscar por parcela/polígono.",
       "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
@@ -144,7 +145,7 @@
       "header3": "Coef. Regadío (%)"
     },
     "button": {
-      "send": "Enviar información",
+      "send": "Buscar Parcela",
       "reset": "Borrar selección",
       "loading": "Cargando..."
     }

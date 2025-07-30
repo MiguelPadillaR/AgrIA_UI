@@ -83,7 +83,7 @@ export class ParcelDrawerComponent {
     }
   };
   // Selected parcel response information
-  private selectedParcelInfo: IFindParcelresponse | null = null;
+  protected selectedParcelInfo: IFindParcelresponse | null = null;
   // Detailed description flag
   public isDetailedDescription: boolean = false;
   // Loading process flag
@@ -449,12 +449,6 @@ export class ParcelDrawerComponent {
         complete: () => {
           this.isLoading.set(false);
           document.body.style.cursor = 'default';
-          if (this.selectedParcelInfo) {
-            this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
-            this.selectedParcelInfo.hasBeenDescribed = false;
-            this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
-            this.router.navigate(['/chat']);
-          }
         }
       });
     } catch (err) {

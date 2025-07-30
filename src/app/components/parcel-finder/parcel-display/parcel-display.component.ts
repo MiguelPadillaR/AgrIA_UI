@@ -18,7 +18,7 @@ import { ProgressBarComponent } from '../../progress-bar/progress-bar.component'
 })
 export class ParcelDisplayComponent {
   // URL of the parcel's satellite image
-  @Input() public parcelImageUrl: string | null = null;
+  @Input() public parcelImageUrl: string | null | undefined = null;
   // Loading image flag
   @Input() public isLoading: WritableSignal<boolean> = signal(false)
   // Planned duration of the loading

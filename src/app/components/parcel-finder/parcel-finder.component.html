@@ -1,5 +1,4 @@
 <div id="parcel-finder">
-
     <div id="parcel-tabs-content">
         <div class="custom-tabs">
             <button
@@ -8,6 +7,13 @@
                 (click)="activeTab = 'finder'"
             >
                 {{ 'parcelFinder.tab.finder' | translate }}
+            </button>
+            <button
+                class="custom-tab"
+                [class.active]="activeTab === 'locator'"
+                (click)="activeTab = 'locator'"
+            >
+                {{ 'parcelFinder.tab.locator' | translate }}
             </button>
             <button
                 class="custom-tab"
@@ -81,6 +87,10 @@
             @case ('drawer') {
                 <app-parcel-drawer></app-parcel-drawer>
             }
+            @case ('locator') {
+                <app-parcel-locator></app-parcel-locator>
+            }
+
         }
         <app-parcel-display
             [parcelImageUrl]="parcelImageUrl"

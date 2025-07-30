@@ -99,6 +99,7 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
+      "locator": "Search by state's parcel/polygon.",
       "drawer": "Search by coordinates / drawing parcel limits."
     }
   },
@@ -144,7 +145,7 @@
       "header3": "Irrigation Coef. (%)"
     },
     "button": {
-      "send": "Send information",
+      "send": "Find Parcel",
       "reset": "Reset selection",
       "loading": "Loading..."
     }

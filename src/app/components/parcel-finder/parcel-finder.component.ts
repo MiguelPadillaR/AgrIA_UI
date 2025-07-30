@@ -6,6 +6,7 @@ import { ParcelFinderService } from '../../services/parcel-finder.service/parcel
 import { NotificationService } from '../../services/notification.service/notification.service';
 import { ParcelDrawerComponent } from "./parcel-drawer/parcel-drawer.component";
 import { ParcelDisplayComponent } from "./parcel-display/parcel-display.component";
+import { ParcelLocatorComponent } from './parcel-locator/parcel-locator.component';
 
 @Component({
   selector: 'app-parcel-finder',
@@ -13,7 +14,8 @@ import { ParcelDisplayComponent } from "./parcel-display/parcel-display.componen
     FormsModule,
     TranslateModule,
     ParcelDrawerComponent,
-    ParcelDisplayComponent
+    ParcelDisplayComponent,
+    ParcelLocatorComponent,
 ],
   templateUrl: './parcel-finder.component.html',
   styleUrl: './parcel-finder.component.css'
@@ -34,7 +36,7 @@ export class ParcelFinderComponent {
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
   // Active tab attribute
-  public activeTab: 'finder' | 'drawer' = 'finder';
+  public activeTab: 'finder' | 'drawer' | 'locator' = 'finder';
 
   // Service to handle parcel finding operations
   private parcelFinderService = inject(ParcelFinderService);
@@ -44,8 +46,7 @@ export class ParcelFinderComponent {
   private notificationService = inject(NotificationService)
 
   constructor() {}
- 
- 
+
  /**
  * Finds a parcel based on the provided cadastral reference and selected date.
  * 
