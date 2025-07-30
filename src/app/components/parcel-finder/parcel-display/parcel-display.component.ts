@@ -19,11 +19,11 @@ import { Subscription } from 'rxjs';
 })
 export class ParcelDisplayComponent {
   // URL of the parcel's satellite image
-  @Input() public parcelImageUrl: string | null | undefined = null;
+  protected parcelImageUrl: string | null | undefined = null;
   // Loading image flag
   @Input() public isLoading: WritableSignal<boolean> = signal(false)
   // Planned duration of the loading
-  @Input() public progressMaxDuration: number = 40;
+  @Input() public maxLoadingDuration: number = 40;
   // Selected parcel information
   private selectedParcelInfo: IFindParcelresponse | null = null;
   // User preference for longer image description
@@ -52,7 +52,6 @@ export class ParcelDisplayComponent {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 
   /* Reroute to chat while sending parcel image file */
   public confirmParcel(): void {

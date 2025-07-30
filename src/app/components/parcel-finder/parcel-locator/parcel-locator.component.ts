@@ -1,13 +1,7 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet-draw';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.models';
-import { NotificationService } from '../../../services/notification.service/notification.service';
-import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.models';
-import { Router } from '@angular/router';
+import { IFindParcelresponse } from '../../../models/parcel-finder.models';
 
 @Component({
   selector: 'app-parcel-locator',
@@ -19,5 +13,10 @@ import { Router } from '@angular/router';
   styleUrl: './parcel-locator.component.css'
 })
 export class ParcelLocatorComponent {
+
+  @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  @Output() loadingStarted = new EventEmitter<number>();
+  @Output() findParcelRequest = new EventEmitter<FormData>();
+
 
 }

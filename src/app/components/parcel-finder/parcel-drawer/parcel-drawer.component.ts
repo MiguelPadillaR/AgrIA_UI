@@ -1,11 +1,10 @@
 import * as L from 'leaflet';
 import 'leaflet-draw';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
 import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.models';
-import { ProgressBarComponent } from "../../progress-bar/progress-bar.component";
 import { NotificationService } from '../../../services/notification.service/notification.service';
 import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.models';
 import { Router } from '@angular/router';
@@ -24,12 +23,16 @@ L.Icon.Default.mergeOptions({
   imports: [
     TranslateModule,
     FormsModule,
-    ProgressBarComponent,
 ],
   templateUrl: './parcel-drawer.component.html',
   styleUrl: './parcel-drawer.component.css'
 })
 export class ParcelDrawerComponent {
+  
+  @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  @Output() loadingStarted = new EventEmitter<number>();
+  @Output() findParcelRequest = new EventEmitter<FormData>();
+
   // Leaflet map instance
   private map!: L.DrawMap;
   // Coordinates marker
@@ -395,11 +398,14 @@ export class ParcelDrawerComponent {
    */
   public sendParcelDrawerInfo(): void {
     try {
-      // Validate request inputs
+      // Validate all input before sending
       this.validateInput();
-      this.isLoading.set(true);
-      document.body.style.cursor = 'progress';
+      // Init loading notifications
       this.notificationService.showNotification("parcel-finder.searching", "", "info")
+      this.notificationService.showNotification("parcel-finder.searching", "", "info")
+      this.isLoading.set(true);
+      this.loadingStarted.emit(60);
+      document.body.style.cursor = 'progress';
 
       // Add essential metadata from crop classification to request
       this.parcelMetadata.query = [];  // Reset metadata info
@@ -429,30 +435,9 @@ export class ParcelDrawerComponent {
       formData.append('selectedDate', this.selectedDate);
       formData.append('isFromCadastralReference', "False");
 
-      this.parcelFinderService.findParcel(formData).subscribe({
-        next: (response: IFindParcelresponse) => {
-          this.isLoading.set(false);
-          this.notificationService.showNotification("parcel-finder.success","","success")
-          this.selectedParcelInfo = response;
-          this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
-          document.body.style.cursor = 'default';
-          console.log("Parcel finder response:", response)
-        },
-        error: (err) => {
-          this.isLoading.set(false);
-          const errorMessage = err?.error?.error?.includes("No images are available")? 
-            this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
-            : "No images are available for the selected date, images are processed at the end of each month."
-            : err.error.error
-          this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
-          console.error('Parcel fetch failed', err);
-          document.body.style.cursor = 'default';
-        },
-        complete: () => {
-          this.isLoading.set(false);
-          document.body.style.cursor = 'default';
-        }
-      });
+      // Output request to parcel finder component
+      this.findParcelRequest.emit(formData)
+
     } catch (err) {
       // Optional: additional logging or handling
       this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
