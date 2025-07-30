@@ -431,8 +431,10 @@ export class ParcelDrawerComponent {
 
       this.parcelFinderService.findParcel(formData).subscribe({
         next: (response: IFindParcelresponse) => {
+          this.isLoading.set(false);
           this.notificationService.showNotification("parcel-finder.success","","success")
           this.selectedParcelInfo = response;
+          this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
           document.body.style.cursor = 'default';
           console.log("Parcel finder response:", response)
         },

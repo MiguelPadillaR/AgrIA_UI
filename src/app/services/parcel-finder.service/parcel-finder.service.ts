@@ -25,7 +25,7 @@ export class ParcelFinderService {
     return this.http.get<ICropClassification[]>('data/crop_classification.json');
   }
 
-  setParcelInfo(data: IFindParcelresponse | null) {
+  setParcelInfo(data: IFindParcelresponse) {
     this.parcelInfoSubject.next(data);
   }
   

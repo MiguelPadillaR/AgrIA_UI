@@ -66,6 +66,7 @@ public findParcel() {
     next: (response: IFindParcelresponse) => {
       this.notificationService.showNotification("parcel-finder.success","","success")
       this.selectedParcelInfo = response;
+      this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
       this.parcelImageUrl = this.selectedParcelInfo.imagePath;
       document.body.style.cursor = 'default';
       console.log("Parcel finder response:", response)
