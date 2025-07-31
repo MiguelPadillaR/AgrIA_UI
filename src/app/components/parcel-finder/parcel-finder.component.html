@@ -35,7 +35,7 @@
                 <app-parcel-locator
                     (parcelFound)="handleParcelFound($event)"
                     (loadingStarted)="handleLoadingStarted($event)"
-                    (findParcelRequest)="handleFindParcelRequest($event)"
+                    (findParcelRequest)="handleLocatorFindParcelRequest($event)"
                 ></app-parcel-locator>
             }
             @case ('drawer') {
@@ -47,6 +47,7 @@
             }
         }
         <app-parcel-display
+            id="display"
             [isLoading]="isLoading"
             [maxLoadingDuration]="maxLoadingDuration"
         ></app-parcel-display>

@@ -103,6 +103,17 @@
       "drawer": "Search by coordinates / drawing parcel limits."
     }
   },
+  "parcel-locator": {
+    "title": "Location Data",
+    "province": "Province:", 
+    "province-placeholder": "CÓRDOBA", 
+    "municipality": "Municipality:", 
+    "municipality-placeholder": "PALENCIANA", 
+    "polygon": "Polygon:", 
+    "polygon-placeholder": "1", 
+    "parcel-id": "Parcel:",
+    "parcel-id-placeholder": "199"
+  },
   "parcelDrawer": {
     "title": "Geographical Data",
     "description": {

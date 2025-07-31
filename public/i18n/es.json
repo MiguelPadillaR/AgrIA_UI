@@ -104,6 +104,17 @@
     }
 
   },
+  "parcel-locator": {
+    "title": "Datos de Localización",
+    "province": "Provincia:", 
+    "province-placeholder": "CÓRDOBA", 
+    "municipality": "Municipio:", 
+    "municipality-placeholder": "PALENCIANA", 
+    "polygon": "Polígono:", 
+    "polygon-placeholder": "1", 
+    "parcel-id": "Parcela:",
+    "parcel-id-placeholder": "199"
+  },
   "parcelDrawer": {
     "title": "Datos Geográficos",
     "description": {

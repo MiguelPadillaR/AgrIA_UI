@@ -13,6 +13,9 @@
             <p>
                 <span style="font-weight: bold;">{{ 'parcelFinder.description3Bold' | translate }}</span> {{ 'parcelFinder.description3' | translate }}
             </p>
+            <p>
+                {{ "parcelDrawer.description.normal01" | translate }} <span style="font-weight: bold;">{{ "parcelDrawer.description.bold01" | translate }}</span>{{ "parcelDrawer.description.normal02" | translate }}
+            </p>
         </div>
         <div class="form">
             <div class="cadastral-field">
@@ -21,7 +24,6 @@
                     <input class="form-input"
                     type="text"
                     placeholder="{{ 'parcelFinder.cadastralPlaceholder' | translate }}"
-                    class="cadastral-input-field"
                     [(ngModel)]="cadastralReference"
                     maxlength="20"
                     />
@@ -31,7 +33,6 @@
                 <label class="form-label">
                     {{ 'parcelFinder.selectDate' | translate }}:
                     <input class="form-input"
-                    class="date-input-field"
                     type="date"
                     placeholder="{{ 'parcelFinder.datePlaceholder' | translate }}"
                     [(ngModel)]="selectedDate"

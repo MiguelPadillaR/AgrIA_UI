@@ -44,7 +44,7 @@ export class ParcelCadastralComponent {
 
   constructor() {}
 
-   /**
+ /**
  * Finds a parcel based on the provided cadastral reference and selected date.
  * 
  */
@@ -64,7 +64,9 @@ export class ParcelCadastralComponent {
     // Output request to parcel finder component
     this.findParcelRequest.emit(formData)
   }
-
+   /**
+    * Clears all form info
+    */
   public clearForm() {
     this.cadastralReference = '';
     this.selectedDate = new Date().toISOString().split('T')[0];

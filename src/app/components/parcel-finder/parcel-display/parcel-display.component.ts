@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, input, Input, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, input, Input, Output, output, signal, WritableSignal } from '@angular/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../../models/parcel-finder.models';
 import { Router } from '@angular/router';
@@ -18,12 +18,14 @@ import { Subscription } from 'rxjs';
   styleUrl: './parcel-display.component.css'
 })
 export class ParcelDisplayComponent {
-  // URL of the parcel's satellite image
-  protected parcelImageUrl: string | null | undefined = null;
   // Loading image flag
   @Input() public isLoading: WritableSignal<boolean> = signal(false)
   // Planned duration of the loading
   @Input() public maxLoadingDuration: number = 40;
+
+  @Output() public loadingFinished = new EventEmitter<void>()
+  // URL of the parcel's satellite image
+  protected parcelImageUrl: string | null | undefined = null;
   // Selected parcel information
   private selectedParcelInfo: IFindParcelresponse | null = null;
   // User preference for longer image description
@@ -43,9 +45,11 @@ export class ParcelDisplayComponent {
     ngOnInit(): void {
     this.subscription = this.parcelFinderService.parcelInfo$
       .subscribe(parcelInfo => {
-        this.selectedParcelInfo = parcelInfo;
-        this.parcelImageUrl = parcelInfo?.imagePath
-        this.cdRef.markForCheck(); // Needed if OnPush, safe otherwise too
+        if (parcelInfo){
+          this.selectedParcelInfo = parcelInfo;
+          this.parcelImageUrl = parcelInfo.imagePath
+          this.cdRef.markForCheck();
+        }
       });
   }
 

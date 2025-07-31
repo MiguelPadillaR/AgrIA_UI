@@ -24,7 +24,6 @@ export class ParcelFinderComponent {
   // Active tab attribute
   protected activeTab: 'finder' | 'drawer' | 'locator' = 'finder';
   private selectedParcelInfo: IFindParcelresponse | null = null;
-  private parcelImageUrl: string | null = null;
   protected isLoading: WritableSignal<boolean> = signal(false);
   protected maxLoadingDuration = 40;
 
@@ -34,28 +33,28 @@ export class ParcelFinderComponent {
 
   constructor() {}
 
-  handleParcelFound(parcel: IFindParcelresponse) {
+  protected handleParcelFound(parcel: IFindParcelresponse) {
     this.selectedParcelInfo = parcel;
-    this.parcelImageUrl = parcel.imagePath;
     this.isLoading.set(false);
   }
 
-  handleLoadingStarted(duration: number) {
+  protected handleLoadingStarted(duration: number) {
     this.isLoading.set(true);
     this.maxLoadingDuration = duration;
   }
 
 
-  handleLoadingFinished() {
+  protected handleLoadingFinished() {
     this.isLoading.set(false);
   }
 
-  handleError(error: any) {
+  protected handleError(error: any) {
     console.error('Parcel fetch error:', error);
     this.isLoading.set(false);
   }
 
-  handleFindParcelRequest(request: FormData) {
+  protected handleFindParcelRequest(request: FormData) {
+    this.scrollToDisplay();
     this.parcelFinderService.findParcel(request).subscribe({
       next: (response: IFindParcelresponse) => {
         // Finish loading
@@ -65,7 +64,6 @@ export class ParcelFinderComponent {
         // Get parcel info
         this.selectedParcelInfo = response;
         this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
-        this.parcelImageUrl = this.selectedParcelInfo.imagePath;
         console.log("Parcel finder response:", response)
       },
       error: (err) => {
@@ -87,6 +85,21 @@ export class ParcelFinderComponent {
       }
     });
 
+  }
+
+  protected handleLocatorFindParcelRequest(request: FormData) {
+    this.scrollToDisplay();
+    console.log("request", request);
+  }
+
+  /**
+   * Scrolls view to map element.
+   */
+  private scrollToDisplay(): void {
+    const mapElement = document.getElementById('display');
+    if (mapElement) {
+      mapElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
 }
