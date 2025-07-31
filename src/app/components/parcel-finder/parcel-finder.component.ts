@@ -4,7 +4,7 @@ import { ParcelCadastralComponent } from './parcel-cadastral/parcel-cadastral.co
 import { ParcelDisplayComponent } from "./parcel-display/parcel-display.component";
 import { ParcelDrawerComponent } from "./parcel-drawer/parcel-drawer.component";
 import { ParcelLocatorComponent } from './parcel-locator/parcel-locator.component';
-import { IFindParcelresponse } from '../../models/parcel-finder.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.model';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { NotificationService } from '../../services/notification.service/notification.service';
 

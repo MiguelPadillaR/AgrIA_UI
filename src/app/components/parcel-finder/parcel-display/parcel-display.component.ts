@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, input, Input, Output, output, signal, WritableSignal } from '@angular/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
-import { IFindParcelresponse } from '../../../models/parcel-finder.models';
+import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, } from '@ngx-translate/core';

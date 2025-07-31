@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
-import { IFindParcelresponse } from '../../../models/parcel-finder.models';
+import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '../../../services/notification.service/notification.service';

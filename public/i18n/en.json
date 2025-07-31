@@ -105,14 +105,26 @@
   },
   "parcel-locator": {
     "title": "Location Data",
-    "province": "Province:", 
-    "province-placeholder": "CÓRDOBA", 
-    "municipality": "Municipality:", 
-    "municipality-placeholder": "PALENCIANA", 
-    "polygon": "Polygon:", 
-    "polygon-placeholder": "1", 
-    "parcel-id": "Parcel:",
-    "parcel-id-placeholder": "199"
+    "province": {
+      "name": "Province:", 
+      "placeholder": "Select province", 
+      "error": "Error: Province not valid. Please, select valid province."
+    },
+    "municipality": {
+      "name": "Municipality:", 
+      "placeholder": "Select municipality", 
+      "error": "Error: Municipality not valid. Please, select valid municipality."
+    },
+    "polygon": {
+      "name": "Polygon:", 
+      "placeholder": "000", 
+      "error": "Error: Polygon not valid. Please, select valid identifier (3 digits max)."
+    },
+    "parcel-id": {
+      "name": "Parcel:",
+      "placeholder": "00000",
+      "error": "Error: Parcel not valid. Please, select valid identifier (5 digits max)."
+    }
   },
   "parcelDrawer": {
     "title": "Geographical Data",

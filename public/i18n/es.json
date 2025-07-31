@@ -106,14 +106,26 @@
   },
   "parcel-locator": {
     "title": "Datos de Localización",
-    "province": "Provincia:", 
-    "province-placeholder": "CÓRDOBA", 
-    "municipality": "Municipio:", 
-    "municipality-placeholder": "PALENCIANA", 
-    "polygon": "Polígono:", 
-    "polygon-placeholder": "1", 
-    "parcel-id": "Parcela:",
-    "parcel-id-placeholder": "199"
+    "province": {
+      "name": "Provincia:", 
+      "placeholder": "Seleccione provincia", 
+      "error": "Error: Provincia no válida. Por favor, seleccione una provincia válida."
+    },
+    "municipality": {
+      "name": "Municipio:", 
+      "placeholder": "Seleccione municipio", 
+      "error": "Error: Municipio no válido. Por favor, seleccione un municipio válido."
+    },
+    "polygon": {
+      "name": "Polígono:", 
+      "placeholder": "000", 
+      "error": "Error: Polígono no válido. Por favor, introduzca un identificador válido (máximo 3 cifras)."
+    },
+    "parcel-id": {
+      "name": "Parcela:",
+      "placeholder": "00000",
+      "error": "Error: Parcela no válido. Por favor, introduzca un identificador válido (máximo 5 cifras)."
+    }
   },
   "parcelDrawer": {
     "title": "Datos Geográficos",

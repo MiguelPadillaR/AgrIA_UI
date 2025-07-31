@@ -4,9 +4,9 @@ import { Component, EventEmitter, inject, Output, signal, WritableSignal } from 
 import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
-import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.models';
+import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.model';
 import { NotificationService } from '../../../services/notification.service/notification.service';
-import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.models';
+import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.model';
 
 // Set default icon paths
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -315,7 +315,7 @@ export class ParcelDrawerComponent {
    * Loads crop classifications from the service and groups them by type and subtype.
    */
   private loadCropClassifications() {
-    this.parcelFinderService.getCropClassifications().subscribe(
+    this.parcelFinderService.loadCropClassifications().subscribe(
       (cropClassification: ICropClassification[]) => {
         this.cropClassification = cropClassification;
         this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);

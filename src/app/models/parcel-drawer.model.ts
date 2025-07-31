@@ -1,4 +1,4 @@
-import { IParcelGeometry } from "./parcel-finder.models";
+import { IParcelGeometry } from "./parcel-finder.model";
 
 export interface IParcelDrawerGeojson extends IParcelGeometry {
   properties: { [key: string]: any}

@@ -101,6 +101,50 @@
   box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
 }
 
+/* DROPDOWN STYLING START*/
+
+.form-input.ng-select {
+  width: 250px; /* fixed width */
+  max-width: 100%;
+  background-color: var(--input-bg); /* fallback for input background */
+  border-radius: var(--border-radius);
+}
+
+/* Force consistent height for selected item */
+.form-input.ng-select .ng-select-container {
+  min-height: 2.5rem;
+  align-items: center;
+}
+
+/* Dropdown panel styles */
+::ng-deep .ng-dropdown-panel {
+  background-color: var(--card-bg-color); /* background for dropdown options */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  max-height: auto; /* limit visible height */
+}
+
+/* Option styles */
+::ng-deep .ng-option {
+  padding: 0.5rem 1rem;
+  white-space: nowrap; /* prevent line breaks */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover and selected states */
+::ng-deep .ng-option:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+::ng-deep .ng-option-selected {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+/* DROPDOWN STYLING END*/
+
 /* Buttons within the form */
 .parcel-cadastral-buttons {
   display: flex;

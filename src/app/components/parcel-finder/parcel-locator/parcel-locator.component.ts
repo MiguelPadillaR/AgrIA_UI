@@ -1,14 +1,18 @@
 import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { IFindParcelresponse } from '../../../models/parcel-finder.models';
+import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { NotificationService } from '../../../services/notification.service/notification.service';
+import { ISigpacLocationData } from '../../../models/parcel-locator.model';
+import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-parcel-locator',
   imports: [
     TranslateModule,
     FormsModule,
+    NgSelectModule,
 ],
   templateUrl: './parcel-locator.component.html',
   styleUrl: './parcel-locator.component.css'
@@ -23,6 +27,10 @@ export class ParcelLocatorComponent {
   protected polygon: number | null = null;
   protected parcelId: number | null = null;
 
+  protected sigpacLocationData: ISigpacLocationData[] = [];
+  provinces: string[] = [];
+  municipalities: string[] = [];
+
   protected today: string = new Date().toISOString().split('T')[0];
   protected selectedDate: string  = this.today;
   protected isVaildInput: WritableSignal<boolean> = signal(true);
@@ -30,8 +38,40 @@ export class ParcelLocatorComponent {
   protected isLoading: WritableSignal<boolean> = signal(false);
   protected maxLoadingDuration: number = 60;
 
+  private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
   private notificationService: NotificationService = inject(NotificationService);
   
+  ngOnInit() {
+    this.loadSigpacLocationData();
+  }
+
+  /**
+   * Loads SIGPAC province and municipalities data.
+   */
+  private loadSigpacLocationData() {
+    this.parcelFinderService.loadSigpacLocationData().subscribe(
+      (sigpacLocationData: ISigpacLocationData[]) => {
+        this.sigpacLocationData = sigpacLocationData;
+        this.provinces = this.sigpacLocationData.map(data => data.province);
+
+      },
+      (error) => {
+        this.notificationService.showNotification("parcel-finder.sigpac-table.error", `\n${error.error.error}`, "error", 10000);
+        console.error('Error loading crop classifications:', error);
+      }
+    );
+  }
+  
+  protected onProvinceChange(selected: string) {
+    this.municipalities = this.getMunicipalities(selected);
+    this.municipality = ''; // reset previous selection
+  }
+
+  private getMunicipalities(province: string): string[] {
+    const entry = this.sigpacLocationData.find(data => data.province === province);
+    return entry ? entry.municipalities : [];
+  }
+
   private isValidInput() {
     this.isVaildInput.set(true);
 
@@ -70,7 +110,9 @@ export class ParcelLocatorComponent {
   }
 
   protected findParcel() {
-        // Init loading notifications
+    // Validate input before sending request
+    this.isValidInput();
+    // Init loading notifications
     this.notificationService.showNotification("parcel-finder.searching", "", "info")
     this.isLoading.set(true);
     this.loadingStarted.emit(this.maxLoadingDuration);

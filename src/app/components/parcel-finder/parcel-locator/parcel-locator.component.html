@@ -14,33 +14,37 @@
         <div class="form">
             <div class="form-field">
                 <label class="form-label">
-                    {{ 'parcel-locator.province' | translate }}
-                    <input
-                    class="form-input"
-                    type="text"
-                    placeholder="{{ 'parcel-locator.province-placeholder' | translate }}"
-                    [(ngModel)]="province"
-                    />
+                    {{ 'parcel-locator.province.name' | translate }}
                 </label>
+                <ng-select
+                class="form-input"
+                [items]="provinces"
+                bindLabel="province"
+                placeholder="{{ 'parcel-locator.province.placeholder' | translate }}"
+                [(ngModel)]="province"
+                (ngModelChange)="onProvinceChange($event)">
+                </ng-select>
             </div>
             <div class="form-field">
                 <label class="form-label">
-                    {{ 'parcel-locator.municipality' | translate }}
-                    <input
-                    class="form-input"
-                    type="text"
-                    placeholder="{{ 'parcel-locator.municipality-placeholder' | translate }}"
-                    [(ngModel)]="municipality"
-                    />
+                    {{ 'parcel-locator.municipality.name' | translate }}
                 </label>
+                <ng-select
+                class="form-input"
+                [items]="municipalities"
+                placeholder="{{ 'parcel-locator.municipality.placeholder' | translate }}"
+                [(ngModel)]="municipality"
+                [disabled]="!province">
+                </ng-select>
+
             </div>
             <div class="form-field">
                 <label class="form-label">
-                    {{ 'parcel-locator.polygon' | translate }}
+                    {{ 'parcel-locator.polygon.name' | translate }}
                     <input 
                     class="form-input"
                     type="number"
-                    placeholder="{{ 'parcel-locator.polygon-placeholder' | translate }}"
+                    placeholder="{{ 'parcel-locator.polygon.placeholder' | translate }}"
                     [(ngModel)]="polygon"
                     maxlength=3
                     />
@@ -48,10 +52,10 @@
             </div>
             <div class="form-field">
                 <label class="form-label">
-                    {{ 'parcel-locator.parcel-id' | translate }}
+                    {{ 'parcel-locator.parcel-id.name' | translate }}
                     <input class="form-input"
                     type="text"
-                    placeholder="{{ 'parcel-locator.parcel-id-placeholder' | translate }}"
+                    placeholder="{{ 'parcel-locator.parcel-id.placeholder' | translate }}"
                     class="form-input"
                     [(ngModel)]="parcelId"
                     maxlength=5
