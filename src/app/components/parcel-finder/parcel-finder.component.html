@@ -29,6 +29,7 @@
                     (parcelFound)="handleParcelFound($event)"
                     (loadingStarted)="handleLoadingStarted($event)"
                     (findParcelRequest)="handleFindParcelRequest($event)"
+                    [isLoading] = "isLoading"
                 ></app-parcel-cadastral>
             }
             @case ('locator') {
@@ -36,6 +37,7 @@
                     (parcelFound)="handleParcelFound($event)"
                     (loadingStarted)="handleLoadingStarted($event)"
                     (findParcelRequest)="handleFindParcelRequest($event)"
+                    [isLoading] = "isLoading"
                 ></app-parcel-locator>
             }
             @case ('drawer') {
@@ -43,6 +45,7 @@
                     (parcelFound)="handleParcelFound($event)"
                     (loadingStarted)="handleLoadingStarted($event)"
                     (findParcelRequest)="handleFindParcelRequest($event)"
+                    [isLoading] = "isLoading"
                 ></app-parcel-drawer>
             }
         }

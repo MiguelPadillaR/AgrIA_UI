@@ -22,14 +22,12 @@ export class ParcelDisplayComponent {
   @Input() public isLoading: WritableSignal<boolean> = signal(false)
   // Planned duration of the loading
   @Input() public maxLoadingDuration: number = 40;
-
-  @Output() public loadingFinished = new EventEmitter<void>()
   // URL of the parcel's satellite image
   protected parcelImageUrl: string | null | undefined = null;
   // Selected parcel information
   private selectedParcelInfo: IFindParcelresponse | null = null;
   // User preference for longer image description
-  public isDetailedDescription: boolean = false;
+  protected isDetailedDescription: boolean = false;
   
   // Service to communicate parcel info from parcel finder to chat
   private parcelFinderService = inject(ParcelFinderService);
@@ -42,7 +40,7 @@ export class ParcelDisplayComponent {
 
   constructor() {}
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.subscription = this.parcelFinderService.parcelInfo$
       .subscribe(parcelInfo => {
         if (parcelInfo){

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -15,9 +15,14 @@ import { ParcelFinderService } from '../../../services/parcel-finder.service/par
   styleUrl: './parcel-cadastral.component.css'
 })
 export class ParcelCadastralComponent {
-
+  // Loading variable for styling
+  @Input() isLoading: WritableSignal<boolean> = signal(false);
+  
+  // Parcel found emmiter
   @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  // Start loading process emmiter
   @Output() loadingStarted = new EventEmitter<number>();
+  // Find parcel request emmiter
   @Output() findParcelRequest = new EventEmitter<FormData>();
 
   // Cadastral reference of the parcel
@@ -28,8 +33,6 @@ export class ParcelCadastralComponent {
   public today: string = new Date().toISOString().split('T')[0];
   // Valid input flag:
   private isValidInput: WritableSignal<boolean> = signal(true);
-  // Loading variable for styling
-  public isLoading: WritableSignal<boolean> = signal(false)
   // Maximum seconds set for the progress bar
   public maxLoadingDuration: number = 40;
   // Selected parcel information
@@ -37,8 +40,6 @@ export class ParcelCadastralComponent {
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
 
-  // Translation service
-  private translateService = inject(TranslateService);
   // Service for notifications
   private notificationService = inject(NotificationService)
 

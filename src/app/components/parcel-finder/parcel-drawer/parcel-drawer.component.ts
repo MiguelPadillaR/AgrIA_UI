@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import 'leaflet-draw';
-import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
@@ -27,9 +27,14 @@ L.Icon.Default.mergeOptions({
   styleUrl: './parcel-drawer.component.css'
 })
 export class ParcelDrawerComponent {
-  
+  // Loading process flag
+  @Input() isLoading: WritableSignal<boolean> = signal(false);
+
+  // Parcel found emmiter
   @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  // Start loading process emmiter
   @Output() loadingStarted = new EventEmitter<number>();
+  // Find parcel request emmiter
   @Output() findParcelRequest = new EventEmitter<FormData>();
 
   // Leaflet map instance
@@ -90,8 +95,6 @@ export class ParcelDrawerComponent {
   protected isDetailedDescription: boolean = false;
   // Valid input flag
   protected isValidInput: WritableSignal<boolean> = signal(true);
-  // Loading process flag
-  protected isLoading: WritableSignal<boolean> = signal(false);
   // Max Loading Time
   private maxLoadingDuration: number = 60;
 
@@ -310,7 +313,7 @@ export class ParcelDrawerComponent {
 
     const latlng = L.latLng(coords[0], coords[1]);
     this.map?.setView(latlng, this.mapZoom);
-    // this.coordinates = '';
+   this.coordinates = '';
   }
 
   /**

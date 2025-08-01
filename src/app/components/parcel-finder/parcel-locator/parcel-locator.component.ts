@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { IFindParcelresponse } from '../../../models/parcel-finder.model';
@@ -18,27 +18,45 @@ import { NgSelectModule } from '@ng-select/ng-select';
   styleUrl: './parcel-locator.component.css'
 })
 export class ParcelLocatorComponent {
+  // Loading flag
+  @Input() isLoading: WritableSignal<boolean> = signal(false);
+  
+  // Parcel found emmiter
   @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  // Start loading process emmiter
   @Output() loadingStarted = new EventEmitter<number>();
+  // Find parcel request emmiter
   @Output() findParcelRequest = new EventEmitter<FormData>();
 
-  protected province: string = '';
-  protected municipality: string = '';
+  // Id and province att
+  protected province: string | null = null;
+  // Id and municipality att
+  protected municipality: string | null = null;
+  // Polygon id att
   protected polygon: number | null = null;
+  // Parcel Id att
   protected parcelId: number | null = null;
 
+  // List of all municipalities associated to each province
   protected sigpacLocationData: ISigpacLocationData[] = [];
+  // List of all provinces for dropdown display
   protected provinces: string[] = [];
+  // List of all municipalities for dropdown display
   protected municipalities: string[] = [];
 
+  // Max date field value
   protected today: string = new Date().toISOString().split('T')[0];
+  // Selected date field value
   protected selectedDate: string  = this.today;
 
+  // Valid input flag
   protected isValidInput: WritableSignal<boolean> = signal(true);
-  protected isLoading: WritableSignal<boolean> = signal(false);
+  // Estimated loading duration value (in seconds)
   protected maxLoadingDuration: number = 60;
 
+  // Parcel Finder service
   private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
+  // Notification service
   private notificationService: NotificationService = inject(NotificationService);
   
   ngOnInit() {
@@ -62,33 +80,43 @@ export class ParcelLocatorComponent {
     );
   }
   
+  /**
+   * Handles changes when selecting a province.
+   * @param selected - Province entry
+   */
   protected onProvinceChange(selected: string) {
     this.municipalities = this.getMunicipalities(selected);
     this.municipality = ''; // reset previous selection
   }
 
+  /**
+   * Updates dropdown municipalities based on selected province.
+   * 
+   * @param province - Province entry
+   * @returns 
+   */
   private getMunicipalities(province: string): string[] {
     const entry = this.sigpacLocationData.find(data => data.province === province);
     return entry ? entry.municipalities : [];
   }
 
+  /**
+   * Validates input before sending a request.
+   */
   private validateInput() {
     this.isValidInput.set(false);
-    console.log("VERIFICANDO.")
-    if (this.province.length < 1) {
+    if (!this.province || this.province.length < 1) {
       const message = "Province not specified.";
       this.notificationService.showNotification(
         "parcel-locator.missing.province", "", "error", 10000
       );
-      console.log("NO PROVINCIA.")
       throw new Error(message);
     } 
-    else if (this.municipality.length < 1) {
+    else if (!this.municipality || this.municipality.length < 1) {
       const message = "Municipality not specified.";
       this.notificationService.showNotification(
         "parcel-locator.missing.municipality", "", "error", 10000
       );
-      console.log("NO MUNI.")
       throw new Error(message);
     }
     else if (!this.polygon) {
@@ -96,7 +124,6 @@ export class ParcelLocatorComponent {
       this.notificationService.showNotification(
         "parcel-locator.missing.polygon", "", "error", 10000
       );
-      console.log("NO POLI.")
       throw new Error(message);
     } 
     else if (!this.parcelId) {
@@ -104,12 +131,14 @@ export class ParcelLocatorComponent {
       this.notificationService.showNotification(
         "parcel-locator.missing.parcel-id", "", "error", 10000
       );
-      console.log("NO PARCELA.")
       throw new Error(message);
     } 
     this.isValidInput.set(true);
   }
 
+  /**
+   * Builds request and send parcel request to parent component.
+   */
   protected findParcel() {
     try {
       // Validate input before sending request
@@ -123,20 +152,13 @@ export class ParcelLocatorComponent {
       
       // Create find parcel request
       const formData = new FormData();
-      formData.append('province', this.province);
-      formData.append('municipality', this.municipality);
+      formData.append('province', this.province!!);
+      formData.append('municipality', this.municipality!!);
       formData.append('polygon', String(this.polygon));
       formData.append('parcelId', String(this.parcelId));
       formData.append('selectedDate', this.selectedDate);
       formData.append('isFromCadastralReference', "True");
       
-      const formDataObj: Record<string, any> = {};
-      formData.forEach((value, key) => {
-        formDataObj[key] = value;
-      });
-
-      console.log("REQUEST SENT:",formDataObj);
-
       // Output request to parcel finder component
       this.findParcelRequest.emit(formData)
     } catch (err) {
@@ -147,6 +169,9 @@ export class ParcelLocatorComponent {
     }
   }
 
+  /**
+   * Resets form values
+   */
   protected clearForm() {
     this.province = '';
     this.municipality = '';
