@@ -230,6 +230,14 @@
         }
 
     },
+    "parcel-locator": {
+      "missing": {
+        "province": "Error: Falta el valor 'Provincia'. Por favor, seleccione una provincia.",
+        "municipality": "Error: Falta el valor 'Municipio'. Por favor, seleccione un municipio.",
+        "polygon": "Error: Falta el valor 'Polígono'. Por favor, introduzca un identificador (máximo 3 cifras).",
+        "parcel-id": "Error: Falta el valor 'Parcela'. Por favor, introduzca un identificador (máximo 5 cifras)."
+      }
+    },
     "chat": {
       "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
       "load-parcel-finder-data-error": "Fallo al cargar datos del Buscador de Parcelas:\n",

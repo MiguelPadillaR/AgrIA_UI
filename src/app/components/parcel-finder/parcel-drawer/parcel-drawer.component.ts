@@ -397,6 +397,7 @@ export class ParcelDrawerComponent {
     try {
       // Validate all input before sending
       this.validateInput();
+
       // Init loading notifications
       this.notificationService.showNotification("parcel-finder.searching", "", "info")
       this.isLoading.set(true);
@@ -426,10 +427,11 @@ export class ParcelDrawerComponent {
       const formData = new FormData();
       formData.append('parcelGeometry', this.parcelGeometry ? JSON.stringify(this.parcelGeometry) : 'None');
       formData.append('parcelMetadata', this.parcelMetadata ? JSON.stringify(this.parcelMetadata) : 'None');
-      console.log("this.parcelMetadata", this.parcelMetadata)
       formData.append('coordinates', this.coordinates ? this.coordinates : 'None');
       formData.append('selectedDate', this.selectedDate);
       formData.append('isFromCadastralReference', "False");
+
+      console.log("this.parcelMetadata", this.parcelMetadata)
 
       // Output request to parcel finder component
       this.findParcelRequest.emit(formData)
@@ -438,8 +440,6 @@ export class ParcelDrawerComponent {
         }, this.maxLoadingDuration * 1000);
 
     } catch (err) {
-      // Optional: additional logging or handling
-      this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
       console.error("Validation Error:", err);
     }
   }
@@ -455,21 +455,19 @@ export class ParcelDrawerComponent {
       );
       throw new Error(message);
     }
-    else if (this.parcelGeometry) {
-      if (!this.selectedClassifications || this.selectedClassifications.length === 0) {
-        const message = "No crop classification selected for parcel geometry.";
-        this.notificationService.showNotification(
-          "parcel-drawer.missing.crop-classification", "", "error", 10000
-        );
-        throw new Error(message);
-      }
-      if (this.selectedClassifications.some(item => item.surface === null)) {
-        const message = "Some selected crop classifications have missing surface values.";
-        this.notificationService.showNotification(
-          "parcel-drawer.missing.surface", "", "error", 10000
-        );
-        throw new Error(message);
-      }
+    else if (!this.selectedClassifications || this.selectedClassifications.length === 0) {
+      const message = "No crop classification selected for parcel geometry.";
+      this.notificationService.showNotification(
+        "parcel-drawer.missing.crop-classification", "", "error", 10000
+      );
+      throw new Error(message);
+    }
+    else if (this.selectedClassifications.some(item => item.surface === null)) {
+      const message = "Some selected crop classifications have missing surface values.";
+      this.notificationService.showNotification(
+        "parcel-drawer.missing.surface", "", "error", 10000
+      );
+      throw new Error(message);
     }
   }
 

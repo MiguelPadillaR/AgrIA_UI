@@ -226,6 +226,14 @@
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
         }
       },
+      "parcel-locator": {
+        "missing": {
+          "province": "Error: Missing value for 'Province'. Please, select province.",
+          "municipality": "Error: Missing value for 'Municipality'. Please, select municipality.",
+          "polygon": "Error: Missing value for 'Polygon'. Please, select identifier (3 digits max).",
+          "parcel-id": "Error: Missing value for 'Parcel'. Please, select entifier (5 digits max)."
+        }
+      },
       "chat": {
         "load-parcel-finder-data-info": "Getting parcel finder data...",
         "load-parcel-finder-data-error": "Error while getting parcel finder data:\n",

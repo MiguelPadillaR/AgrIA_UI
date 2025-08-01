@@ -43,7 +43,6 @@ export class ParcelFinderComponent {
     this.maxLoadingDuration = duration;
   }
 
-
   protected handleLoadingFinished() {
     this.isLoading.set(false);
   }

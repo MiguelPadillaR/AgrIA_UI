@@ -77,7 +77,7 @@
                 <button 
                     class="input-button"
                     [style.cursor]="isLoading() ? 'progress' : 'pointer'"
-                    [disabled]="isLoading() || isVaildInput()"
+                    [disabled]="isLoading()"
                     (click)="findParcel()"
                 >
                 {{ isLoading() ? ('parcelFinder.loading' | translate) : ('parcelFinder.findParcel' | translate) }}

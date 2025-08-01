@@ -33,7 +33,6 @@ export class ParcelLocatorComponent {
 
   protected today: string = new Date().toISOString().split('T')[0];
   protected selectedDate: string  = this.today;
-  protected isVaildInput: WritableSignal<boolean> = signal(true);
 
   protected isLoading: WritableSignal<boolean> = signal(false);
   protected maxLoadingDuration: number = 60;
@@ -72,46 +71,46 @@ export class ParcelLocatorComponent {
     return entry ? entry.municipalities : [];
   }
 
-  private isValidInput() {
-    this.isVaildInput.set(true);
-
+  private validateInput() {
+    console.log("VERIFICANDO.")
     if (this.province.length < 1) {
       const message = "Province not specified.";
-      this.isVaildInput.set(false);
       this.notificationService.showNotification(
         "parcel-locator.missing.province", "", "error", 10000
       );
+      console.log("NO PROVINCIA.")
       throw new Error(message);
     } 
     else if (this.municipality.length < 1) {
-      this.isVaildInput.set(false);
       const message = "Municipality not specified.";
       this.notificationService.showNotification(
         "parcel-locator.missing.municipality", "", "error", 10000
       );
+      console.log("NO MUNI.")
       throw new Error(message);
     }
-        else if (!this.polygon) {
-      this.isVaildInput.set(false);
+    else if (!this.polygon) {
       const message = "Polygon not specified.";
       this.notificationService.showNotification(
         "parcel-locator.missing.polygon", "", "error", 10000
       );
+      console.log("NO POLI.")
       throw new Error(message);
     } 
     else if (!this.parcelId) {
-      this.isVaildInput.set(false);
       const message = "Parcel not specified.";
       this.notificationService.showNotification(
         "parcel-locator.missing.parcel-id", "", "error", 10000
       );
+      console.log("NO PARCELA.")
       throw new Error(message);
     } 
   }
 
   protected findParcel() {
     // Validate input before sending request
-    this.isValidInput();
+    this.validateInput();
+        
     // Init loading notifications
     this.notificationService.showNotification("parcel-finder.searching", "", "info")
     this.isLoading.set(true);
