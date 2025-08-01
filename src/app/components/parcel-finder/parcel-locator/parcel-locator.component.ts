@@ -28,12 +28,13 @@ export class ParcelLocatorComponent {
   protected parcelId: number | null = null;
 
   protected sigpacLocationData: ISigpacLocationData[] = [];
-  provinces: string[] = [];
-  municipalities: string[] = [];
+  protected provinces: string[] = [];
+  protected municipalities: string[] = [];
 
   protected today: string = new Date().toISOString().split('T')[0];
   protected selectedDate: string  = this.today;
 
+  protected isValidInput: WritableSignal<boolean> = signal(true);
   protected isLoading: WritableSignal<boolean> = signal(false);
   protected maxLoadingDuration: number = 60;
 
@@ -72,6 +73,7 @@ export class ParcelLocatorComponent {
   }
 
   private validateInput() {
+    this.isValidInput.set(false);
     console.log("VERIFICANDO.")
     if (this.province.length < 1) {
       const message = "Province not specified.";
@@ -105,26 +107,44 @@ export class ParcelLocatorComponent {
       console.log("NO PARCELA.")
       throw new Error(message);
     } 
+    this.isValidInput.set(true);
   }
 
   protected findParcel() {
-    // Validate input before sending request
-    this.validateInput();
-        
-    // Init loading notifications
-    this.notificationService.showNotification("parcel-finder.searching", "", "info")
-    this.isLoading.set(true);
-    this.loadingStarted.emit(this.maxLoadingDuration);
-    document.body.style.cursor = 'progress';
-    // Create find parcel request
-    const formData = new FormData();
-    formData.append('province', this.province);
-    formData.append('municipality', this.municipality);
-    formData.append('polygon', String(this.polygon));
-    formData.append('parcelId', String(this.parcelId));
-    formData.append('selectedDate', this.selectedDate);
-    // Output request to parcel finder component
-    this.findParcelRequest.emit(formData)
+    try {
+      // Validate input before sending request
+      this.validateInput();
+          
+      // Init loading notifications
+      this.notificationService.showNotification("parcel-finder.searching", "", "info")
+      this.isLoading.set(true);
+      this.loadingStarted.emit(this.maxLoadingDuration);
+      document.body.style.cursor = 'progress';
+      
+      // Create find parcel request
+      const formData = new FormData();
+      formData.append('province', this.province);
+      formData.append('municipality', this.municipality);
+      formData.append('polygon', String(this.polygon));
+      formData.append('parcelId', String(this.parcelId));
+      formData.append('selectedDate', this.selectedDate);
+      formData.append('isFromCadastralReference', "True");
+      
+      const formDataObj: Record<string, any> = {};
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      });
+
+      console.log("REQUEST SENT:",formDataObj);
+
+      // Output request to parcel finder component
+      this.findParcelRequest.emit(formData)
+    } catch (err) {
+      if(this.isValidInput()) {
+        this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
+      }
+      console.error("Request error:", err);
+    }
   }
 
   protected clearForm() {

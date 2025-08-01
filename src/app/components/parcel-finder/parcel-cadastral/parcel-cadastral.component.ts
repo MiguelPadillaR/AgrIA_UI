@@ -26,6 +26,8 @@ export class ParcelCadastralComponent {
   public selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker
   public today: string = new Date().toISOString().split('T')[0];
+  // Valid input flag:
+  private isValidInput: WritableSignal<boolean> = signal(true);
   // Loading variable for styling
   public isLoading: WritableSignal<boolean> = signal(false)
   // Maximum seconds set for the progress bar
@@ -35,8 +37,6 @@ export class ParcelCadastralComponent {
   // URL of the parcel's satellite image
   public parcelImageUrl: string | null = null;
 
-  // Service to handle parcel finding operations
-  private parcelFinderService = inject(ParcelFinderService);
   // Translation service
   private translateService = inject(TranslateService);
   // Service for notifications
@@ -49,21 +49,52 @@ export class ParcelCadastralComponent {
  * 
  */
   public findParcel() {
-    // Init loading notifications
-    this.notificationService.showNotification("parcel-finder.searching", "", "info")
-    this.isLoading.set(true);
-    this.loadingStarted.emit(this.maxLoadingDuration);
-    document.body.style.cursor = 'progress';
-    // Reset parcel image
-    this.parcelImageUrl = null;
-    // Create find parcel request
-    const formData = new FormData();
-    formData.append('cadastralReference', this.cadastralReference);
-    formData.append('selectedDate', this.selectedDate);
-    formData.append('isFromCadastralReference', "True");
-    // Output request to parcel finder component
-    this.findParcelRequest.emit(formData)
+    try {
+      // Validate input
+      this.validateInput();
+
+      if(this.isValidInput()) {
+        // Init loading notifications
+        this.notificationService.showNotification("parcel-finder.searching", "", "info")
+        this.isLoading.set(true);
+        this.loadingStarted.emit(this.maxLoadingDuration);
+        document.body.style.cursor = 'progress';
+
+        // Reset parcel image
+        this.parcelImageUrl = null;
+
+        // Create find parcel request
+        const formData = new FormData();
+        formData.append('cadastralReference', this.cadastralReference);
+        formData.append('selectedDate', this.selectedDate);
+        formData.append('isFromCadastralReference', "True");
+
+        // Output request to parcel finder component
+        this.findParcelRequest.emit(formData)
+      }
+    } catch (err) {
+      if(this.isValidInput()) {
+        this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
+      }
+      console.error("Request error:", err);
+    }
   }
+  
+  /**
+   * Validate input before sending request
+   */
+  private validateInput() {
+    this.isValidInput.set(false);
+    if(!this.cadastralReference || this.cadastralReference.length !== 20) {
+      const message = "Municipality not specified.";
+      this.notificationService.showNotification(
+        "parcel-cadastral.missing.cadastral", "", "error", 10000
+      )
+    }
+
+    this.isValidInput.set(true);
+  }
+
    /**
     * Clears all form info
     */

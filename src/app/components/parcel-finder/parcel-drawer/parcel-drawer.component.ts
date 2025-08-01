@@ -88,6 +88,8 @@ export class ParcelDrawerComponent {
   protected selectedParcelInfo: IFindParcelresponse | null = null;
   // Detailed description flag
   protected isDetailedDescription: boolean = false;
+  // Valid input flag
+  protected isValidInput: WritableSignal<boolean> = signal(true);
   // Loading process flag
   protected isLoading: WritableSignal<boolean> = signal(false);
   // Max Loading Time
@@ -440,7 +442,10 @@ export class ParcelDrawerComponent {
         }, this.maxLoadingDuration * 1000);
 
     } catch (err) {
-      console.error("Validation Error:", err);
+      if(this.isValidInput()) {
+        this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
+      }
+      console.error("Request error:", err);
     }
   }
 
@@ -448,6 +453,8 @@ export class ParcelDrawerComponent {
    * Validate the parcel geometry and selected classifications
    */
   private validateInput() {
+    this.isValidInput.set(false);
+
     if (!this.parcelGeometry && !this.activeMarker) { // TODO: REMOVE WHEN IMPLEMENTED
       const message = "No parcel drawing / marker found.";
       this.notificationService.showNotification(
@@ -469,6 +476,8 @@ export class ParcelDrawerComponent {
       );
       throw new Error(message);
     }
+    
+    this.isValidInput.set(true);
   }
 
   protected resetForm(): void {
