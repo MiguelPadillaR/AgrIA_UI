@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, input, Input, Output, output, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, signal, WritableSignal } from '@angular/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { Router } from '@angular/router';
@@ -45,7 +45,7 @@ export class ParcelDisplayComponent {
       .subscribe(parcelInfo => {
         if (parcelInfo){
           this.selectedParcelInfo = parcelInfo;
-          this.parcelImageUrl = parcelInfo.imagePath
+          this.parcelImageUrl = parcelInfo.imagePath + '?t=' + new Date().getTime();
           this.cdRef.markForCheck();
         }
       });
