@@ -70,6 +70,23 @@
     }
 }
 
+.form-input {
+  flex-grow: 1; /* Allow input to take remaining space */
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  color: var(--text-color-dark);
+  min-width: 150px; /* Ensure input isn't too small */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+}
+
 .coordinates-container {
   display: flex;
   flex-direction: column;
@@ -107,6 +124,14 @@
 #map {
   width: 100%;
   height: 100%;
+}
+
+.custom-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-top: 5rem;
 }
 
 .crop-classification-container {
@@ -306,6 +331,7 @@
 @media (max-width: 768px) {
   #parcel-drawer {
     border-radius: 0;
+    padding: 0.5rem;
   }
   .content,
   .map-container,
@@ -357,5 +383,11 @@
   .input-button, .clear-info-button {
     width: 100%; /* Make buttons full width */
   }
+
+  .form-input {
+    width: 100%; /* Inputs take full width */
+    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+  }
+
 
 }

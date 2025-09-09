@@ -27,7 +27,7 @@
       "title": "Main Features",
       "parcelLocation": {
         "title": "Parcel Location",
-        "description": "Automatically find your parcel by simply using its cadastral reference."
+        "description": "Automatically find your parcel by simply using its cadastral reference or locating it on the map."
       },
       "satelliteImageAnalysis": {
         "title": "Satellite Image Analysis",
@@ -99,7 +99,31 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
+      "locator": "Search by state's parcel/polygon.",
       "drawer": "Search by coordinates / drawing parcel limits."
+    }
+  },
+  "parcel-locator": {
+    "title": "Location Data",
+    "province": {
+      "name": "Province:", 
+      "placeholder": "Select province", 
+      "error": "Error: Province not valid. Please, select valid province."
+    },
+    "municipality": {
+      "name": "Municipality:", 
+      "placeholder": "Select municipality", 
+      "error": "Error: Municipality not valid. Please, select valid municipality."
+    },
+    "polygon": {
+      "name": "Polygon:", 
+      "placeholder": "000", 
+      "error": "Error: Polygon not valid. Please, select valid identifier (3 digits max)."
+    },
+    "parcel-id": {
+      "name": "Parcel:",
+      "placeholder": "00000",
+      "error": "Error: Parcel not valid. Please, select valid identifier (5 digits max)."
     }
   },
   "parcelDrawer": {
@@ -144,7 +168,7 @@
       "header3": "Irrigation Coef. (%)"
     },
     "button": {
-      "send": "Send information",
+      "send": "Find Parcel",
       "reset": "Reset selection",
       "loading": "Loading..."
     }
@@ -200,6 +224,14 @@
           "parcel-drawing":"Error: No polygon or coordinate marker detected on the map. Draw a polygon or use a coordinate marker.",
           "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
+        }
+      },
+      "parcel-locator": {
+        "missing": {
+          "province": "Error: Missing value for 'Province'. Please, select province.",
+          "municipality": "Error: Missing value for 'Municipality'. Please, select municipality.",
+          "polygon": "Error: Missing value for 'Polygon'. Please, select identifier (3 digits max).",
+          "parcel-id": "Error: Missing value for 'Parcel'. Please, select entifier (5 digits max)."
         }
       },
       "chat": {

@@ -5,9 +5,9 @@ import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.componen
 import { Router } from '@angular/router';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { ChatService } from '../../services/chat.services/chat.service';
-import { IChatParcelResponse } from '../../models/chat.models';
+import { IChatParcelResponse } from '../../models/chat.model';
 import { take } from 'rxjs';
-import { IFindParcelresponse } from '../../models/parcel-finder.models';
+import { IFindParcelresponse } from '../../models/parcel-finder.model';
 import { NotificationService } from '../../services/notification.service/notification.service';
 
 @Component({

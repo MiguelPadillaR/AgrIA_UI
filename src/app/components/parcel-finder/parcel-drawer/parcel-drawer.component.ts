@@ -1,14 +1,12 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
+import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
-import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../models/parcel-drawer.models';
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
-import { NotificationService } from '../../services/notification.service/notification.service';
-import { IFindParcelresponse, IParcelMetadata } from '../../models/parcel-finder.models';
-import { Router } from '@angular/router';
+import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.model';
+import { NotificationService } from '../../../services/notification.service/notification.service';
+import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.model';
 
 // Set default icon paths
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -24,12 +22,21 @@ L.Icon.Default.mergeOptions({
   imports: [
     TranslateModule,
     FormsModule,
-    ProgressBarComponent,
 ],
   templateUrl: './parcel-drawer.component.html',
   styleUrl: './parcel-drawer.component.css'
 })
 export class ParcelDrawerComponent {
+  // Loading process flag
+  @Input() isLoading: WritableSignal<boolean> = signal(false);
+
+  // Parcel found emmiter
+  @Output() parcelFound = new EventEmitter<IFindParcelresponse>();
+  // Start loading process emmiter
+  @Output() loadingStarted = new EventEmitter<number>();
+  // Find parcel request emmiter
+  @Output() findParcelRequest = new EventEmitter<FormData>();
+
   // Leaflet map instance
   private map!: L.DrawMap;
   // Coordinates marker
@@ -41,23 +48,23 @@ export class ParcelDrawerComponent {
   // Flag for when a shape is being drawn
   private isDrawing: WritableSignal<boolean> = signal(false);
   // Coordinates attribute
-  public mapCenter: string = '40.400409, -3.631434';
+  protected mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
-  public coordinates: string = this.mapCenter; // TODO: REMOVE Center coordinates (40.4165, -3.70256)
+  protected coordinates: string = this.mapCenter; // TODO: REMOVE Center coordinates (40.4165, -3.70256)
   // Date for which the parcel image is requested
-  public selectedDate: string  = new Date().toISOString().split('T')[0];
+  protected selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker
-  public today: string = new Date().toISOString().split('T')[0];
+  protected today: string = new Date().toISOString().split('T')[0];
   // Parcel's geometry attribute
-  public parcelGeometry: IParcelDrawerGeojson | null = null;
-  // Detail description flag
-  public isDetailedDescription: boolean = false;
+  protected parcelGeometry: IParcelDrawerGeojson | null = null;
+  // Active Tab flag
+  protected activeTab: 'sigpac' | 'address' = 'sigpac';
   // List of SIGPAC's crop classifications
-  public cropClassification: ICropClassification[] = [];
+  protected cropClassification: ICropClassification[] = [];
   // Grouped crop classifications by type and subtype
-  public groupedCropClassification: IGroupedCropClassification = {};
+  protected groupedCropClassification: IGroupedCropClassification = {};
   // Selected crop classifications
-  public selectedClassifications: ISelectedCrop[] = [];
+  protected selectedClassifications: ISelectedCrop[] = [];
   // Parcel Metadata
   private parcelMetadata: IParcelMetadata = {
     query: [],
@@ -83,20 +90,21 @@ export class ParcelDrawerComponent {
     }
   };
   // Selected parcel response information
-  private selectedParcelInfo: IFindParcelresponse | null = null;
-  // Loading process flag
-  public isLoading: WritableSignal<boolean> = signal(false);
+  protected selectedParcelInfo: IFindParcelresponse | null = null;
+  // Detailed description flag
+  protected isDetailedDescription: boolean = false;
+  // Valid input flag
+  protected isValidInput: WritableSignal<boolean> = signal(true);
+  // Max Loading Time
+  private maxLoadingDuration: number = 60;
 
   // Service to handle parcel finding operations
   private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
   // Service for notifications
   private notificationService: NotificationService = inject(NotificationService);
-  // Translation service
-  private translateService: TranslateService = inject(TranslateService);
   // Utility to get object keys
-  public objectKeys = Object.keys;
-  // Router for navigation
-  private router: Router = inject(Router);
+  protected objectKeys = Object.keys;
+  
 
   constructor() { }
   
@@ -258,7 +266,7 @@ export class ParcelDrawerComponent {
    * 
    * @returns The current map instance.
    */
-  public centerMapOnCoordinates(): void {
+  protected centerMapOnCoordinates(): void {
     this.mapZoom = this.mapZoom < 17? 17 : this.mapZoom; // Limit zoom level to a maximum of 16
     if (!this.map || !this.coordinates) return;
 
@@ -292,7 +300,7 @@ export class ParcelDrawerComponent {
   /**
    * Resets the map view to the default coordinates and zoom level, clearing any drawn shapes.
    */
-  public resetMapAndCoordinates(): void {
+  protected resetMapAndCoordinates(): void {
     this.parcelGeometry = null;
     this.drawnItems.clearLayers();
     this.mapZoom = 5;
@@ -305,14 +313,14 @@ export class ParcelDrawerComponent {
 
     const latlng = L.latLng(coords[0], coords[1]);
     this.map?.setView(latlng, this.mapZoom);
-    // this.coordinates = '';
+   this.coordinates = '';
   }
 
   /**
    * Loads crop classifications from the service and groups them by type and subtype.
    */
   private loadCropClassifications() {
-    this.parcelFinderService.getCropClassifications().subscribe(
+    this.parcelFinderService.loadCropClassifications().subscribe(
       (cropClassification: ICropClassification[]) => {
         this.cropClassification = cropClassification;
         this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
@@ -348,7 +356,7 @@ export class ParcelDrawerComponent {
    * 
    * @param clickedItem - The crop classification item to toggle.
    */
-  public toggleSelectedClassification(clickedItem: ICropClassification): void {
+  protected toggleSelectedClassification(clickedItem: ICropClassification): void {
     const index = this.selectedClassifications.findIndex(
       (entry) => entry.classification === clickedItem
     );
@@ -370,7 +378,7 @@ export class ParcelDrawerComponent {
    * @param item - The crop classification item to check.
    * @returns 
    */
-  public isSelected(item: ICropClassification): boolean {
+  protected isSelected(item: ICropClassification): boolean {
   return this.selectedClassifications.some(
     (entry) => entry.classification === item
   );
@@ -382,7 +390,7 @@ export class ParcelDrawerComponent {
    * @param item - The selected crop classification item.
    * @returns The class (title) of the item if it is selected, otherwise an empty string.
    */
-  public trackClassification(item: ISelectedCrop): string {
+  protected trackClassification(item: ISelectedCrop): string {
     return item.classification.class;
   }
 
@@ -390,13 +398,16 @@ export class ParcelDrawerComponent {
    * Sends the parcel geometry and metadata to the backend for processing.
    *  
    */
-  public sendParcelDrawerInfo(): void {
+  protected sendParcelDrawerInfo(): void {
     try {
-      // Validate request inputs
+      // Validate all input before sending
       this.validateInput();
-      this.isLoading.set(true);
-      document.body.style.cursor = 'progress';
+
+      // Init loading notifications
       this.notificationService.showNotification("parcel-finder.searching", "", "info")
+      this.isLoading.set(true);
+      this.loadingStarted.emit(this.maxLoadingDuration);
+      document.body.style.cursor = 'progress';
 
       // Add essential metadata from crop classification to request
       this.parcelMetadata.query = [];  // Reset metadata info
@@ -421,43 +432,23 @@ export class ParcelDrawerComponent {
       const formData = new FormData();
       formData.append('parcelGeometry', this.parcelGeometry ? JSON.stringify(this.parcelGeometry) : 'None');
       formData.append('parcelMetadata', this.parcelMetadata ? JSON.stringify(this.parcelMetadata) : 'None');
-      console.log("this.parcelMetadata", this.parcelMetadata)
       formData.append('coordinates', this.coordinates ? this.coordinates : 'None');
       formData.append('selectedDate', this.selectedDate);
       formData.append('isFromCadastralReference', "False");
 
-      this.parcelFinderService.findParcel(formData).subscribe({
-        next: (response: IFindParcelresponse) => {
-          this.notificationService.showNotification("parcel-finder.success","","success")
-          this.selectedParcelInfo = response;
-          document.body.style.cursor = 'default';
-          console.log("Parcel finder response:", response)
-        },
-        error: (err) => {
-          this.isLoading.set(false);
-          const errorMessage = err?.error?.error?.includes("No images are available")? 
-            this.translateService.currentLang === "es"? "No hay imágenes disponibles para la fecha seleccionada, las imágenes se procesan al final de cada mes."
-            : "No images are available for the selected date, images are processed at the end of each month."
-            : err.error.error
-          this.notificationService.showNotification("parcel-finder.error",`\n${errorMessage}`,"error", 10000)
-          console.error('Parcel fetch failed', err);
-          document.body.style.cursor = 'default';
-        },
-        complete: () => {
-          this.isLoading.set(false);
-          document.body.style.cursor = 'default';
-          if (this.selectedParcelInfo) {
-            this.selectedParcelInfo.isDetailedDescription = this.isDetailedDescription;
-            this.selectedParcelInfo.hasBeenDescribed = false;
-            this.parcelFinderService.setParcelInfo(this.selectedParcelInfo);
-            this.router.navigate(['/chat']);
-          }
-        }
-      });
+      console.log("this.parcelMetadata", this.parcelMetadata)
+
+      // Output request to parcel finder component
+      this.findParcelRequest.emit(formData)
+        setTimeout(() => {
+          this.isLoading.set(false)
+        }, this.maxLoadingDuration * 1000);
+
     } catch (err) {
-      // Optional: additional logging or handling
-      this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
-      console.error("Validation Error:", err);
+      if(this.isValidInput()) {
+        this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
+      }
+      console.error("Request error:", err);
     }
   }
 
@@ -465,6 +456,8 @@ export class ParcelDrawerComponent {
    * Validate the parcel geometry and selected classifications
    */
   private validateInput() {
+    this.isValidInput.set(false);
+
     if (!this.parcelGeometry && !this.activeMarker) { // TODO: REMOVE WHEN IMPLEMENTED
       const message = "No parcel drawing / marker found.";
       this.notificationService.showNotification(
@@ -472,25 +465,25 @@ export class ParcelDrawerComponent {
       );
       throw new Error(message);
     }
-    else if (this.parcelGeometry) {
-      if (!this.selectedClassifications || this.selectedClassifications.length === 0) {
-        const message = "No crop classification selected for parcel geometry.";
-        this.notificationService.showNotification(
-          "parcel-drawer.missing.crop-classification", "", "error", 10000
-        );
-        throw new Error(message);
-      }
-      if (this.selectedClassifications.some(item => item.surface === null)) {
-        const message = "Some selected crop classifications have missing surface values.";
-        this.notificationService.showNotification(
-          "parcel-drawer.missing.surface", "", "error", 10000
-        );
-        throw new Error(message);
-      }
+    else if (!this.selectedClassifications || this.selectedClassifications.length === 0) {
+      const message = "No crop classification selected for parcel geometry.";
+      this.notificationService.showNotification(
+        "parcel-drawer.missing.crop-classification", "", "error", 10000
+      );
+      throw new Error(message);
     }
+    else if (this.selectedClassifications.some(item => item.surface === null)) {
+      const message = "Some selected crop classifications have missing surface values.";
+      this.notificationService.showNotification(
+        "parcel-drawer.missing.surface", "", "error", 10000
+      );
+      throw new Error(message);
+    }
+    
+    this.isValidInput.set(true);
   }
 
-  public resetForm(): void {
+  protected resetForm(): void {
     // TODO: Work in progress...
     this.selectedClassifications = [];
   }

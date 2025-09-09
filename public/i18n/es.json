@@ -27,7 +27,7 @@
       "title": "Características Principales",
       "parcelLocation": {
         "title": "Localización de Parcela",
-        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral."
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral o localizándola en el mapa."
       },
       "satelliteImageAnalysis": {
         "title": "Análisis de Imagen Satelital",
@@ -99,9 +99,33 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
+      "locator": "Buscar por parcela/polígono.",
       "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
+  },
+  "parcel-locator": {
+    "title": "Datos de Localización",
+    "province": {
+      "name": "Provincia:", 
+      "placeholder": "Seleccione provincia", 
+      "error": "Error: Provincia no válida. Por favor, seleccione una provincia válida."
+    },
+    "municipality": {
+      "name": "Municipio:", 
+      "placeholder": "Seleccione municipio", 
+      "error": "Error: Municipio no válido. Por favor, seleccione un municipio válido."
+    },
+    "polygon": {
+      "name": "Polígono:", 
+      "placeholder": "000", 
+      "error": "Error: Polígono no válido. Por favor, introduzca un identificador válido (máximo 3 cifras)."
+    },
+    "parcel-id": {
+      "name": "Parcela:",
+      "placeholder": "00000",
+      "error": "Error: Parcela no válido. Por favor, introduzca un identificador válido (máximo 5 cifras)."
+    }
   },
   "parcelDrawer": {
     "title": "Datos Geográficos",
@@ -144,7 +168,7 @@
       "header3": "Coef. Regadío (%)"
     },
     "button": {
-      "send": "Enviar información",
+      "send": "Buscar Parcela",
       "reset": "Borrar selección",
       "loading": "Cargando..."
     }
@@ -205,6 +229,14 @@
           "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
         }
 
+    },
+    "parcel-locator": {
+      "missing": {
+        "province": "Error: Falta el valor 'Provincia'. Por favor, seleccione una provincia.",
+        "municipality": "Error: Falta el valor 'Municipio'. Por favor, seleccione un municipio.",
+        "polygon": "Error: Falta el valor 'Polígono'. Por favor, introduzca un identificador (máximo 3 cifras).",
+        "parcel-id": "Error: Falta el valor 'Parcela'. Por favor, introduzca un identificador (máximo 5 cifras)."
+      }
     },
     "chat": {
       "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",
