@@ -27,7 +27,7 @@
       "title": "Main Features",
       "parcelLocation": {
         "title": "Parcel Location",
-        "description": "Automatically find your parcel by simply using its cadastral reference."
+        "description": "Automatically find your parcel by simply using its cadastral reference or locating it on the map."
       },
       "satelliteImageAnalysis": {
         "title": "Satellite Image Analysis",
@@ -99,12 +99,45 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
-      "drawer": "Search by drawing parcel limits."
+      "locator": "Search by state's parcel/industrial park.",
+      "drawer": "Search by coordinates / drawing parcel limits."
+    }
+  },
+  "parcel-locator": {
+    "title": "Location Data",
+    "province": {
+      "name": "Province:", 
+      "placeholder": "Select province", 
+      "error": "Error: Province not valid. Please, select valid province."
+    },
+    "municipality": {
+      "name": "Municipality:", 
+      "placeholder": "Select municipality", 
+      "error": "Error: Municipality not valid. Please, select valid municipality."
+    },
+    "polygon": {
+      "name": "Industrial Park:", 
+      "placeholder": "000", 
+      "error": "Error: Industrial Park not valid. Please, select valid identifier (3 digits max)."
+    },
+    "parcel-id": {
+      "name": "Parcel:",
+      "placeholder": "00000",
+      "error": "Error: Parcel not valid. Please, select valid identifier (5 digits max)."
     }
   },
   "parcelDrawer": {
-    "title": "Parcel drawer",
+    "title": "Geographical Data",
     "description": {
+      "intro":"In this module, you may use one of the two options available to find your parcel. In both, the date will be used to extract the image.",
+      "header1": "Coordinates Search:",
+      "header2": "Parcel Drawing Search:",
+      "bold0":"Introduce a set of coordinates (latitude, longitude) that are within your state's limits ",
+      "normal0":" as per the property's cadastral data in order to find it.",
+      "normal00":"Introduce the parcel's location data, sepcifying each one of these fields: Province, Municipality, Industrial's Park numeric ID, and Parcel's numeric ID",
+      "normal01": "This options allows the ",
+      "bold01": "automatic extraction of the SIPAC classification",
+      "normal02": " of your parcel's crops.",
       "bold1": "Draw your parcel's limits over the map.",
       "normal1": "When you are done marking your parcel, ",
       "bold2": "press again on the initial node to finish ",
@@ -136,7 +169,7 @@
       "header3": "Irrigation Coef. (%)"
     },
     "button": {
-      "send": "Send information",
+      "send": "Find Parcel",
       "reset": "Reset selection",
       "loading": "Loading..."
     }
@@ -181,15 +214,25 @@
       },
       "parcel-drawer": {
         "coordinates": {
-          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:"
+          "invalid": "Invalid coordinates format. Please use the 'lat, lon' format.\nInput coordinates:",
+          "new-coordinates": "Updated coordinates: ",
+          "new-coordinates-error": "Error when updating coordinates: "
         },
         "sigpac-table": {
           "error": "Error when loading crop classifications:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: No polygon detected on the map. Draw one to continue.",
+          "parcel-drawing":"Error: No polygon or coordinate marker detected on the map. Draw a polygon or use a coordinate marker.",
           "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
+        }
+      },
+      "parcel-locator": {
+        "missing": {
+          "province": "Error: Missing value for 'Province'. Please, select province.",
+          "municipality": "Error: Missing value for 'Municipality'. Please, select municipality.",
+          "polygon": "Error: Missing value for 'Industrial Park'. Please, select identifier (3 digits max).",
+          "parcel-id": "Error: Missing value for 'Parcel'. Please, select entifier (5 digits max)."
         }
       },
       "chat": {

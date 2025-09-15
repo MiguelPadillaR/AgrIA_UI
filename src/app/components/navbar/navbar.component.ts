@@ -1,5 +1,4 @@
 import { Component, HostBinding, HostListener, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -7,10 +6,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-navbar',
   imports: [
-    CommonModule,
     RouterModule,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -48,7 +46,7 @@ export class NavbarComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    this.isAtTop = scrollTop < 5;
+    this.isAtTop = scrollTop < 80;
 
     if (scrollTop < this.lastScrollTop) {
       this.isVisible = true; // Scrolling up

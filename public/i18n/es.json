@@ -27,7 +27,7 @@
       "title": "Características Principales",
       "parcelLocation": {
         "title": "Localización de Parcela",
-        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral."
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral o localizándola en el mapa."
       },
       "satelliteImageAnalysis": {
         "title": "Análisis de Imagen Satelital",
@@ -99,13 +99,46 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
-      "drawer": "Buscar dibujando los límites."
+      "locator": "Buscar por parcela/polígono.",
+      "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
   },
+  "parcel-locator": {
+    "title": "Datos de Localización",
+    "province": {
+      "name": "Provincia:", 
+      "placeholder": "Seleccione provincia", 
+      "error": "Error: Provincia no válida. Por favor, seleccione una provincia válida."
+    },
+    "municipality": {
+      "name": "Municipio:", 
+      "placeholder": "Seleccione municipio", 
+      "error": "Error: Municipio no válido. Por favor, seleccione un municipio válido."
+    },
+    "polygon": {
+      "name": "Polígono:", 
+      "placeholder": "000", 
+      "error": "Error: Polígono no válido. Por favor, introduzca un identificador válido (máximo 3 cifras)."
+    },
+    "parcel-id": {
+      "name": "Parcela:",
+      "placeholder": "00000",
+      "error": "Error: Parcela no válido. Por favor, introduzca un identificador válido (máximo 5 cifras)."
+    }
+  },
   "parcelDrawer": {
-    "title": "Delimitador de Parcelas",
+    "title": "Datos Geográficos",
     "description": {
+      "intro":"En este módulo, puede usar una de las siguientes opciones para encontrar su parcela. En ambos, se utlizará la fecha para extraer la imagen.",
+      "header1": "Búsqueda por coordenadas:",
+      "header2": "Búsqueda por delimitación de parcela:",
+      "bold0":"Utilice un conjunto de coordenadas (latitud, longitud) que se ubiquen en el interior de los límites de su finca ",
+      "normal0":"de acuerdo con los datos catastrales de la propiedad para poder encontrarla.",
+      "normal00":"Introduzca la localización de su parcela espeficando con cada uno de los siguientes campos: Provincia, Municipio, identificador numérico del polígono e identificador numérico de la parcela. ",
+      "normal01": "Esta opción permite la ",
+      "bold01": "extracción automática de la clasificación SIGPAC",
+      "normal02": " de los cultivos de la parcela.",
       "bold1": "Dibuje los límites de su parcela sobre el mapa.",
       "normal1": "Cuando haya terminado de delimitar la parcela, ",
       "bold2": "vuelva a pulsar sobre el vértice inicial para terminar",
@@ -119,7 +152,6 @@
       "placeholder": "Ej: 40.4165, -3.70256 ...",
       "search-button": "Buscar Coordenadas",
       "clear-button": "Reiniciar mapa y coordenadas"
-
     },
     "sigpacForm": {
       "title": "Clasificación SIGPAC ",
@@ -137,7 +169,7 @@
       "header3": "Coef. Regadío (%)"
     },
     "button": {
-      "send": "Enviar información",
+      "send": "Buscar Parcela",
       "reset": "Borrar selección",
       "loading": "Cargando..."
     }
@@ -184,17 +216,28 @@
     },
     "parcel-drawer": {
       "coordinates": {
-        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:"
+        "invalid": "Formato de coordenadas inválido. Por favor, use el formato 'lat, lon'.\nCoordenadas introducidas:",
+        "new-coordinates": "Coordenadas actualizadas: ",
+        "new-coordinates-error": "Error al actualizar coordenadas: "
+
         },
         "sigpac-table": {
           "error": "Error al cargar la clasificación de cultivos:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: Nigún polígono detectado en el mapa. Dibuje uno para continuar.",
+          "parcel-drawing":"Error: Nigún polígono ni marcador de coordenadas detectado en el mapa. Dibuje un polígono o use un marcador de coordenadas para continuar.",
           "crop-classification": "Error: Nigún tipo de cultivo seleccionado. Por favor, seleccione al menos un tipo de cultivo.",
           "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
         }
 
+    },
+    "parcel-locator": {
+      "missing": {
+        "province": "Error: Falta el valor 'Provincia'. Por favor, seleccione una provincia.",
+        "municipality": "Error: Falta el valor 'Municipio'. Por favor, seleccione un municipio.",
+        "polygon": "Error: Falta el valor 'Polígono'. Por favor, introduzca un identificador (máximo 3 cifras).",
+        "parcel-id": "Error: Falta el valor 'Parcela'. Por favor, introduzca un identificador (máximo 5 cifras)."
+      }
     },
     "chat": {
       "load-parcel-finder-data-info": "Cargando datos del Buscador de Parcelas...",

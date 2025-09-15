@@ -5,6 +5,14 @@
         </div>
         <div class="form-description">
             <p>
+                {{ "parcelDrawer.description.intro" | translate }}
+            </p>
+            <h3>{{ "parcelDrawer.description.header1" | translate }}</h3>
+            <p>
+                <span style="font-weight: bold;">{{ "parcelDrawer.description.bold0" | translate }}</span>{{ "parcelDrawer.description.normal0" | translate }}
+            </p>
+            <h3>{{ "parcelDrawer.description.header2" | translate }}</h3>
+            <p>
                 <span style="font-weight: bold;">{{ "parcelDrawer.description.bold1" | translate }}</span> 
                 {{ "parcelDrawer.description.normal1" | translate }}
                 <span style="font-weight: bold;">{{ "parcelDrawer.description.bold2" | translate}}</span>
@@ -19,7 +27,7 @@
         <div class="coordinates-container">
             <label class="coordinates-label"> {{ 'parcelDrawer.coordinates.label' | translate }} <span style="font-style: italic;">(lat, lon): </span>
                 <input
-                    class="coordinates-input"
+                    class="form-input"
                     type="text"
                     name="coordinates"
                     [(ngModel)]="coordinates"
@@ -29,8 +37,8 @@
             <div class="date-field">
                 <label class="form-label">
                     {{ 'parcelFinder.selectDate' | translate }}:
-                    <input class="form-input"
-                    class="date-input-field"
+                    <input 
+                    class="form-input"
                     type="date"
                     placeholder="{{ 'parcelFinder.datePlaceholder' | translate }}"
                     [(ngModel)]="selectedDate"
@@ -143,10 +151,6 @@
                 </div>
             }
         </div>
-        <app-progress-bar
-            [isProcessing]="isLoading()"
-            [durationInSeconds]="40"
-        ></app-progress-bar>
         <div class="form-buttons">
             <button
                 class="input-button"
@@ -163,16 +167,4 @@
                 {{ 'parcelDrawer.button.reset' | translate }}
             </button>
         </div>
-
-        <div class="checkbox-container">
-            <label class="detailed-description-checkbox">
-                <input 
-                type="checkbox"
-                class="description-length"
-                [(ngModel)]="isDetailedDescription"
-                >
-                {{ 'parcelFinder.detailedDescription' | translate }}
-            </label>
-        </div>
-
 </div>
