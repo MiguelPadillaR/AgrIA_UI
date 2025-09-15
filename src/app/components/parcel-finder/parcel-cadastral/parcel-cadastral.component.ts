@@ -1,9 +1,8 @@
 import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { IFindParcelresponse } from '../../../models/parcel-finder.model';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from '../../../services/notification.service/notification.service';
-import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 
 @Component({
   selector: 'app-parcel-cadastral',

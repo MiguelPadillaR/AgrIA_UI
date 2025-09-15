@@ -99,7 +99,7 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
-      "locator": "Search by state's parcel/polygon.",
+      "locator": "Search by state's parcel/industrial park.",
       "drawer": "Search by coordinates / drawing parcel limits."
     }
   },
@@ -116,9 +116,9 @@
       "error": "Error: Municipality not valid. Please, select valid municipality."
     },
     "polygon": {
-      "name": "Polygon:", 
+      "name": "Industrial Park:", 
       "placeholder": "000", 
-      "error": "Error: Polygon not valid. Please, select valid identifier (3 digits max)."
+      "error": "Error: Industrial Park not valid. Please, select valid identifier (3 digits max)."
     },
     "parcel-id": {
       "name": "Parcel:",
@@ -134,6 +134,7 @@
       "header2": "Parcel Drawing Search:",
       "bold0":"Introduce a set of coordinates (latitude, longitude) that are within your state's limits ",
       "normal0":" as per the property's cadastral data in order to find it.",
+      "normal00":"Introduce the parcel's location data, sepcifying each one of these fields: Province, Municipality, Industrial's Park numeric ID, and Parcel's numeric ID",
       "normal01": "This options allows the ",
       "bold01": "automatic extraction of the SIPAC classification",
       "normal02": " of your parcel's crops.",
@@ -230,7 +231,7 @@
         "missing": {
           "province": "Error: Missing value for 'Province'. Please, select province.",
           "municipality": "Error: Missing value for 'Municipality'. Please, select municipality.",
-          "polygon": "Error: Missing value for 'Polygon'. Please, select identifier (3 digits max).",
+          "polygon": "Error: Missing value for 'Industrial Park'. Please, select identifier (3 digits max).",
           "parcel-id": "Error: Missing value for 'Parcel'. Please, select entifier (5 digits max)."
         }
       },
