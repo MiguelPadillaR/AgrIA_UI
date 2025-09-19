@@ -7,7 +7,7 @@
   "home": {
     "hero": {
       "title": "Optimize your crops with Artificial Intelligence",
-      "description": "AgrIA helps you meet CAP subsidy requirements by analyzing your satellite images.",
+      "description": "AgrIA helps you meet CAP subsidy eco-regimes requirements by analyzing your satellite images.",
       "button": "Discover More",
       "imageAlt": "Satellite image of cultivated fields"
     },
@@ -27,7 +27,11 @@
       "title": "Main Features",
       "parcelLocation": {
         "title": "Parcel Location",
-        "description": "Automatically find your parcel by simply using its cadastral reference or locating it on the map."
+        "description": "Automatically find your parcel by simply using its cadastral reference, address or locating it on the map."
+      },
+      "imageSuperRes": {
+        "title": "Image Super-Resolution",
+        "description": "Get and improved 10m/px image resolution up to 5m/px thanks to self-supervised AI models."
       },
       "satelliteImageAnalysis": {
         "title": "Satellite Image Analysis",
@@ -39,7 +43,7 @@
       },
       "pacAdvisory": {
         "title": "CAP Advisory",
-        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria."
+        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria for eco-regimes status."
       },
       "interactiveSupport": {
         "title": "Interactive Support",
@@ -99,7 +103,7 @@
     "confirmParcel": "Confirm Parcel",
     "tab": {
       "finder": "Search by cadastral reference.",
-      "locator": "Search by state's parcel/industrial park.",
+      "locator": "Search by state's parcel / industrial park.",
       "drawer": "Search by coordinates / drawing parcel limits."
     }
   },

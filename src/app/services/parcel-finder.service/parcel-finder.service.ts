@@ -27,7 +27,7 @@ export class ParcelFinderService {
   }
 
   loadCropClassifications(): Observable<ICropClassification[]> {
-    return this.http.get<ICropClassification[]>('data/crop_classification.json');
+    return this.http.get<ICropClassification[]>('data/crop_classification_en.json');
   }
 
   setParcelInfo(data: IFindParcelresponse) {

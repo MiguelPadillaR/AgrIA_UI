@@ -68,7 +68,7 @@ export class ChatComponent {
    */
   private sendParcelInfoToChat(parcel: IFindParcelresponse) {
     this.chatAssistant.showMessageIcon() ;
-    const [year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
+    const [__, year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
         
     const formData = new FormData();
     formData.append('imageDate', `${month}/${year}`);

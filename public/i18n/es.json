@@ -7,7 +7,7 @@
   "home": {
     "hero": {
       "title": "Optimiza tus cultivos con Inteligencia Artificial",
-      "description": "AgrIA te ayuda a cumplir con los requisitos de las subvenciones de la PAC analizando tus imágenes satelitales.",
+      "description": "AgrIA te ayuda a cumplir con los requisitos de las subvenciones de ecorregíemenes de la PAC analizando tus imágenes satelitales.",
       "button": "Descubre Más",
       "imageAlt": "Imagen de satélite de campos de cultivo"
     },
@@ -27,7 +27,11 @@
       "title": "Características Principales",
       "parcelLocation": {
         "title": "Localización de Parcela",
-        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral o localizándola en el mapa."
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral, dirección o localizándola en el mapa."
+      },
+      "imageSuperRes": {
+        "title": "Super-resolución de Imagen",
+        "description": "Consigue y mejora la resolución de imágenes de 10m/px a 5m/px gracias a modelos de IA de auto-supervisión."
       },
       "satelliteImageAnalysis": {
         "title": "Análisis de Imagen Satelital",
@@ -39,7 +43,7 @@
       },
       "pacAdvisory": {
         "title": "Asesoramiento PAC",
-        "description": "Consigue guía experta para cumplir con los criterios de subvención de la Política Agrícola Común."
+        "description": "Consigue guía experta para cumplir con los criterios de subvención de la Política Agrícola Común para estados de ecorrégimen."
       },
       "interactiveSupport": {
         "title": "Soporte Interactivo",
@@ -99,7 +103,7 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
-      "locator": "Buscar por parcela/polígono.",
+      "locator": "Buscar por parcela / polígono.",
       "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
