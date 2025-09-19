@@ -1,12 +1,13 @@
 import * as L from 'leaflet';
 import 'leaflet-draw';
 import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ParcelFinderService } from '../../../services/parcel-finder.service/parcel-finder.service';
 import { FormsModule } from '@angular/forms';
 import { ICropClassification, IGroupedCropClassification, IParcelDrawerGeojson, ISelectedCrop } from '../../../models/parcel-drawer.model';
 import { NotificationService } from '../../../services/notification.service/notification.service';
 import { IFindParcelresponse, IParcelMetadata } from '../../../models/parcel-finder.model';
+import { Subscription } from 'rxjs';
 
 // Set default icon paths
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -102,21 +103,37 @@ export class ParcelDrawerComponent {
   private parcelFinderService: ParcelFinderService = inject(ParcelFinderService);
   // Service for notifications
   private notificationService: NotificationService = inject(NotificationService);
+  // Translation service
+  private translateService = inject(TranslateService);
   // Utility to get object keys
   protected objectKeys = Object.keys;
   
+  private subscriptions = new Subscription();
 
   constructor() { }
   
   ngOnInit() {
+    // Initial load
     this.loadCropClassifications();
-  }
 
+    // Subscribe to language changes
+    this.subscriptions.add(
+      this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('Language changed to:', event.lang);
+        this.resetForm()
+        this.loadCropClassifications();
+      })
+    );
+  }
   /**
    * Initializes the map and loads the provider layer.
    */
   ngAfterViewInit(): void {
     this.initMap();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   
   /**
@@ -243,7 +260,7 @@ export class ParcelDrawerComponent {
   }
 
   /**
-   * Reset coordinate marker plarcing and info.
+   * Reset coordinate marker placing and info.
    * 
    * @param lat - latitude component.
    * @param lng - Longitude component.
@@ -320,7 +337,7 @@ export class ParcelDrawerComponent {
    * Loads crop classifications from the service and groups them by type and subtype.
    */
   private loadCropClassifications() {
-    this.parcelFinderService.loadCropClassifications().subscribe(
+    this.parcelFinderService.loadCropClassifications(this.translateService.currentLang).subscribe(
       (cropClassification: ICropClassification[]) => {
         this.cropClassification = cropClassification;
         this.groupedCropClassification = this.groupByTypeAndSubtype(cropClassification);
@@ -343,7 +360,7 @@ export class ParcelDrawerComponent {
     const grouped: any = {};
       for (const item of data) {
         const type = item.type || 'Unknown';
-        const subtype = item.subtype1 || item.subtype2 || 'Otro';
+        const subtype = item.subtype1 || item.subtype2 || '\u2610';
         if (!grouped[type]) grouped[type] = {};
         if (!grouped[type][subtype]) grouped[type][subtype] = [];
         grouped[type][subtype].push(item);

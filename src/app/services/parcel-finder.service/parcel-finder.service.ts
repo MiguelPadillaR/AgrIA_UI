@@ -5,6 +5,7 @@ import { ICropClassification } from '../../models/parcel-drawer.model';
 import { environment } from '../../../environments/environment';
 import { IFindParcelresponse } from '../../models/parcel-finder.model';
 import { ISigpacLocationData } from '../../models/parcel-locator.model';
+import { CROP_CLASSIFICATION_FILENAME } from '../../config/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,12 @@ export class ParcelFinderService {
       .pipe(map(res => res.response));
   }
 
-   loadSigpacLocationData(): Observable<ISigpacLocationData[]> {
+  loadSigpacLocationData(): Observable<ISigpacLocationData[]> {
     return this.http.get<ISigpacLocationData[]>('data/sigpac_location_data.json');
   }
 
-  loadCropClassifications(): Observable<ICropClassification[]> {
-    return this.http.get<ICropClassification[]>('data/crop_classification_en.json');
+  loadCropClassifications(lang: String): Observable<ICropClassification[]> {
+    return this.http.get<ICropClassification[]>(CROP_CLASSIFICATION_FILENAME + lang +'.json');
   }
 
   setParcelInfo(data: IFindParcelresponse) {
