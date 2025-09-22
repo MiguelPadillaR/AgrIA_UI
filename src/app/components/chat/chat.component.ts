@@ -1,12 +1,12 @@
 import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateModule, TranslateService  } from '@ngx-translate/core';
 import { ChatAssistantComponent } from "./chat-assistant/chat-assistant.component";
 import { Router } from '@angular/router';
 import { ParcelFinderService } from '../../services/parcel-finder.service/parcel-finder.service';
 import { ChatService } from '../../services/chat.services/chat.service';
 import { IChatParcelResponse } from '../../models/chat.model';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { IFindParcelresponse } from '../../models/parcel-finder.model';
 import { NotificationService } from '../../services/notification.service/notification.service';
 
@@ -30,7 +30,7 @@ export class ChatComponent {
   // User's chat input
   public userInput: string = ""
   // User preference for longer image description
-  isDetailedDescription: boolean = false;
+  protected isDetailedDescription: boolean = false;
   // Loading variable for styling
   public isLoading: WritableSignal<boolean> = signal(false)
 
@@ -42,22 +42,56 @@ export class ChatComponent {
   private notificationService = inject(NotificationService)
   // Chat service
   private chatService = inject(ChatService);
+  // Translation service
+  private translateService = inject(TranslateService);
   // Router for navigation
   private router: Router = inject(Router);
-
+  // Subscription handler
+  private subscription = new Subscription();
 
   ngOnInit() {
-    this.parcelFinderService.parcelInfo$.pipe(take(1))
-    .subscribe(parcel => {
-      if (parcel) {
-      !parcel.hasBeenDescribed ? this.notificationService.showNotification("chat.load-parcel-finder-data-info", "", "info"): null;
-        // Delay template updates to avoid ExpressionChanged errors
-        setTimeout(() => {
-          this.imagePreviewUrl = parcel.imagePath;
-          this.parcelImageInfo = parcel.parcelInfo;
-          !parcel.hasBeenDescribed ? this.sendParcelInfoToChat(parcel): null;
-        }, 500);
-      }
+    // Subscribe to language changes
+    this.subscription.add(
+      this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+        console.log('Language changed to:', event.lang);
+        this.loadParcelDescription();
+      })
+    );
+    
+    this.parcelFinderService.parcelInfo$
+      .pipe(take(1))
+      .subscribe(parcel => {
+        if (parcel) {
+          if (!parcel.hasBeenDescribed) {
+            this.notificationService.showNotification("chat.load-parcel-finder-data-info", "", "info");
+          }
+          // Delay template updates to avoid ExpressionChangedAfterItHasBeenCheckedError
+          setTimeout(() => {
+            this.imagePreviewUrl = parcel.imagePath;
+
+            this.loadParcelDescription();
+            
+            if (!parcel.hasBeenDescribed) {
+              this.sendParcelInfoToChat(parcel);
+            }
+          }, 500);
+        }
+      });
+    }
+
+  private loadParcelDescription() {
+    const formData = new FormData();
+    formData.append('lang', `${this.translateService.currentLang}`);
+
+    this.parcelFinderService.loadParcelDescription(formData).pipe(take(1)).subscribe({
+      next: (response: string) => {
+        console.log("loadParcelDesc", response)
+        this.parcelImageInfo = response;
+        console.log("this.parcelImageInfo", this.parcelImageInfo);
+      }, 
+      error: (err) => {
+        this.notificationService.showNotification("chat.load-parcel-finder-data-error", err.error.error, "error", 10000);
+      },
     });
   }
 
@@ -75,12 +109,13 @@ export class ChatComponent {
     formData.append('imageCrops', JSON.stringify(parcel.metadata.query));
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
+    formData.append('lang', String(this.translateService.currentLang));
 
     this.chatService.loadParcelDataToChat(formData).pipe(take(1)).subscribe({
         next: (response: IChatParcelResponse) => { 
           this.notificationService.showNotification("chat.load-parcel-finder-data-success", "", "success");
 
-          this.parcelImageInfo = response.imageDesc;
+          this.loadParcelDescription();
           parcel.parcelInfo = response.imageDesc;
           this.chatAssistant.hideMessageIcon();
           this.chatAssistant.displayResponse(response.text);

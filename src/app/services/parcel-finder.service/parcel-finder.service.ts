@@ -18,6 +18,11 @@ export class ParcelFinderService {
 
   constructor(private http: HttpClient) {}
 
+  loadParcelDescription(request: FormData): Observable<string> {
+    return this.http.post<{ response: string }>(`${this.apiUrl}/load-parcel-description`, request)
+      .pipe(map(res => res.response));
+  }
+
   findParcel(request: FormData): Observable<IFindParcelresponse> {
     return this.http.post<{ response: IFindParcelresponse }>(`${this.apiUrl}/find-parcel`, request)
       .pipe(map(res => res.response));

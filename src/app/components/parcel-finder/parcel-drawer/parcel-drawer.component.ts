@@ -107,8 +107,8 @@ export class ParcelDrawerComponent {
   private translateService = inject(TranslateService);
   // Utility to get object keys
   protected objectKeys = Object.keys;
-  
-  private subscriptions = new Subscription();
+  // Subscription handler
+  private subscription = new Subscription();
 
   constructor() { }
   
@@ -117,7 +117,7 @@ export class ParcelDrawerComponent {
     this.loadCropClassifications();
 
     // Subscribe to language changes
-    this.subscriptions.add(
+    this.subscription.add(
       this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
         console.log('Language changed to:', event.lang);
         this.resetForm()
@@ -133,7 +133,7 @@ export class ParcelDrawerComponent {
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.subscription.unsubscribe();
   }
   
   /**
