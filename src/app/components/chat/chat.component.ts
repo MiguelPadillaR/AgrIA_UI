@@ -187,7 +187,9 @@ export class ChatComponent {
     this.notificationService.showNotification("chat.suggestion-info", "", "info")
     this.isLoading.set(true);
     document.body.style.cursor = 'progress';
-    this.chatService.getInputSuggestion().subscribe({
+    const formData = new FormData();
+    formData.append('lang', `${this.translateService.currentLang}`);
+    this.chatService.loadInputSuggestion(formData).subscribe({
       next: (response: string) => {
       this.notificationService.showNotification("chat.suggestion-success", "", "success")
         this.userInput = response
