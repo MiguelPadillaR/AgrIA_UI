@@ -7,7 +7,7 @@
   "home": {
     "hero": {
       "title": "Optimiza tus cultivos con Inteligencia Artificial",
-      "description": "AgrIA te ayuda a cumplir con los requisitos de las subvenciones de la PAC analizando tus imágenes satelitales.",
+      "description": "AgrIA te ayuda a cumplir con los requisitos de las subvenciones de ecorregíemenes de la PAC analizando tus imágenes satelitales.",
       "button": "Descubre Más",
       "imageAlt": "Imagen de satélite de campos de cultivo"
     },
@@ -27,7 +27,11 @@
       "title": "Características Principales",
       "parcelLocation": {
         "title": "Localización de Parcela",
-        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral o localizándola en el mapa."
+        "description": "Encuentra tu parcela de forma automática usando simplemente su referencia catastral, dirección o localizándola en el mapa."
+      },
+      "imageSuperRes": {
+        "title": "Super-resolución de Imagen",
+        "description": "Consigue y mejora la resolución de imágenes de 10m/px a 5m/px gracias a modelos de IA de auto-supervisión."
       },
       "satelliteImageAnalysis": {
         "title": "Análisis de Imagen Satelital",
@@ -39,7 +43,7 @@
       },
       "pacAdvisory": {
         "title": "Asesoramiento PAC",
-        "description": "Consigue guía experta para cumplir con los criterios de subvención de la Política Agrícola Común."
+        "description": "Consigue guía experta para cumplir con los criterios de subvención de la Política Agrícola Común para estados de ecorrégimen."
       },
       "interactiveSupport": {
         "title": "Soporte Interactivo",
@@ -83,8 +87,8 @@
     "cadastralData": "Datos Catastrales",
     "description1": "Introduzca el código de referencia catastral de la parcela que desea consultar. Si no lo conoce, puede buscarlo en el sitio web del catastro o en documentos relacionados con la propiedad.",
     "description2": "Asegúrese de que el código tenga 20 caracteres.",
-    "description3Bold": "No se admitirán códigos de referencia catastral urbanos.",
-    "description3": " Si tiene dificultades para encontrar su parcela, suba una imagen de su finca al chat junto con los datos de cultivo y superficie de parcelas.",
+    "description3Bold": "No se admitirán códigos de referencia catastral urbanos. Si tiene dificultades para encontrar su parcela, búsquela por coordenadas / dibujando sus límites.",
+    "description3": "",
     "cadastralReference": "Código de referencia catastral:",
     "cadastralPlaceholder": "Referencia catastral",
     "selectDate": "Seleccione fecha aproximada",
@@ -99,7 +103,7 @@
     "confirmParcel": "Confirmar Parcela",
     "tab": {
       "finder": "Buscar por referencia catastral.",
-      "locator": "Buscar por parcela/polígono.",
+      "locator": "Buscar por parcela / polígono.",
       "drawer": "Buscar por coordenadas / dibujando los límites."
     }
 
@@ -133,13 +137,13 @@
       "intro":"En este módulo, puede usar una de las siguientes opciones para encontrar su parcela. En ambos, se utlizará la fecha para extraer la imagen.",
       "header1": "Búsqueda por coordenadas:",
       "header2": "Búsqueda por delimitación de parcela:",
-      "bold0":"Utilice un conjunto de coordenadas (latitud, longitud) que se ubiquen en el interior de los límites de su finca ",
+      "bold0":"Pinche/pulse en el mapa sobre su parcela o utilice un conjunto de coordenadas (latitud, longitud) que se ubiquen en el interior de los límites de su finca ",
       "normal0":"de acuerdo con los datos catastrales de la propiedad para poder encontrarla.",
       "normal00":"Introduzca la localización de su parcela espeficando con cada uno de los siguientes campos: Provincia, Municipio, identificador numérico del polígono e identificador numérico de la parcela. ",
       "normal01": "Esta opción permite la ",
       "bold01": "extracción automática de la clasificación SIGPAC",
       "normal02": " de los cultivos de la parcela.",
-      "bold1": "Dibuje los límites de su parcela sobre el mapa.",
+      "bold1": "Utilice el botón de '\u2B54' y dibuje los límites de su parcela sobre el mapa.",
       "normal1": "Cuando haya terminado de delimitar la parcela, ",
       "bold2": "vuelva a pulsar sobre el vértice inicial para terminar",
       "normal2": "de dibujar.",

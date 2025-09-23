@@ -5,6 +5,7 @@ import { ICropClassification } from '../../models/parcel-drawer.model';
 import { environment } from '../../../environments/environment';
 import { IFindParcelresponse } from '../../models/parcel-finder.model';
 import { ISigpacLocationData } from '../../models/parcel-locator.model';
+import { CROP_CLASSIFICATION_FILENAME } from '../../config/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,22 @@ export class ParcelFinderService {
 
   constructor(private http: HttpClient) {}
 
+  loadParcelDescription(request: FormData): Observable<string> {
+    return this.http.post<{ response: string }>(`${this.apiUrl}/load-parcel-description`, request)
+      .pipe(map(res => res.response));
+  }
+
   findParcel(request: FormData): Observable<IFindParcelresponse> {
     return this.http.post<{ response: IFindParcelresponse }>(`${this.apiUrl}/find-parcel`, request)
       .pipe(map(res => res.response));
   }
 
-   loadSigpacLocationData(): Observable<ISigpacLocationData[]> {
+  loadSigpacLocationData(): Observable<ISigpacLocationData[]> {
     return this.http.get<ISigpacLocationData[]>('data/sigpac_location_data.json');
   }
 
-  loadCropClassifications(): Observable<ICropClassification[]> {
-    return this.http.get<ICropClassification[]>('data/crop_classification.json');
+  loadCropClassifications(lang: String): Observable<ICropClassification[]> {
+    return this.http.get<ICropClassification[]>(CROP_CLASSIFICATION_FILENAME + lang +'.json');
   }
 
   setParcelInfo(data: IFindParcelresponse) {
