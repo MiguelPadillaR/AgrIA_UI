@@ -3,6 +3,8 @@ import { IChatMessage } from '../../../models/chat-assistant.model';
 import { ChatAssistantService } from '../../../services/chat-assistant.service/chat-assistant.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { NotificationService } from '../../../services/notification.service/notification.service';
+import DOMPurify from 'dompurify';
+
 @Component({
   selector: 'app-chat-assistant',
   standalone: true,
@@ -78,7 +80,6 @@ export class ChatAssistantComponent {
     return sanitized_history
   }
 
-
   /**
    * Scrolls to the bottom of the chat window
    * 
@@ -97,11 +98,11 @@ export class ChatAssistantComponent {
    */
   public addUserMessage(content: string) {
     if (content.length > 0) {
-      this.chatHistory.push({ role: 'user', content });
-      this.sendUserInput(content);
-      this.scrollToBottom()
+      const safeContent = this.sanitizeMarkdown(content);
+      this.chatHistory.push({ role: 'user', content: safeContent });
+      this.sendUserInput(safeContent);
+      this.scrollToBottom();
     }
-    this.scrollToBottom();
   }
 
   /**
@@ -187,20 +188,21 @@ export class ChatAssistantComponent {
    * @param responseText - response from AgrIA
    */
   public displayResponse(responseText: string) {
+    const safeContent = this.sanitizeMarkdown(responseText);
+
     const newMsg: IChatMessage = {
       role: 'model',
-      content: responseText,
+      content: safeContent,
       revealProgress: ''
     };
-    if (newMsg.content?.length === 0 || newMsg.content === undefined) {
+
+    if (!newMsg.content || newMsg.content.length === 0) {
       newMsg.content = 'No response received from the assistant.';
     }
+
     this.chatHistory.push(newMsg);
     this.animateLoadingResponse(newMsg);
     this.scrollToBottom();
-
-    console.log("responseText:", responseText)
-
   }
       
   /**
@@ -222,5 +224,14 @@ export class ChatAssistantComponent {
       }
     }, 5); // Adjust typing speed (ms per character)
   }
+
+  private sanitizeMarkdown(md: string): string {
+    // Remove/disallow raw HTML, allow only markdown that will be converted
+    return DOMPurify.sanitize(md, {
+      ALLOWED_TAGS: [], // strip all HTML tags if someone injects them
+      ALLOWED_ATTR: []
+    });
+  }
+
 }
   
