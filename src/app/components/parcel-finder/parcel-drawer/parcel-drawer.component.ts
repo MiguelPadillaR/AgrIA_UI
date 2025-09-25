@@ -52,6 +52,7 @@ export class ParcelDrawerComponent {
   protected mapCenter: string = '40.400409, -3.631434';
   // Coordinates attribute
   protected coordinates: string = this.mapCenter; // TODO: REMOVE Center coordinates (40.4165, -3.70256)
+
   // Date for which the parcel image is requested
   protected selectedDate: string  = new Date().toISOString().split('T')[0];
   // Max date allowed for the date picker
@@ -213,6 +214,15 @@ export class ParcelDrawerComponent {
       // Convert  to GeoJSON and store it in parcelGeometry
       this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
       this.parcelGeometry.CRS = 'epsg:4326';
+    });
+
+    // When existing shapes are modified
+    this.map.on(L.Draw.Event.EDITED, (event: any) => {
+      event.layers.eachLayer((layer: any) => {
+        // Convert updated geometry to GeoJSON and save it
+        this.parcelGeometry = layer.toGeoJSON().geometry as IParcelDrawerGeojson;
+        this.parcelGeometry.CRS = 'epsg:4326';
+      });
     });
 
     // When features are deleted
@@ -457,10 +467,6 @@ export class ParcelDrawerComponent {
 
       // Output request to parcel finder component
       this.findParcelRequest.emit(formData)
-        setTimeout(() => {
-          this.isLoading.set(false)
-        }, this.maxLoadingDuration * 1000);
-
     } catch (err) {
       if(this.isValidInput()) {
         this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)
