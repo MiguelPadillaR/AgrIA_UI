@@ -76,6 +76,14 @@
     "subtype1": "",
     "subtype2": ""
   },
+    {
+    "class": "MT",
+    "name": "Bushes",
+    "type": "FORESTRY",
+    "subtype1": "",
+    "subtype2": ""
+  },
+
   {
     "class": "FS",
     "name": "Nut trees",

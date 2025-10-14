@@ -437,21 +437,13 @@ export class ParcelDrawerComponent {
       document.body.style.cursor = 'progress';
 
       // Add essential metadata from crop classification to request
-      this.parcelMetadata.query = [];  // Reset metadata info
+      this.parcelMetadata.usos = [];  // Reset metadata info
       for (const classification of this.selectedClassifications) {
         const item = classification.classification
-          this.parcelMetadata.query.push({
-            dn_surface: Number(classification.surface) * 10000,
+          this.parcelMetadata.usos.push({
+            dn_superficie: Number(String(classification.surface).replace(",", ".")) * 10000,
             uso_sigpac: `${item.class}-${item.name}`,
-            superficie_admisible: Number(classification.surface) * 10000,
-            recinto: 0,
-            coef_regadio: classification.irrigation ?? 0,
-            admisibilidad: 0,
-            altitud: 0,
-            incidencias: '',
-            inctexto: '',
-            pendiente_media: 0,
-            region: ''
+            superficie_admisible: Number(String(classification.surface).replace(",", ".")) * 10000,
           });
       };
 
