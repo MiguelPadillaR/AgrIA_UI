@@ -85,9 +85,7 @@ export class ChatComponent {
 
     this.parcelFinderService.loadParcelDescription(formData).pipe(take(1)).subscribe({
       next: (response: string) => {
-        console.log("loadParcelDesc", response)
         this.parcelImageInfo = response;
-        console.log("this.parcelImageInfo", this.parcelImageInfo);
       }, 
       error: (err) => {
         this.notificationService.showNotification("chat.load-parcel-finder-data-error", err.error.error, "error", 10000);
@@ -107,6 +105,7 @@ export class ChatComponent {
     const formData = new FormData();
     formData.append('imageDate', `${month}/${year}`);
     formData.append('landUses', JSON.stringify(parcel.metadata.usos));
+    formData.append('query', JSON.stringify(parcel.metadata.query));
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
     formData.append('lang', String(this.translateService.currentLang));

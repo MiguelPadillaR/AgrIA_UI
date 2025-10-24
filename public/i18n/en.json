@@ -7,7 +7,7 @@
   "home": {
     "hero": {
       "title": "Optimize your crops with Artificial Intelligence",
-      "description": "AgrIA helps you meet CAP subsidy eco-regimes requirements by analyzing your satellite images.",
+      "description": "AgrIA helps you meet CAP subsidy eco-schemes requirements by analyzing your satellite images.",
       "button": "Discover More",
       "imageAlt": "Satellite image of cultivated fields"
     },
@@ -43,7 +43,7 @@
       },
       "pacAdvisory": {
         "title": "CAP Advisory",
-        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria for eco-regimes status."
+        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria for eco-schemes status."
       },
       "interactiveSupport": {
         "title": "Interactive Support",

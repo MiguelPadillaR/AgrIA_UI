@@ -189,6 +189,7 @@ export class ChatAssistantComponent {
    */
   public displayResponse(responseText: string) {
     const safeContent = this.sanitizeMarkdown(responseText);
+    console.log("LLM RESPONSE\n", responseText)
 
     const newMsg: IChatMessage = {
       role: 'model',
