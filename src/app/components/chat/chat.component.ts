@@ -85,9 +85,7 @@ export class ChatComponent {
 
     this.parcelFinderService.loadParcelDescription(formData).pipe(take(1)).subscribe({
       next: (response: string) => {
-        console.log("loadParcelDesc", response)
         this.parcelImageInfo = response;
-        console.log("this.parcelImageInfo", this.parcelImageInfo);
       }, 
       error: (err) => {
         this.notificationService.showNotification("chat.load-parcel-finder-data-error", err.error.error, "error", 10000);
@@ -103,10 +101,11 @@ export class ChatComponent {
   private sendParcelInfoToChat(parcel: IFindParcelresponse) {
     this.chatAssistant.showMessageIcon() ;
     const [__, year, month] = this.imagePreviewUrl?.split('/')?.pop()?.split('.')[0].split("_") || [];
-        
+
     const formData = new FormData();
     formData.append('imageDate', `${month}/${year}`);
-    formData.append('imageCrops', JSON.stringify(parcel.metadata.query));
+    formData.append('landUses', JSON.stringify(parcel.metadata.usos));
+    formData.append('query', JSON.stringify(parcel.metadata.query));
     formData.append('imageFilename', parcel.imagePath?.split('/')?.pop() ?? '');
     formData.append('isDetailedDescription', String(parcel.isDetailedDescription));
     formData.append('lang', String(this.translateService.currentLang));
@@ -114,7 +113,6 @@ export class ChatComponent {
     this.chatService.loadParcelDataToChat(formData).pipe(take(1)).subscribe({
         next: (response: IChatParcelResponse) => { 
           this.notificationService.showNotification("chat.load-parcel-finder-data-success", "", "success");
-
           this.loadParcelDescription();
           parcel.parcelInfo = response.imageDesc;
           this.chatAssistant.hideMessageIcon();

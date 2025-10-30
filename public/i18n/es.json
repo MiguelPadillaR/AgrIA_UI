@@ -135,8 +135,8 @@
     "title": "Datos Geográficos",
     "description": {
       "intro":"En este módulo, puede usar una de las siguientes opciones para encontrar su parcela. En ambos, se utlizará la fecha para extraer la imagen.",
-      "header1": "Búsqueda por coordenadas:",
-      "header2": "Búsqueda por delimitación de parcela:",
+      "header1": "Búsqueda por coordenadas (sólo en España):",
+      "header2": "Búsqueda por delimitación de parcela (resto del mundo):",
       "bold0":"Pinche/pulse en el mapa sobre su parcela o utilice un conjunto de coordenadas (latitud, longitud) que se ubiquen en el interior de los límites de su finca ",
       "normal0":"de acuerdo con los datos catastrales de la propiedad para poder encontrarla.",
       "normal00":"Introduzca la localización de su parcela espeficando con cada uno de los siguientes campos: Provincia, Municipio, identificador numérico del polígono e identificador numérico de la parcela. ",
@@ -229,7 +229,8 @@
           "error": "Error al cargar la clasificación de cultivos:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: Nigún polígono ni marcador de coordenadas detectado en el mapa. Dibuje un polígono o use un marcador de coordenadas para continuar.",
+          "parcel-drawing":"Error: Nigún polígono de parcela ni marcador de coordenadas detectado en el mapa. Dibuje un polígono (si el terreno está fuera de España) o use un marcador de coordenadas (dentro de España) para continuar.",
+          "parcel-out":"Error: Territorio fuera de España detectado. Dibuje un polígono de su parcela para continuar.",
           "crop-classification": "Error: Nigún tipo de cultivo seleccionado. Por favor, seleccione al menos un tipo de cultivo.",
           "surface": "Error: Superficie faltante. Por favor, indique las superficies de todos los tipos de cultivo seleccionados."
         }

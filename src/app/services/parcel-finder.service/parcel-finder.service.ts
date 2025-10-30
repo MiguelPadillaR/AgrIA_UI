@@ -36,6 +36,11 @@ export class ParcelFinderService {
     return this.http.get<ICropClassification[]>(CROP_CLASSIFICATION_FILENAME + lang +'.json');
   }
 
+  isCoordInZone(request: FormData): Observable<boolean> {
+    return this.http.post<{ response: boolean }>(`${this.apiUrl}/is-coord-in-zone`, request)
+      .pipe(map(res => res.response));
+  }
+  
   setParcelInfo(data: IFindParcelresponse) {
     this.parcelInfoSubject.next(data);
   }

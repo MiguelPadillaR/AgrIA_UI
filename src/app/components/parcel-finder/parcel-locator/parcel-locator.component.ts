@@ -143,24 +143,26 @@ export class ParcelLocatorComponent {
     try {
       // Validate input before sending request
       this.validateInput();
-          
-      // Init loading notifications
-      this.notificationService.showNotification("parcel-finder.searching", "", "info")
-      this.isLoading.set(true);
-      this.loadingStarted.emit(this.maxLoadingDuration);
-      document.body.style.cursor = 'progress';
       
-      // Create find parcel request
-      const formData = new FormData();
-      formData.append('province', this.province!!);
-      formData.append('municipality', this.municipality!!);
-      formData.append('polygon', String(this.polygon));
-      formData.append('parcelId', String(this.parcelId));
-      formData.append('selectedDate', this.selectedDate);
-      formData.append('isFromCadastralReference', "True");
-      
-      // Output request to parcel finder component
-      this.findParcelRequest.emit(formData)
+      if(this.isValidInput()) {
+        // Init loading notifications
+        this.notificationService.showNotification("parcel-finder.searching", "", "info")
+        this.isLoading.set(true);
+        this.loadingStarted.emit(this.maxLoadingDuration);
+        document.body.style.cursor = 'progress';
+        
+        // Create find parcel request
+        const formData = new FormData();
+        formData.append('province', this.province!!);
+        formData.append('municipality', this.municipality!!);
+        formData.append('polygon', String(this.polygon));
+        formData.append('parcelId', String(this.parcelId));
+        formData.append('selectedDate', this.selectedDate);
+        formData.append('isFromCadastralReference', "True");
+        
+        // Output request to parcel finder component
+        this.findParcelRequest.emit(formData)
+      }
     } catch (err) {
       if(this.isValidInput()) {
         this.notificationService.showNotification("parcel-finder.error",`\n${err}`,"error", 10000)

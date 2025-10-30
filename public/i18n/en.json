@@ -7,7 +7,7 @@
   "home": {
     "hero": {
       "title": "Optimize your crops with Artificial Intelligence",
-      "description": "AgrIA helps you meet CAP subsidy eco-regimes requirements by analyzing your satellite images.",
+      "description": "AgrIA helps you meet CAP subsidy eco-schemes requirements by analyzing your satellite images.",
       "button": "Discover More",
       "imageAlt": "Satellite image of cultivated fields"
     },
@@ -43,7 +43,7 @@
       },
       "pacAdvisory": {
         "title": "CAP Advisory",
-        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria for eco-regimes status."
+        "description": "Get expert guidance to meet Common Agricultural Policy subsidy criteria for eco-schemes status."
       },
       "interactiveSupport": {
         "title": "Interactive Support",
@@ -134,8 +134,8 @@
     "title": "Geographical Data",
     "description": {
       "intro":"In this module, you may use one of the two options available to find your parcel. In both, the date will be used to extract the image.",
-      "header1": "Coordinates Search:",
-      "header2": "Parcel Drawing Search:",
+      "header1": "Coordinates Search (Spain only):",
+      "header2": "Parcel Drawing Search (resto of the world):",
       "bold0":"Click/tap on the map over your parcel or introduce a set of coordinates (latitude, longitude) that are within your state's limits ",
       "normal0":" as per the property's cadastral data in order to find it.",
       "normal00":"Introduce the parcel's location data, sepcifying each one of these fields: Province, Municipality, Industrial's Park numeric ID, and Parcel's numeric ID",
@@ -226,7 +226,8 @@
           "error": "Error when loading crop classifications:\n"
         },
         "missing": {
-          "parcel-drawing":"Error: No polygon or coordinate marker detected on the map. Draw a polygon or use a coordinate marker.",
+          "parcel-drawing":"Error: No parcel's polygon or coordinate marker detected on the map. Draw a polygon (states out of Spain) or use a coordinate marker (within Spain).",
+          "parcel-out":"Error: Territory outside of Spain detected. Draw a polygon of your state to continue.",
           "crop-classification": "Error: No crop type selected. Please select at least one crop type.",
           "surface": "Error: Missing surface. Please provide a surface for all selected crop classification."
         }
