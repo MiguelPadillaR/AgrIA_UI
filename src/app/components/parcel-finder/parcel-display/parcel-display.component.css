@@ -70,9 +70,9 @@
 .display-box img {
   max-height: 500px;
   min-height: 300px;
+  min-width: 120px;
   object-fit: contain;
   border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
 }
 
 /* Placeholder icon for no image (reusing from chat component) */
