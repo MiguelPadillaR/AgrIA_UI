@@ -98,7 +98,6 @@ body, html {
   max-height: 500px;
   object-fit: contain; /* Ensures the entire image is visible */
   border-radius: var(--border-radius);
-  border: 1px solid var(--border-color); /* A subtle border around the image */
 }
 
 /* Placeholder icon for no image */

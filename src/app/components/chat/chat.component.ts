@@ -24,7 +24,7 @@ export class ChatComponent {
   // Image file
   public imageFile: File | null = null;
   // Image URL/path for the preview module
-  public imagePreviewUrl: string | null = null;
+  public imagePreviewUrl: string | null = "img/image-icon.png";
   // Parcel's image information
   public parcelImageInfo: string =  "..."
   // User's chat input
