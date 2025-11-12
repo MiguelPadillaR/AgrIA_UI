@@ -76,6 +76,14 @@
     "subtype1": "",
     "subtype2": ""
   },
+    {
+    "class": "MT",
+    "name": "Matorral",
+    "type": "FORESTAL",
+    "subtype1": "",
+    "subtype2": ""
+  },
+
   {
     "class": "FS",
     "name": "Frutal de Cáscara",
